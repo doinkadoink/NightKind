@@ -27,7 +27,7 @@ Once deployed to GitHub Pages, the website will be available at:
 
 2. **Push this code to GitHub**
    ```bash
-   git remote add origin https://github.com/[your-username]/[repository-name].git
+   git remote add origin https://github.com/doinkadoink/NightKind.git
    git branch -M main
    git push -u origin main
    ```
