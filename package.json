@@ -1,0 +1,12 @@
+{
+  "name": "nightkind-collective-static",
+  "version": "1.0.0",
+  "description": "Static copy of NightKind Collective website",
+  "scripts": {
+    "start": "npx serve . -p 8000",
+    "serve": "npx serve . -p 8000"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+} 
