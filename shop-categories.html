@@ -68,10 +68,18 @@
         margin-bottom: 1.5rem;
         font-family: 'Courier Prime', monospace;
         text-transform: uppercase;
-        letter-spacing: 0.1em;
-        text-shadow: var(--shadow-glow);
-        text-decoration: underline;
-        text-decoration-color: hsl(var(--secondary));
+        letter-spacing: 0.3em;
+        text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6), 0 0 40px hsla(60, 100%, 65%, 0.3);
+        animation: titleGlow 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes titleGlow {
+        0% {
+          text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6), 0 0 40px hsla(60, 100%, 65%, 0.3);
+        }
+        100% {
+          text-shadow: 0 0 25px hsla(60, 100%, 65%, 0.8), 0 0 50px hsla(60, 100%, 65%, 0.4);
+        }
       }
 
       .shop-description {
@@ -94,9 +102,18 @@
         margin-bottom: 3rem;
         font-family: 'Courier Prime', monospace;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        text-decoration: underline;
-        text-decoration-color: hsl(var(--secondary));
+        letter-spacing: 0.2em;
+        text-shadow: 0 0 15px hsla(60, 100%, 65%, 0.5);
+        animation: sectionGlow 4s ease-in-out infinite alternate;
+      }
+
+      @keyframes sectionGlow {
+        0% {
+          text-shadow: 0 0 15px hsla(60, 100%, 65%, 0.5);
+        }
+        100% {
+          text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.7);
+        }
       }
 
       .categories-grid {
@@ -112,10 +129,35 @@
         border-radius: 12px;
         padding: 2rem;
         text-align: center;
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
         position: relative;
         overflow: hidden;
+        box-shadow: 0 0 15px hsla(60, 100%, 65%, 0.1);
+        animation: cardFloat 6s ease-in-out infinite;
+      }
+
+      .category-card:nth-child(2) {
+        animation-delay: 1.5s;
+      }
+
+      .category-card:nth-child(3) {
+        animation-delay: 3s;
+      }
+
+      .category-card:nth-child(4) {
+        animation-delay: 4.5s;
+      }
+
+      @keyframes cardFloat {
+        0%, 100% {
+          transform: translateY(0px);
+          box-shadow: 0 0 15px hsla(60, 100%, 65%, 0.1);
+        }
+        50% {
+          transform: translateY(-5px);
+          box-shadow: 0 0 25px hsla(60, 100%, 65%, 0.2);
+        }
       }
 
       .category-card::before {
@@ -131,8 +173,8 @@
       }
 
       .category-card:hover {
-        transform: translateY(-8px);
-        box-shadow: var(--shadow-gothic);
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 0 30px hsla(60, 100%, 65%, 0.3), 0 10px 40px hsla(270, 45%, 15%, 0.8);
         border-color: hsl(var(--secondary));
       }
 
@@ -311,6 +353,119 @@
         </div>
       </div>
     </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">NightKind Collective</h3>
+          <p class="footer-description">
+            Alternative fashion with purpose. Supporting Queensland bat rescue through authentic subcultural style.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Conservation</h4>
+          <p class="footer-text">
+            Every purchase directly funds wildlife rescue operations and bat conservation efforts.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Community</h4>
+          <p class="footer-text">
+            Join the NightKind community and make a difference through style.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2024 NightKind Collective. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <style>
+      .footer {
+        background: linear-gradient(180deg, hsl(var(--background)), hsl(var(--card)));
+        border-top: 1px solid hsl(var(--border));
+        margin-top: 6rem;
+        padding: 3rem 0 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, hsl(var(--secondary)), transparent);
+        box-shadow: 0 0 10px hsl(var(--secondary));
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section {
+        text-align: center;
+      }
+
+      .footer-title {
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-shadow: 0 0 10px hsla(60, 100%, 65%, 0.5);
+      }
+
+      .footer-subtitle {
+        color: hsl(var(--secondary));
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .footer-description,
+      .footer-text {
+        color: hsl(var(--muted-foreground));
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid hsl(var(--border));
+        margin: 0 2rem;
+      }
+
+      .footer-copyright {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.9rem;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      @media (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        
+        .footer {
+          padding: 2rem 0 1rem;
+        }
+      }
+    </style>
 
     <script>
       // Cart functionality
