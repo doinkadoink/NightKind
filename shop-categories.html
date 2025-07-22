@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop Categories - NightKind Collective</title>
+    <meta name="description" content="Browse NightKind Collective merchandise categories" />
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="index-CZEDu5tD.css">
+    <style>
+      /* Using the same CSS variables and styling as your React app */
+      :root {
+        --background: 0 0% 8%;
+        --foreground: 60 100% 85%;
+        --card: 0 0% 12%;
+        --card-foreground: 60 100% 85%;
+        --primary: 270 45% 25%;
+        --secondary: 60 100% 65%;
+        --muted: 0 0% 18%;
+        --muted-foreground: 0 0% 65%;
+        --accent: 270 35% 35%;
+        --border: 0 0% 25%;
+        --shadow-gothic: 0 10px 40px -15px hsla(270, 45%, 15%, .8);
+        --shadow-glow: 0 0 30px hsla(60, 100%, 65%, .3);
+        --gradient-primary: linear-gradient(135deg, hsl(270, 45%, 25%), hsl(270, 35%, 35%));
+        --gradient-accent: linear-gradient(90deg, hsl(60, 100%, 65%), hsl(50, 100%, 70%));
+        --gradient-dark: linear-gradient(180deg, hsl(0, 0%, 8%), hsl(0, 0%, 12%));
+      }
+
+      body {
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+
+      .shop-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .shop-header {
+        text-align: center;
+        padding: 3rem 2rem;
+        margin-bottom: 4rem;
+      }
+
+      .back-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        margin-bottom: 2rem;
+        display: inline-block;
+        font-size: 1.1rem;
+        transition: color 0.3s;
+      }
+
+      .back-link:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
+      }
+
+      .shop-title {
+        color: hsl(var(--secondary));
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-shadow: var(--shadow-glow);
+        text-decoration: underline;
+        text-decoration-color: hsl(var(--secondary));
+      }
+
+      .shop-description {
+        color: hsl(var(--muted-foreground));
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.7;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .categories-section {
+        margin-bottom: 4rem;
+      }
+
+      .section-title {
+        color: hsl(var(--secondary));
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 3rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        text-decoration: underline;
+        text-decoration-color: hsl(var(--secondary));
+      }
+
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .category-card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .category-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 50% 50%, hsla(270, 45%, 25%, 0.1) 0%, transparent 50%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .category-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-gothic);
+        border-color: hsl(var(--secondary));
+      }
+
+      .category-card:hover::before {
+        opacity: 1;
+      }
+
+      .category-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .category-title {
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .category-description {
+        color: hsl(var(--muted-foreground));
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .category-price {
+        color: hsl(var(--secondary));
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      .category-count {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .view-category-btn {
+        background: hsl(var(--secondary));
+        color: hsl(var(--secondary-foreground));
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-family: 'Courier Prime', monospace;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .view-category-btn:hover {
+        background: hsl(var(--secondary) / 0.8);
+        transform: scale(1.05);
+        box-shadow: var(--shadow-glow);
+      }
+
+      .cart-icon {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: hsl(var(--secondary));
+        color: hsl(var(--secondary-foreground));
+        padding: 0.75rem;
+        border-radius: 50%;
+        cursor: pointer;
+        font-weight: bold;
+        z-index: 1000;
+        font-size: 1.2rem;
+        transition: transform 0.2s;
+        box-shadow: var(--shadow-glow);
+      }
+
+      .cart-icon:hover {
+        transform: scale(1.1);
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: hsl(var(--destructive));
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+
+      @media (max-width: 768px) {
+        .shop-title {
+          font-size: 2.5rem;
+        }
+        
+        .categories-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .shop-container {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cart-icon" onclick="window.location.href='cart.html'">
+      🛒
+      <div class="cart-count" id="cartCount">0</div>
+    </div>
+
+    <div class="shop-container">
+      <div class="shop-header">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <h1 class="shop-title">Alt Shop</h1>
+        <p class="shop-description">
+          Curated alternative merchandise supporting bat conservation. Every purchase directly funds wildlife rescue operations.
+        </p>
+      </div>
+
+      <div class="categories-section">
+        <h2 class="section-title">Categories</h2>
+        <div class="categories-grid">
+          <div class="category-card" onclick="window.location.href='stickers.html'">
+            <span class="category-icon">🦇</span>
+            <h3 class="category-title">Stickers</h3>
+            <p class="category-description">
+              Illustrative bat designs with alt/gothic motifs. High-quality vinyl stickers perfect for laptops, water bottles, and anywhere you want to show your support for bat conservation.
+            </p>
+            <div class="category-price">From $5</div>
+            <div class="category-count">12 items</div>
+            <button class="view-category-btn">View Stickers</button>
+          </div>
+
+          <div class="category-card" onclick="window.location.href='keychains.html'">
+            <span class="category-icon">🔑</span>
+            <h3 class="category-title">Keychains</h3>
+            <p class="category-description">
+              Bat silhouettes, inverted crescents, and symbolic shapes. Durable metal and leather keychains that make a statement while supporting bat conservation efforts.
+            </p>
+            <div class="category-price">From $12</div>
+            <div class="category-count">8 items</div>
+            <button class="view-category-btn">View Keychains</button>
+          </div>
+
+          <div class="category-card" onclick="window.location.href='pins.html'">
+            <span class="category-icon">📌</span>
+            <h3 class="category-title">Enamel Pins</h3>
+            <p class="category-description">
+              Stylized bats, winged crests, and occult references. High-quality enamel pins perfect for jackets, bags, and displaying your alternative aesthetic while supporting bat conservation.
+            </p>
+            <div class="category-price">From $18</div>
+            <div class="category-count">15 items</div>
+            <button class="view-category-btn">View Pins</button>
+          </div>
+
+          <div class="category-card" onclick="window.location.href='tshirts.html'">
+            <span class="category-icon">👕</span>
+            <h3 class="category-title">T-Shirts</h3>
+            <p class="category-description">
+              Distressed or symbolic prints with conservation themes. High-quality cotton t-shirts featuring unique bat designs that make a statement while supporting wildlife rescue operations.
+            </p>
+            <div class="category-price">From $35</div>
+            <div class="category-count">6 items</div>
+            <button class="view-category-btn">View T-Shirts</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Cart functionality
+      let cart = JSON.parse(localStorage.getItem('nightkindCart')) || [];
+      
+      function updateCartCount() {
+        const count = cart.reduce((total, item) => total + item.quantity, 0);
+        document.getElementById('cartCount').textContent = count;
+      }
+      
+      // Initialize page
+      updateCartCount();
+    </script>
+  </body>
+</html> 
