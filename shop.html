@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop - NightKind Collective</title>
+    <meta name="description" content="Alternative merchandise supporting bat conservation" />
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="index-CZEDu5tD.css">
+    <style>
+      .shop-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      
+      .shop-header {
+        text-align: center;
+        padding: 2rem;
+        background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+        margin-bottom: 3rem;
+      }
+      
+      .shop-title {
+        color: #ffd700;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-family: 'Creepster', cursive;
+        text-decoration: underline;
+      }
+      
+      .shop-description {
+        color: #ccc;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+        font-size: 1.1rem;
+      }
+      
+      .back-link {
+        color: #ffd700;
+        text-decoration: none;
+        margin-bottom: 1rem;
+        display: inline-block;
+      }
+      
+      .back-link:hover {
+        text-decoration: underline;
+      }
+      
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+      
+      .category-card {
+        background: #2a2a2a;
+        border: 1px solid #444;
+        border-radius: 12px;
+        padding: 2rem;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+      }
+      
+      .category-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
+        border-color: #ffd700;
+      }
+      
+      .category-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+      }
+      
+      .category-title {
+        color: #ffd700;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Creepster', cursive;
+      }
+      
+      .category-description {
+        color: #ccc;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+      
+      .category-price {
+        color: #ffd700;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+      
+      .category-count {
+        color: #aaa;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .view-category-btn {
+        background: #ffd700;
+        color: #000;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: background 0.2s;
+      }
+      
+      .view-category-btn:hover {
+        background: #ffed4e;
+      }
+      
+      .cart-icon {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #ffd700;
+        color: #000;
+        padding: 0.5rem;
+        border-radius: 50%;
+        cursor: pointer;
+        font-weight: bold;
+        z-index: 1000;
+        font-size: 1.2rem;
+      }
+      
+      .cart-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ff4444;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+      }
+      
+      .featured-section {
+        background: #2a2a2a;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-top: 3rem;
+      }
+      
+      .featured-title {
+        color: #ffd700;
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-family: 'Creepster', cursive;
+        text-decoration: underline;
+      }
+      
+      .featured-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+      }
+      
+      .featured-item {
+        background: #333;
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+        transition: transform 0.2s;
+      }
+      
+      .featured-item:hover {
+        transform: translateY(-5px);
+      }
+      
+      .featured-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      .featured-name {
+        color: #ffd700;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Creepster', cursive;
+      }
+      
+      .featured-price {
+        color: #ccc;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cart-icon" onclick="window.location.href='cart.html'">
+      🛒
+      <div class="cart-count" id="cartCount">0</div>
+    </div>
+    
+    <div class="shop-container">
+      <div class="shop-header">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <h1 class="shop-title">ALT SHOP</h1>
+        <p class="shop-description">
+          Curated alternative merchandise supporting bat conservation. Every purchase directly funds wildlife rescue operations.
+        </p>
+      </div>
+      
+      <div class="categories-grid">
+        <a href="stickers.html" class="category-card">
+          <div class="category-icon">🦇</div>
+          <h2 class="category-title">STICKERS</h2>
+          <p class="category-description">Illustrative bat designs with alt/gothic motifs</p>
+          <div class="category-price">From $5</div>
+          <div class="category-count">12 items</div>
+          <button class="view-category-btn">View Stickers</button>
+        </a>
+        
+        <a href="keychains.html" class="category-card">
+          <div class="category-icon">🔑</div>
+          <h2 class="category-title">KEYCHAINS</h2>
+          <p class="category-description">Bat silhouettes, inverted crescents, symbolic shapes</p>
+          <div class="category-price">From $12</div>
+          <div class="category-count">8 items</div>
+          <button class="view-category-btn">View Keychains</button>
+        </a>
+        
+        <a href="pins.html" class="category-card">
+          <div class="category-icon">📌</div>
+          <h2 class="category-title">ENAMEL PINS</h2>
+          <p class="category-description">Stylized bats, winged crests, occult references</p>
+          <div class="category-price">From $18</div>
+          <div class="category-count">15 items</div>
+          <button class="view-category-btn">View Pins</button>
+        </a>
+        
+        <a href="tshirts.html" class="category-card">
+          <div class="category-icon">👕</div>
+          <h2 class="category-title">T-SHIRTS</h2>
+          <p class="category-description">Distressed or symbolic prints with conservation themes</p>
+          <div class="category-price">From $35</div>
+          <div class="category-count">6 items</div>
+          <button class="view-category-btn">View T-Shirts</button>
+        </a>
+      </div>
+      
+      <div class="featured-section">
+        <h2 class="featured-title">FEATURED PRODUCTS</h2>
+        <div class="featured-grid">
+          <div class="featured-item">
+            <div class="featured-icon">🦇</div>
+            <div class="featured-name">Gothic Bat Sticker</div>
+            <div class="featured-price">$5.00</div>
+          </div>
+          <div class="featured-item">
+            <div class="featured-icon">🔑</div>
+            <div class="featured-name">Bat Silhouette Keychain</div>
+            <div class="featured-price">$12.00</div>
+          </div>
+          <div class="featured-item">
+            <div class="featured-icon">📌</div>
+            <div class="featured-name">Gothic Bat Pin</div>
+            <div class="featured-price">$18.00</div>
+          </div>
+          <div class="featured-item">
+            <div class="featured-icon">👕</div>
+            <div class="featured-name">Gothic Bat T-Shirt</div>
+            <div class="featured-price">$35.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      // Cart functionality
+      let cart = JSON.parse(localStorage.getItem('nightkindCart')) || [];
+      
+      function updateCartCount() {
+        const count = cart.reduce((total, item) => total + item.quantity, 0);
+        document.getElementById('cartCount').textContent = count;
+      }
+      
+      // Initialize page
+      updateCartCount();
+    </script>
+  </body>
+</html> 

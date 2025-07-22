@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enamel Pins - NightKind Collective</title>
+    <meta name="description" content="Stylized bat and occult-themed enamel pins supporting wildlife conservation" />
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="index-CZEDu5tD.css">
+    <style>
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .product-card {
+        background: #2a2a2a;
+        border: 1px solid #444;
+        border-radius: 8px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+      }
+      
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+      }
+      
+      .product-image {
+        width: 150px;
+        height: 150px;
+        background: #333;
+        border-radius: 8px;
+        margin: 0 auto 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+      }
+      
+      .product-title {
+        color: #ffd700;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Creepster', cursive;
+      }
+      
+      .product-description {
+        color: #ccc;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+      }
+      
+      .product-price {
+        color: #ffd700;
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+      
+      .add-to-cart-btn {
+        background: #ffd700;
+        color: #000;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.2s;
+      }
+      
+      .add-to-cart-btn:hover {
+        background: #ffed4e;
+      }
+      
+      .cart-icon {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #ffd700;
+        color: #000;
+        padding: 0.5rem;
+        border-radius: 50%;
+        cursor: pointer;
+        font-weight: bold;
+        z-index: 1000;
+      }
+      
+      .cart-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ff4444;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+      }
+      
+      .category-header {
+        text-align: center;
+        padding: 2rem;
+        background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+      }
+      
+      .category-title {
+        color: #ffd700;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Creepster', cursive;
+        text-decoration: underline;
+      }
+      
+      .category-description {
+        color: #ccc;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+      
+      .back-link {
+        color: #ffd700;
+        text-decoration: none;
+        margin-bottom: 1rem;
+        display: inline-block;
+      }
+      
+      .back-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cart-icon" onclick="window.location.href='cart.html'">
+      🛒
+      <div class="cart-count" id="cartCount">0</div>
+    </div>
+    
+    <div class="category-header">
+      <a href="index.html" class="back-link">← Back to Shop</a>
+      <h1 class="category-title">ENAMEL PINS</h1>
+      <p class="category-description">
+        Stylized bats, winged crests, and occult references. High-quality enamel pins perfect for jackets, bags, and displaying your alternative aesthetic while supporting bat conservation.
+      </p>
+    </div>
+    
+    <div class="product-grid" id="productGrid">
+      <!-- Products will be loaded here -->
+    </div>
+    
+    <script>
+      // Product data for enamel pins
+      const pins = [
+        {
+          id: 'pin-1',
+          name: 'Gothic Bat Pin',
+          description: 'Black enamel bat with gothic details',
+          price: 18.00,
+          image: '🦇'
+        },
+        {
+          id: 'pin-2',
+          name: 'Winged Crest',
+          description: 'Bat wings with family crest design',
+          price: 22.00,
+          image: '🦇'
+        },
+        {
+          id: 'pin-3',
+          name: 'Occult Bat',
+          description: 'Bat with pentagram and moon symbols',
+          price: 20.00,
+          image: '⭐'
+        },
+        {
+          id: 'pin-4',
+          name: 'Vampire Bat',
+          description: 'Detailed vampire bat with red accents',
+          price: 25.00,
+          image: '🦇'
+        },
+        {
+          id: 'pin-5',
+          name: 'Bat Skull Pin',
+          description: 'Stylized bat skull with metallic finish',
+          price: 24.00,
+          image: '💀'
+        },
+        {
+          id: 'pin-6',
+          name: 'Moon Phase Bat',
+          description: 'Bat with moon phase background',
+          price: 21.00,
+          image: '🌙'
+        },
+        {
+          id: 'pin-7',
+          name: 'Conservation Bat',
+          description: 'Bat with "Save the Bats" message',
+          price: 19.00,
+          image: '🦇'
+        },
+        {
+          id: 'pin-8',
+          name: 'Gothic Cross Bat',
+          description: 'Bat with ornate gothic cross',
+          price: 23.00,
+          image: '✝️'
+        },
+        {
+          id: 'pin-9',
+          name: 'Flying Bat Pack',
+          description: 'Set of 3 flying bat designs',
+          price: 35.00,
+          image: '🦇'
+        },
+        {
+          id: 'pin-10',
+          name: 'Bat Wing Anatomy',
+          description: 'Detailed bat wing structure',
+          price: 20.00,
+          image: '🦇'
+        },
+        {
+          id: 'pin-11',
+          name: 'Echo Location',
+          description: 'Bat with sound wave patterns',
+          price: 18.00,
+          image: '📡'
+        },
+        {
+          id: 'pin-12',
+          name: 'Cave Dweller',
+          description: 'Bat in cave setting with crystals',
+          price: 22.00,
+          image: '🕳️'
+        },
+        {
+          id: 'pin-13',
+          name: 'Bat Family',
+          description: 'Mother and baby bat design',
+          price: 26.00,
+          image: '🦇'
+        },
+        {
+          id: 'pin-14',
+          name: 'Gothic Rose Bat',
+          description: 'Bat with gothic rose elements',
+          price: 24.00,
+          image: '🌹'
+        },
+        {
+          id: 'pin-15',
+          name: 'Night Hunter',
+          description: 'Bat in hunting pose with stars',
+          price: 21.00,
+          image: '⭐'
+        }
+      ];
+      
+      // Cart functionality
+      let cart = JSON.parse(localStorage.getItem('nightkindCart')) || [];
+      
+      function updateCartCount() {
+        const count = cart.reduce((total, item) => total + item.quantity, 0);
+        document.getElementById('cartCount').textContent = count;
+      }
+      
+      function addToCart(product) {
+        const existingItem = cart.find(item => item.id === product.id);
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cart.push({ ...product, quantity: 1 });
+        }
+        localStorage.setItem('nightkindCart', JSON.stringify(cart));
+        updateCartCount();
+        
+        // Show feedback
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = 'Added!';
+        btn.style.background = '#4CAF50';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '#ffd700';
+        }, 1000);
+      }
+      
+      function renderProducts() {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = pins.map(product => `
+          <div class="product-card">
+            <div class="product-image">${product.image}</div>
+            <h3 class="product-title">${product.name}</h3>
+            <p class="product-description">${product.description}</p>
+            <div class="product-price">$${product.price.toFixed(2)}</div>
+            <button class="add-to-cart-btn" onclick="addToCart(${JSON.stringify(product)})">
+              Add to Cart
+            </button>
+          </div>
+        `).join('');
+      }
+      
+      // Initialize page
+      updateCartCount();
+      renderProducts();
+    </script>
+  </body>
+</html> 
