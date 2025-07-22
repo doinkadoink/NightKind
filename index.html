@@ -24,6 +24,63 @@
 
   <body>
     <div id="root"></div>
+    
+    <script>
+      // Wait for the React app to load and render the content
+      function waitForShopCards() {
+        // Look for the shop section with category cards
+        const shopSection = document.querySelector('.grid.md\\:grid-cols-2.lg\\:grid-cols-4');
+        
+        if (shopSection) {
+          // Find all category cards within the grid
+          const categoryCards = shopSection.querySelectorAll('.gothic-card');
+          
+          // Add click handlers to each card
+          categoryCards.forEach((card, index) => {
+            card.style.cursor = 'pointer';
+            
+            // Define the category pages in order
+            const categoryPages = [
+              'stickers.html',
+              'keychains.html', 
+              'pins.html',
+              'tshirts.html'
+            ];
+            
+            // Add click handler
+            card.addEventListener('click', () => {
+              if (categoryPages[index]) {
+                window.location.href = categoryPages[index];
+              }
+            });
+            
+            // Add hover effect to show it's clickable
+            card.addEventListener('mouseenter', () => {
+              card.style.transform = 'scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+              card.style.transform = 'scale(1)';
+            });
+          });
+          
+          console.log(`Found ${categoryCards.length} category cards and made them clickable`);
+        } else {
+          // If not found yet, try again in a moment
+          setTimeout(waitForShopCards, 100);
+        }
+      }
+      
+      // Start checking for the shop cards once the page loads
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', waitForShopCards);
+      } else {
+        waitForShopCards();
+      }
+      
+      // Also check after a delay to ensure React has rendered
+      setTimeout(waitForShopCards, 1000);
+    </script>
   </body>
 </html>
 
