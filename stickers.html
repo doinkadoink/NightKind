@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stickers - NightKind Collective</title>
     <meta name="description" content="Alternative bat-themed stickers supporting wildlife conservation" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="bat vector tracing1.svg">
+    <link rel="icon" type="image/png" href="bat vector tracing1.svg">
+    
     <link rel="stylesheet" href="fonts.css">
     <link rel="stylesheet" href="index-CZEDu5tD.css">
     <style>
@@ -48,6 +53,25 @@
         margin: 0 auto;
         line-height: 1.6;
         font-size: 1.1rem;
+      }
+
+      .logo-container {
+        margin: 2rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .site-logo {
+        width: 120px;
+        height: auto;
+        filter: drop-shadow(0 0 15px hsla(60, 100%, 65%, 0.6));
+        transition: all 0.3s ease;
+      }
+
+      .site-logo:hover {
+        filter: drop-shadow(0 0 25px hsla(60, 100%, 65%, 0.8));
+        transform: scale(1.05);
       }
       
       .back-link {
@@ -212,6 +236,9 @@
     <div class="shop-container">
       <div class="shop-header">
         <a href="shop-categories.html" class="back-link">← Back to Shop</a>
+        <div class="logo-container">
+          <img src="bat vector tracing1.svg" alt="NightKind Collective Logo" class="site-logo">
+        </div>
         <h1 class="shop-title">STICKERS</h1>
         <p class="shop-description">
           Illustrative bat designs with alt/gothic motifs. High-quality vinyl stickers perfect for laptops, water bottles, and anywhere you want to show your support for bat conservation.

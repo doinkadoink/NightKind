@@ -16,6 +16,10 @@
     <meta name="twitter:site" content="@nightkindcollective" />
     <meta name="twitter:image" content="preview.png" />
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="bat vector tracing1.svg">
+    <link rel="icon" type="image/png" href="bat vector tracing1.svg">
+    
     <!-- Gothic/Alternative Fonts -->
     <link rel="stylesheet" href="fonts.css">
     <script type="module" crossorigin src="index-B11PqZaG.js"></script>
@@ -80,6 +84,156 @@
       
       // Also check after a delay to ensure React has rendered
       setTimeout(waitForShopCards, 1000);
+
+      // Add logo to the main page
+      function addLogoToMainPage() {
+        console.log('Attempting to add logo...');
+        
+        // Try multiple selectors to find the right place
+        const selectors = [
+          'header', '.header', '[class*="header"]',
+          'main', '.main', '[class*="main"]',
+          '.hero', '[class*="hero"]',
+          '.container', '[class*="container"]',
+          '.content', '[class*="content"]',
+          '.app', '[class*="app"]',
+          '#root > div:first-child',
+          '#root > *:first-child'
+        ];
+        
+        let targetElement = null;
+        
+        for (let selector of selectors) {
+          const element = document.querySelector(selector);
+          if (element) {
+            console.log('Found target element:', selector);
+            targetElement = element;
+            break;
+          }
+        }
+        
+        // If still no target, try the root div
+        if (!targetElement) {
+          targetElement = document.getElementById('root');
+          console.log('Using root element as target');
+        }
+        
+        if (targetElement) {
+          // Check if logo already exists
+          if (document.querySelector('.nightkind-logo')) {
+            console.log('Logo already exists, skipping...');
+            return;
+          }
+          
+          // Create logo container
+          const logoContainer = document.createElement('div');
+          logoContainer.className = 'nightkind-logo';
+          logoContainer.style.cssText = `
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem auto;
+            padding: 1rem;
+            position: relative;
+            z-index: 1000;
+            width: 100%;
+            max-width: 200px;
+          `;
+          
+          // Create logo image
+          const logo = document.createElement('img');
+          logo.src = 'bat vector tracing1.svg';
+          logo.alt = 'NightKind Collective Logo';
+          logo.style.cssText = `
+            width: 150px;
+            height: auto;
+            filter: drop-shadow(0 0 20px hsla(60, 100%, 65%, 0.6));
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: block;
+          `;
+          
+          // Add hover effects
+          logo.addEventListener('mouseenter', () => {
+            logo.style.filter = 'drop-shadow(0 0 25px hsla(60, 100%, 65%, 0.8))';
+            logo.style.transform = 'scale(1.05)';
+          });
+          
+          logo.addEventListener('mouseleave', () => {
+            logo.style.filter = 'drop-shadow(0 0 20px hsla(60, 100%, 65%, 0.6))';
+            logo.style.transform = 'scale(1)';
+          });
+          
+          // Add click to go to shop
+          logo.addEventListener('click', () => {
+            window.location.href = 'shop-categories.html';
+          });
+          
+          logoContainer.appendChild(logo);
+          
+          // Try to insert at the very beginning of the target
+          if (targetElement.firstChild) {
+            targetElement.insertBefore(logoContainer, targetElement.firstChild);
+          } else {
+            targetElement.appendChild(logoContainer);
+          }
+          
+          console.log('Logo successfully added to main page!');
+        } else {
+          console.log('No target element found, retrying...');
+          // If no good target found, try again in a moment
+          setTimeout(addLogoToMainPage, 1000);
+        }
+      }
+      
+      // Start trying to add the logo once the page loads
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', addLogoToMainPage);
+      } else {
+        addLogoToMainPage();
+      }
+      
+      // Try multiple times to ensure it loads after React renders
+      setTimeout(addLogoToMainPage, 1000);
+      setTimeout(addLogoToMainPage, 2000);
+      setTimeout(addLogoToMainPage, 3000);
+      setTimeout(addLogoToMainPage, 5000);
+      
+      // Also try when the window loads completely
+      window.addEventListener('load', addLogoToMainPage);
+
+      // Add click handler for "Support Bats QLD" button
+      function addBatsQLDButtonHandler() {
+        const buttons = document.querySelectorAll('button, a, [class*="button"], [class*="btn"]');
+        
+        buttons.forEach(button => {
+          const text = button.textContent || button.innerText || '';
+          if (text.toLowerCase().includes('support bats qld') || 
+              text.toLowerCase().includes('support bats') ||
+              text.toLowerCase().includes('bats qld')) {
+            
+            console.log('Found Bats QLD button:', text);
+            
+            button.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              window.open('https://bats.org.au/get-involved/donate/', '_blank');
+            });
+            
+            // Also make it look clickable
+            button.style.cursor = 'pointer';
+          }
+        });
+      }
+      
+      // Try to add the button handler multiple times
+      setTimeout(addBatsQLDButtonHandler, 1000);
+      setTimeout(addBatsQLDButtonHandler, 2000);
+      setTimeout(addBatsQLDButtonHandler, 3000);
+      setTimeout(addBatsQLDButtonHandler, 5000);
+      
+      // Also try when the window loads completely
+      window.addEventListener('load', addBatsQLDButtonHandler);
     </script>
   </body>
 </html>
