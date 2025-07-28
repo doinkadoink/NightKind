@@ -83,6 +83,43 @@
           transform: translateY(-10px) rotate(2deg);
         }
       }
+
+      /* Bat Logo Header */
+      .logo-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .logo-container {
+        display: inline-block;
+        position: relative;
+        z-index: 10;
+      }
+
+      .logo-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, hsla(270, 100%, 70%, 0.3) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: glowPulse 3s ease-in-out infinite;
+        z-index: 1;
+      }
+
+      @keyframes glowPulse {
+        0%, 100% {
+          opacity: 0.3;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          opacity: 0.6;
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+      }
       
       .back-link {
         color: #ffd700;
@@ -264,11 +301,16 @@
     </div>
     
     <div class="shop-container">
-      <div class="shop-header">
-        <a href="shop-categories.html" class="back-link">← Back to Shop</a>
+      <!-- Bat Logo Header -->
+      <div class="logo-header">
         <div class="logo-container">
           <img src="bat vector tracing1.svg" alt="NightKind Collective Logo" class="site-logo">
         </div>
+        <div class="logo-glow"></div>
+      </div>
+
+      <div class="shop-header">
+        <a href="shop-categories.html" class="back-link">← Back to Shop</a>
         <h1 class="shop-title">T-SHIRTS</h1>
         <p class="shop-description">
           Distressed or symbolic prints with conservation themes. High-quality cotton t-shirts featuring unique bat designs that make a statement while supporting wildlife rescue operations.
