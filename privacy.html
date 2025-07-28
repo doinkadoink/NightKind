@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - NightKind Collective</title>
+    <meta name="description" content="Privacy Policy for NightKind Collective - How we protect your information">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="bat vector tracing1.svg">
+    <link rel="icon" type="image/png" href="bat vector tracing1.svg">
+    
+    <!-- Gothic/Alternative Fonts -->
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="index-CZEDu5tD.css">
+    
+    <style>
+      /* Using the same CSS variables and styling as your React app */
+      :root {
+        --background: 0 0% 8%;
+        --foreground: 60 100% 85%;
+        --card: 0 0% 12%;
+        --card-foreground: 60 100% 85%;
+        --primary: 270 45% 25%;
+        --secondary: 60 100% 65%;
+        --muted: 0 0% 18%;
+        --muted-foreground: 0 0% 65%;
+        --accent: 270 35% 35%;
+        --border: 0 0% 25%;
+        --shadow-gothic: 0 10px 40px -15px hsla(270, 45%, 15%, .8);
+        --shadow-glow: 0 0 30px hsla(60, 100%, 65%, .3);
+        --gradient-primary: linear-gradient(135deg, hsl(270, 45%, 25%), hsl(270, 35%, 35%));
+        --gradient-accent: linear-gradient(90deg, hsl(60, 100%, 65%), hsl(50, 100%, 70%));
+        --gradient-dark: linear-gradient(180deg, hsl(0, 0%, 8%), hsl(0, 0%, 12%));
+      }
+
+      body {
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+
+      .privacy-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .privacy-header {
+        text-align: center;
+        padding: 3rem 2rem;
+        margin-bottom: 4rem;
+      }
+
+      .logo-container {
+        margin: 2rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .site-logo {
+        width: 120px;
+        height: auto;
+        filter: drop-shadow(0 0 15px hsla(60, 100%, 65%, 0.6));
+        transition: all 0.3s ease;
+      }
+
+      .site-logo:hover {
+        filter: drop-shadow(0 0 25px hsla(60, 100%, 65%, 0.8));
+        transform: scale(1.05);
+      }
+
+      .back-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        margin-bottom: 2rem;
+        display: inline-block;
+        font-size: 1.1rem;
+        transition: color 0.3s;
+      }
+
+      .back-link:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
+      }
+
+      .privacy-title {
+        color: hsl(var(--secondary));
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6), 0 0 40px hsla(60, 100%, 65%, 0.3);
+        animation: titleGlow 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes titleGlow {
+        0% {
+          text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6), 0 0 40px hsla(60, 100%, 65%, 0.3);
+        }
+        100% {
+          text-shadow: 0 0 25px hsla(60, 100%, 65%, 0.8), 0 0 50px hsla(60, 100%, 65%, 0.4);
+        }
+      }
+
+      .section-title {
+        color: hsl(var(--secondary));
+        font-size: 2rem;
+        text-align: left;
+        margin-bottom: 2rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        text-shadow: 0 0 15px hsla(60, 100%, 65%, 0.5);
+        animation: sectionGlow 4s ease-in-out infinite alternate;
+      }
+
+      @keyframes sectionGlow {
+        0% {
+          text-shadow: 0 0 15px hsla(60, 100%, 65%, 0.5);
+        }
+        100% {
+          text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.7);
+        }
+      }
+
+      .policy-card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-gothic);
+      }
+
+      .policy-text {
+        color: hsl(var(--card-foreground));
+        line-height: 1.7;
+        margin-bottom: 1rem;
+      }
+
+      .policy-list {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+      }
+
+      .policy-list li {
+        color: hsl(var(--card-foreground));
+        margin-bottom: 0.75rem;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+
+      .policy-list li::before {
+        content: '•';
+        color: hsl(var(--secondary));
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+      }
+
+      .footer {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        border-top: 1px solid hsl(var(--border));
+        margin-top: 4rem;
+        padding: 3rem 0 1rem;
+        position: relative;
+      }
+
+      .footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, hsl(var(--secondary)), transparent);
+        box-shadow: 0 0 10px hsl(var(--secondary));
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        text-align: center;
+      }
+
+      .footer-text {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        .privacy-title {
+          font-size: 2.5rem;
+          letter-spacing: 0.2em;
+        }
+        
+        .section-title {
+          font-size: 1.5rem;
+          letter-spacing: 0.1em;
+        }
+        
+        .policy-card {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="privacy-container">
+        <div class="privacy-header">
+            <a href="index.html" class="back-link">← Back to NightKind Collective</a>
+            <div class="logo-container">
+                <img src="bat vector tracing1.svg" alt="NightKind Collective Logo" class="site-logo">
+            </div>
+            <h1 class="privacy-title">PRIVACY POLICY</h1>
+            <p class="policy-text">
+                Last updated: July 2025
+            </p>
+        </div>
+
+        <!-- Introduction -->
+        <article class="policy-card">
+            <p class="policy-text">
+                Nightkind.org ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit or make a purchase from our website.
+            </p>
+        </article>
+
+        <!-- Policy Sections -->
+        <div>
+            <!-- Information Collection -->
+            <section>
+                <h2 class="section-title">1. What Information We Collect</h2>
+                <article class="policy-card">
+                    <p class="policy-text">We may collect the following types of personal information:</p>
+                    <ul class="policy-list">
+                        <li><strong>Contact Information:</strong> such as your name, email address, phone number, and shipping address.</li>
+                        <li><strong>Account Information:</strong> if you create an account, we store your login credentials (securely hashed).</li>
+                        <li><strong>Order Details:</strong> including purchase history, billing, and shipping data.</li>
+                        <li><strong>Technical Data:</strong> such as IP address, browser type, and pages visited (via cookies or analytics tools, if used).</li>
+                    </ul>
+                </article>
+            </section>
+
+            <!-- Information Usage -->
+            <section>
+                <h2 class="section-title">2. How We Use Your Information</h2>
+                <article class="policy-card">
+                    <p class="policy-text">We only use your information for purposes that are clearly communicated, including:</p>
+                    <ul class="policy-list">
+                        <li>Fulfilling and confirming product orders</li>
+                        <li>Providing customer support</li>
+                        <li>Sending optional marketing emails (only if you've opted in)</li>
+                        <li>Creating and managing user accounts (if applicable)</li>
+                        <li>Improving website functionality and user experience</li>
+                    </ul>
+                </article>
+            </section>
+
+            <!-- Information Sharing -->
+            <section>
+                <h2 class="section-title">3. Sharing Your Information</h2>
+                <article class="policy-card">
+                    <p class="policy-text">We do not sell, rent, or trade your personal information. Your data may be shared only with trusted third-party services as required for:</p>
+                    <ul class="policy-list">
+                        <li>Payment processing</li>
+                        <li>Order fulfillment and shipping</li>
+                        <li>Website hosting and analytics</li>
+                    </ul>
+                    <p class="policy-text">These third parties are contractually obligated to handle your data securely and only for the services they provide.</p>
+                </article>
+            </section>
+
+            <!-- Rights and Choices -->
+            <section>
+                <h2 class="section-title">4. Your Rights and Choices</h2>
+                <article class="policy-card">
+                    <p class="policy-text">You may:</p>
+                    <ul class="policy-list">
+                        <li>Access or update your account information</li>
+                        <li>Unsubscribe from marketing emails at any time</li>
+                        <li>Request deletion of your personal data by contacting us</li>
+                    </ul>
+                </article>
+            </section>
+
+            <!-- Data Security -->
+            <section>
+                <h2 class="section-title">5. Data Security</h2>
+                <article class="policy-card">
+                    <p class="policy-text">We implement appropriate technical and organizational measures to protect your information from unauthorized access, alteration, disclosure, or destruction.</p>
+                </article>
+            </section>
+
+            <!-- Cookies and Tracking -->
+            <section>
+                <h2 class="section-title">6. Cookies and Tracking</h2>
+                <article class="policy-card">
+                    <p class="policy-text">We use cookies to enhance your experience and analyze site traffic. You can manage your cookie preferences through your browser settings.</p>
+                </article>
+            </section>
+
+            <!-- Children's Privacy -->
+            <section>
+                <h2 class="section-title">7. Children's Privacy</h2>
+                <article class="policy-card">
+                    <p class="policy-text">Nightkind.org is not intended for individuals under the age of 13. We do not knowingly collect personal information from children.</p>
+                </article>
+            </section>
+
+            <!-- Contact Information -->
+            <section>
+                <h2 class="section-title">8. Contact Us</h2>
+                <article class="policy-card">
+                    <p class="policy-text">If you have questions about this Privacy Policy or your data, please contact:</p>
+                    <div class="policy-text">
+                        <p><strong>Rachel Frappell</strong></p>
+                        <p>Email: <a href="mailto:info@nightkind.org" class="text-nightkind-accent hover:text-white transition-colors duration-300">info@nightkind.org</a></p>
+                        <p>ABN: [insert ABN if applicable]</p>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Policy Changes -->
+            <section>
+                <h2 class="section-title">9. Changes to This Policy</h2>
+                <article class="policy-card">
+                    <p class="policy-text">We may update this policy from time to time. Any changes will be posted on this page with a revised "Last updated" date.</p>
+                </article>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">
+                &copy; 2025 NightKind Collective. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+</html> 
