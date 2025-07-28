@@ -24,6 +24,18 @@
     <link rel="stylesheet" href="fonts.css">
     <script type="module" crossorigin src="index-B11PqZaG.js"></script>
     <link rel="stylesheet" crossorigin href="index-CZEDu5tD.css">
+    
+    <style>
+      /* Logo Animation Styles */
+      @keyframes logoFloat {
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(2deg);
+        }
+      }
+    </style>
   </head>
 
   <body>
@@ -177,21 +189,22 @@
           logo.style.cssText = `
             width: 150px;
             height: auto;
-            filter: drop-shadow(0 0 20px hsla(60, 100%, 65%, 0.6));
-            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 20px hsla(270, 100%, 70%, 0.8));
+            transition: all 0.4s ease;
             cursor: pointer;
             display: block;
+            animation: logoFloat 4s ease-in-out infinite;
           `;
           
           // Add hover effects
           logo.addEventListener('mouseenter', () => {
-            logo.style.filter = 'drop-shadow(0 0 25px hsla(60, 100%, 65%, 0.8))';
-            logo.style.transform = 'scale(1.05)';
+            logo.style.filter = 'drop-shadow(0 0 30px hsla(270, 100%, 70%, 1))';
+            logo.style.transform = 'scale(1.1) rotate(5deg)';
           });
           
           logo.addEventListener('mouseleave', () => {
-            logo.style.filter = 'drop-shadow(0 0 20px hsla(60, 100%, 65%, 0.6))';
-            logo.style.transform = 'scale(1)';
+            logo.style.filter = 'drop-shadow(0 0 20px hsla(270, 100%, 70%, 0.8))';
+            logo.style.transform = 'scale(1) rotate(0deg)';
           });
           
           // Add click to go to shop
