@@ -297,6 +297,38 @@
         });
       }
       
+      // Also redirect any shop-related buttons or links that might exist
+      function redirectShopElements() {
+        // Look for any shop-related elements and redirect them
+        const shopElements = document.querySelectorAll('a, button, [class*="shop"], [class*="store"]');
+        
+        shopElements.forEach(element => {
+          const text = (element.textContent || element.innerText || '').toLowerCase();
+          const href = element.getAttribute('href') || '';
+          
+          // If it looks like a shop link but doesn't already point to our shop page
+          if ((text.includes('shop') || text.includes('store') || text.includes('buy') || text.includes('merch')) && 
+              !href.includes('shop-categories.html') && 
+              !element.hasAttribute('data-shop-redirected')) {
+            
+            console.log('Redirecting shop element:', text);
+            
+            // Mark as redirected to prevent duplicate handling
+            element.setAttribute('data-shop-redirected', 'true');
+            
+            // Add click handler to redirect to our shop page
+            element.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              window.location.href = 'shop-categories.html';
+            });
+            
+            // Make it look clickable
+            element.style.cursor = 'pointer';
+          }
+        });
+      }
+      
       // Try to fix navigation links multiple times
       setTimeout(fixNavigationLinks, 1000);
       setTimeout(fixNavigationLinks, 2000);
@@ -305,6 +337,15 @@
       
       // Also try when the window loads completely
       window.addEventListener('load', fixNavigationLinks);
+      
+      // Try to redirect shop elements multiple times
+      setTimeout(redirectShopElements, 1000);
+      setTimeout(redirectShopElements, 2000);
+      setTimeout(redirectShopElements, 3000);
+      setTimeout(redirectShopElements, 5000);
+      
+      // Also try when the window loads completely
+      window.addEventListener('load', redirectShopElements);
     </script>
   </body>
 </html>
