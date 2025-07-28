@@ -196,6 +196,34 @@
         font-size: 0.9rem;
       }
 
+      .nav-links {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .nav-link {
+        display: inline-block;
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        padding: 0.75rem 1rem;
+        border: 1px solid hsl(var(--border));
+        border-radius: 8px;
+        background: hsl(var(--card));
+        transition: all 0.3s ease;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      .nav-link:hover {
+        color: hsl(var(--foreground));
+        background: hsl(var(--muted));
+        border-color: hsl(var(--secondary));
+        box-shadow: 0 0 15px hsla(60, 100%, 65%, 0.3);
+        transform: translateY(-2px);
+      }
+
       @media (max-width: 768px) {
         .privacy-title {
           font-size: 2.5rem;
@@ -209,6 +237,16 @@
         
         .policy-card {
           padding: 1.5rem;
+        }
+
+        .nav-links {
+          grid-template-columns: 1fr;
+          gap: 0.75rem;
+        }
+
+        .nav-link {
+          padding: 0.5rem 0.75rem;
+          font-size: 0.9rem;
         }
       }
     </style>
@@ -225,6 +263,23 @@
                 Last updated: July 2025
             </p>
         </div>
+
+        <!-- Navigation Links -->
+        <section class="navigation-section">
+            <h2 class="section-title">About NightKind Collective</h2>
+            <article class="policy-card">
+                <p class="policy-text">Explore our site and learn more about our mission:</p>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">🏠 Home</a>
+                    <a href="shop-categories.html" class="nav-link">🛍️ Shop Categories</a>
+                    <a href="stickers.html" class="nav-link">🏷️ Stickers</a>
+                    <a href="keychains.html" class="nav-link">🔑 Keychains</a>
+                    <a href="pins.html" class="nav-link">📌 Enamel Pins</a>
+                    <a href="tshirts.html" class="nav-link">👕 T-Shirts</a>
+                    <a href="cart.html" class="nav-link">🛒 Shopping Cart</a>
+                </div>
+            </article>
+        </section>
 
         <!-- Introduction -->
         <article class="policy-card">

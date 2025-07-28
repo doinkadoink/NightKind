@@ -30,6 +30,36 @@
     <div id="root"></div>
     
     <script>
+      // Handle 404 errors when opening locally
+      window.addEventListener('error', function(e) {
+        if (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK') {
+          console.warn('Resource failed to load:', e.target.src || e.target.href);
+        }
+      });
+
+      // Fallback for local development
+      if (window.location.protocol === 'file:') {
+        console.log('Running locally - some features may be limited');
+        // Add a banner to inform users
+        const banner = document.createElement('div');
+        banner.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+          color: white;
+          padding: 10px;
+          text-align: center;
+          font-family: 'Courier Prime', monospace;
+          font-size: 14px;
+          z-index: 10000;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        `;
+        banner.innerHTML = '⚠️ Running locally - Use <strong>start-server.bat</strong> for full functionality';
+        document.body.appendChild(banner);
+      }
+
       // Wait for the React app to load and render the content
       function waitForShopCards() {
         // Look for the shop section with category cards
@@ -212,7 +242,15 @@
               text.toLowerCase().includes('support bats') ||
               text.toLowerCase().includes('bats qld')) {
             
+            // Check if this button already has our handler
+            if (button.hasAttribute('data-bats-qld-handler')) {
+              return; // Skip if already handled
+            }
+            
             console.log('Found Bats QLD button:', text);
+            
+            // Mark this button as handled
+            button.setAttribute('data-bats-qld-handler', 'true');
             
             button.addEventListener('click', (e) => {
               e.preventDefault();
@@ -234,6 +272,39 @@
       
       // Also try when the window loads completely
       window.addEventListener('load', addBatsQLDButtonHandler);
+
+      // Fix navigation links in the React app
+      function fixNavigationLinks() {
+        // Find all navigation links and fix them
+        const links = document.querySelectorAll('a[href="/shop"], a[href="/about"], a[href="/contact"]');
+        
+        links.forEach(link => {
+          const href = link.getAttribute('href');
+          
+          if (href === '/shop') {
+            link.href = 'shop-categories.html';
+          } else if (href === '/about') {
+            link.href = 'about.html';
+          } else if (href === '/contact') {
+            link.href = 'contact.html';
+          }
+          
+          // Add click handler to prevent React routing
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = link.href;
+          });
+        });
+      }
+      
+      // Try to fix navigation links multiple times
+      setTimeout(fixNavigationLinks, 1000);
+      setTimeout(fixNavigationLinks, 2000);
+      setTimeout(fixNavigationLinks, 3000);
+      setTimeout(fixNavigationLinks, 5000);
+      
+      // Also try when the window loads completely
+      window.addEventListener('load', fixNavigationLinks);
     </script>
   </body>
 </html>

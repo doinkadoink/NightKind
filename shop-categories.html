@@ -79,11 +79,19 @@
         display: inline-block;
         font-size: 1.1rem;
         transition: color 0.3s;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        position: relative;
+        z-index: 10;
       }
 
       .back-link:hover {
         color: hsl(var(--foreground));
         text-decoration: underline;
+        border-color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.1);
       }
 
       .shop-title {
@@ -321,7 +329,7 @@
 
     <div class="shop-container">
       <div class="shop-header">
-        <a href="index.html" class="back-link">← Back to Home</a>
+        <a href="index.html" class="back-link" onclick="console.log('Back link clicked'); return true;">← Back to Home</a>
         <h1 class="shop-title">Alt Shop</h1>
         <p class="shop-description">
           Curated alternative merchandise supporting bat conservation. Every purchase directly funds wildlife rescue operations.
@@ -401,7 +409,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p class="footer-copyright">© 2024 NightKind Collective. All rights reserved.</p>
+        <p class="footer-copyright">© 2024 NightKind Collective. All rights reserved. | <a href="privacy.html" class="footer-link">Privacy Policy</a></p>
       </div>
     </footer>
 
@@ -477,6 +485,17 @@
         color: hsl(var(--muted-foreground));
         font-size: 0.9rem;
         font-family: 'Courier Prime', monospace;
+      }
+
+      .footer-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-link:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
       }
 
       @media (max-width: 768px) {

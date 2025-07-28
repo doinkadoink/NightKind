@@ -1,10 +1,53 @@
 @echo off
-echo Starting local server for NightKind Collective website...
+echo Starting NightKind Collective Local Server...
+echo.
+echo This will start a local server to properly run your React app.
+echo The server will handle routing and prevent 404 errors.
 echo.
 echo Server will be available at: http://localhost:8000
 echo Press Ctrl+C to stop the server
 echo.
 
-powershell -Command "& { $Hso = New-Object Net.HttpListener; $Hso.Prefixes.Add('http://localhost:8000/'); $Hso.Start(); Write-Host 'Server running at http://localhost:8000/'; Write-Host 'Press Ctrl+C to stop'; while ($Hso.IsListening) { $HC = $Hso.GetContext(); $HRes = $HC.Response; $path = $HC.Request.Url.LocalPath; if ($path -eq '/') { $path = '/index.html' }; $filePath = (Get-Location).Path + $path; if (Test-Path $filePath) { $ext = [System.IO.Path]::GetExtension($filePath); switch ($ext) { '.html' { $contentType = 'text/html' } '.css' { $contentType = 'text/css' } '.js' { $contentType = 'application/javascript' } '.png' { $contentType = 'image/png' } '.jpg' { $contentType = 'image/jpeg' } '.jpeg' { $contentType = 'image/jpeg' } '.gif' { $contentType = 'image/gif' } '.svg' { $contentType = 'image/svg+xml' } default { $contentType = 'text/plain' } }; $HRes.Headers.Add('Content-Type', $contentType); $Buf = [System.IO.File]::ReadAllBytes($filePath); $HRes.ContentLength64 = $Buf.Length; $HRes.OutputStream.Write($Buf,0,$Buf.Length) } else { $HRes.StatusCode = 404 }; $HRes.Close() } }"
+REM Check if Python is available
+python --version >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Using Python server...
+    python -m http.server 8000
+    goto :end
+)
 
-pause 
+REM Check if Python3 is available
+python3 --version >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Using Python3 server...
+    python3 -m http.server 8000
+    goto :end
+)
+
+REM Check if Node.js is available
+node --version >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Using Node.js server...
+    npx http-server -p 8000 -o
+    goto :end
+)
+
+REM Check if PHP is available
+php --version >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Using PHP server...
+    php -S localhost:8000
+    goto :end
+)
+
+echo No suitable server found!
+echo Please install one of the following:
+echo - Python (https://python.org)
+echo - Node.js (https://nodejs.org)
+echo - PHP (https://php.net)
+echo.
+echo Or simply open index.html in your browser
+echo (Note: Some features may not work without a server)
+pause
+
+:end 

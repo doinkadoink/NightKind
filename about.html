@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - NightKind Collective</title>
+    <meta name="description" content="Learn about NightKind Collective's mission to support bat conservation through alternative fashion" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="bat vector tracing1.svg">
+    <link rel="icon" type="image/png" href="bat vector tracing1.svg">
+    
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="index-CZEDu5tD.css">
+    <style>
+      /* Using the same CSS variables and styling as your React app */
+      :root {
+        --background: 0 0% 8%;
+        --foreground: 60 100% 85%;
+        --card: 0 0% 12%;
+        --card-foreground: 60 100% 85%;
+        --primary: 270 45% 25%;
+        --secondary: 60 100% 65%;
+        --muted: 0 0% 18%;
+        --muted-foreground: 0 0% 65%;
+        --accent: 270 35% 35%;
+        --border: 0 0% 25%;
+        --shadow-gothic: 0 10px 40px -15px hsla(270, 45%, 15%, .8);
+        --shadow-glow: 0 0 30px hsla(60, 100%, 65%, .3);
+        --gradient-primary: linear-gradient(135deg, hsl(270, 45%, 25%), hsl(270, 35%, 35%));
+        --gradient-accent: linear-gradient(90deg, hsl(60, 100%, 65%), hsl(50, 100%, 70%));
+        --gradient-dark: linear-gradient(180deg, hsl(0, 0%, 8%), hsl(0, 0%, 12%));
+      }
+
+      body {
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+
+      .about-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .about-header {
+        text-align: center;
+        padding: 3rem 2rem;
+        margin-bottom: 4rem;
+      }
+
+      .logo-container {
+        margin: 2rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .site-logo {
+        width: 120px;
+        height: auto;
+        filter: drop-shadow(0 0 15px hsla(60, 100%, 65%, 0.6));
+        transition: all 0.3s ease;
+      }
+
+      .site-logo:hover {
+        filter: drop-shadow(0 0 25px hsla(60, 100%, 65%, 0.8));
+        transform: scale(1.05);
+      }
+
+      .back-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        margin-bottom: 2rem;
+        display: inline-block;
+        font-size: 1.1rem;
+        transition: color 0.3s;
+      }
+
+      .back-link:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
+      }
+
+      .about-title {
+        color: hsl(var(--secondary));
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6), 0 0 40px hsla(60, 100%, 65%, 0.3);
+        animation: titleGlow 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes titleGlow {
+        0% {
+          text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6), 0 0 40px hsla(60, 100%, 65%, 0.3);
+        }
+        100% {
+          text-shadow: 0 0 25px hsla(60, 100%, 65%, 0.8), 0 0 50px hsla(60, 100%, 65%, 0.4);
+        }
+      }
+
+      .section-title {
+        color: hsl(var(--secondary));
+        font-size: 2rem;
+        text-align: left;
+        margin-bottom: 2rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        text-shadow: 0 0 15px hsla(60, 100%, 65%, 0.5);
+        animation: sectionGlow 4s ease-in-out infinite alternate;
+      }
+
+      @keyframes sectionGlow {
+        0% {
+          text-shadow: 0 0 15px hsla(60, 100%, 65%, 0.5);
+        }
+        100% {
+          text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.7);
+        }
+      }
+
+      .about-card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-gothic);
+      }
+
+      .about-text {
+        color: hsl(var(--card-foreground));
+        line-height: 1.7;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .mission-highlight {
+        background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+        border: 1px solid hsl(var(--secondary));
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem 0;
+        text-align: center;
+        box-shadow: 0 0 20px hsla(60, 100%, 65%, 0.2);
+      }
+
+      .mission-text {
+        color: hsl(var(--foreground));
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin: 0;
+      }
+
+      .footer {
+        background: linear-gradient(180deg, hsl(var(--background)), hsl(var(--card)));
+        border-top: 1px solid hsl(var(--border));
+        margin-top: 6rem;
+        padding: 3rem 0 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, hsl(var(--secondary)), transparent);
+        box-shadow: 0 0 10px hsl(var(--secondary));
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section {
+        text-align: center;
+      }
+
+      .footer-title {
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-shadow: 0 0 10px hsla(60, 100%, 65%, 0.5);
+      }
+
+      .footer-subtitle {
+        color: hsl(var(--secondary));
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .footer-description,
+      .footer-text {
+        color: hsl(var(--muted-foreground));
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid hsl(var(--border));
+        margin: 0 2rem;
+      }
+
+      .footer-copyright {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.9rem;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .footer-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-link:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .about-title {
+          font-size: 2.5rem;
+          letter-spacing: 0.2em;
+        }
+        
+        .section-title {
+          font-size: 1.5rem;
+          letter-spacing: 0.1em;
+        }
+        
+        .about-card {
+          padding: 1.5rem;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        
+        .footer {
+          padding: 2rem 0 1rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="about-container">
+      <div class="about-header">
+        <a href="index.html" class="back-link">← Back to NightKind Collective</a>
+        <div class="logo-container">
+          <img src="bat vector tracing1.svg" alt="NightKind Collective Logo" class="site-logo">
+        </div>
+        <h1 class="about-title">ABOUT US</h1>
+      </div>
+
+      <!-- Mission Statement -->
+      <section>
+        <div class="mission-highlight">
+          <p class="mission-text">
+            Alternative Fashion with Purpose
+          </p>
+        </div>
+      </section>
+
+      <!-- Our Story -->
+      <section>
+        <h2 class="section-title">Our Story</h2>
+        <article class="about-card">
+          <p class="about-text">
+            NightKind Collective was born from a passion for alternative fashion and a deep commitment to wildlife conservation. Founded in Queensland, Australia, we recognized the urgent need to protect our local bat populations while creating unique, high-quality merchandise that speaks to the gothic and alternative community.
+          </p>
+          <p class="about-text">
+            Our journey began with a simple observation: the beauty and importance of bats in our ecosystem, and the lack of representation of these magnificent creatures in alternative fashion. We saw an opportunity to bridge the gap between subcultural style and environmental activism.
+          </p>
+        </article>
+      </section>
+
+      <!-- Our Mission -->
+      <section>
+        <h2 class="section-title">Our Mission</h2>
+        <article class="about-card">
+          <p class="about-text">
+            We are dedicated to supporting Queensland bat rescue operations through the sale of carefully crafted alternative fashion items. Every purchase directly contributes to wildlife rescue efforts, helping injured and orphaned bats receive the care they need to return to the wild.
+          </p>
+          <p class="about-text">
+            Our mission extends beyond fundraising. We aim to educate our community about the vital role bats play in our ecosystem, dispel myths and misconceptions, and inspire others to take action in wildlife conservation.
+          </p>
+        </article>
+      </section>
+
+      <!-- Our Values -->
+      <section>
+        <h2 class="section-title">Our Values</h2>
+        <article class="about-card">
+          <p class="about-text">
+            <strong>Conservation First:</strong> Every decision we make prioritizes the well-being of wildlife and their habitats. We partner exclusively with reputable conservation organizations and ensure our practices are environmentally responsible.
+          </p>
+          <p class="about-text">
+            <strong>Quality Craftsmanship:</strong> We believe in creating products that last. Our merchandise is designed with attention to detail, using high-quality materials that reflect the care we put into our conservation efforts.
+          </p>
+          <p class="about-text">
+            <strong>Community:</strong> We're building a community of like-minded individuals who share our passion for alternative fashion and wildlife conservation. Together, we can make a difference.
+          </p>
+          <p class="about-text">
+            <strong>Transparency:</strong> We believe in being open about how your purchases support conservation efforts. We regularly share updates about our partnerships and the impact of your support.
+          </p>
+        </article>
+      </section>
+
+      <!-- Our Partnership -->
+      <section>
+        <h2 class="section-title">Our Partnership</h2>
+        <article class="about-card">
+          <p class="about-text">
+            We are proud to partner with Bat Conservation & Rescue QLD Inc., a registered charity dedicated to the rescue, rehabilitation, and release of Queensland's native bat species. This partnership ensures that your purchases directly support:
+          </p>
+          <ul style="color: hsl(var(--card-foreground)); line-height: 1.7; margin: 1rem 0; padding-left: 2rem;">
+            <li>Emergency rescue operations for injured bats</li>
+            <li>Rehabilitation facilities and veterinary care</li>
+            <li>Release programs for recovered bats</li>
+            <li>Educational programs about bat conservation</li>
+            <li>Habitat protection and restoration efforts</li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- Get Involved -->
+      <section>
+        <h2 class="section-title">Get Involved</h2>
+        <article class="about-card">
+          <p class="about-text">
+            There are many ways to support our mission beyond purchasing our merchandise:
+          </p>
+          <ul style="color: hsl(var(--card-foreground)); line-height: 1.7; margin: 1rem 0; padding-left: 2rem;">
+            <li>Volunteer with local wildlife rescue organizations</li>
+            <li>Educate others about the importance of bats</li>
+            <li>Create bat-friendly habitats in your garden</li>
+            <li>Report injured bats to wildlife rescue services</li>
+            <li>Support conservation legislation and initiatives</li>
+          </ul>
+          <p class="about-text">
+            Together, we can create a world where alternative fashion and wildlife conservation go hand in hand.
+          </p>
+        </article>
+      </section>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">NightKind Collective</h3>
+          <p class="footer-description">
+            Alternative fashion with purpose. Supporting Queensland bat rescue through authentic subcultural style.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Conservation</h4>
+          <p class="footer-text">
+            Every purchase directly funds wildlife rescue operations and bat conservation efforts.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Community</h4>
+          <p class="footer-text">
+            Join the NightKind community and make a difference through style.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2024 NightKind Collective. All rights reserved. | <a href="privacy.html" class="footer-link">Privacy Policy</a></p>
+      </div>
+    </footer>
+  </body>
+</html> 

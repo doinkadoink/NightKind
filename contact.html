@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - NightKind Collective</title>
+    <meta name="description" content="Get in touch with NightKind Collective for questions about our products or bat conservation efforts" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="bat vector tracing1.svg">
+    <link rel="icon" type="image/png" href="bat vector tracing1.svg">
+    
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="index-CZEDu5tD.css">
+    <style>
+      /* Using the same CSS variables and styling as your React app */
+      :root {
+        --background: 0 0% 8%;
+        --foreground: 60 100% 85%;
+        --card: 0 0% 12%;
+        --card-foreground: 60 100% 85%;
+        --primary: 270 45% 25%;
+        --secondary: 60 100% 65%;
+        --muted: 0 0% 18%;
+        --muted-foreground: 0 0% 65%;
+        --accent: 270 35% 35%;
+        --border: 0 0% 25%;
+        --shadow-gothic: 0 10px 40px -15px hsla(270, 45%, 15%, .8);
+        --shadow-glow: 0 0 30px hsla(60, 100%, 65%, .3);
+        --gradient-primary: linear-gradient(135deg, hsl(270, 45%, 25%), hsl(270, 35%, 35%));
+        --gradient-accent: linear-gradient(90deg, hsl(60, 100%, 65%), hsl(50, 100%, 70%));
+        --gradient-dark: linear-gradient(180deg, hsl(0, 0%, 8%), hsl(0, 0%, 12%));
+      }
+
+      body {
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+
+      .contact-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .contact-header {
+        text-align: center;
+        padding: 3rem 2rem;
+        margin-bottom: 4rem;
+      }
+
+      .logo-container {
+        margin: 2rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .site-logo {
+        width: 120px;
+        height: auto;
+        filter: drop-shadow(0 0 15px hsla(60, 100%, 65%, 0.6));
+        transition: all 0.3s ease;
+      }
+
+      .site-logo:hover {
+        filter: drop-shadow(0 0 25px hsla(60, 100%, 65%, 0.8));
+        transform: scale(1.05);
+      }
+
+      .back-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        margin-bottom: 2rem;
+        display: inline-block;
+        font-size: 1.1rem;
+        transition: color 0.3s;
+      }
+
+      .back-link:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
+      }
+
+      .contact-title {
+        color: hsl(var(--secondary));
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6), 0 0 40px hsla(60, 100%, 65%, 0.3);
+        animation: titleGlow 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes titleGlow {
+        0% {
+          text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6), 0 0 40px hsla(60, 100%, 65%, 0.3);
+        }
+        100% {
+          text-shadow: 0 0 25px hsla(60, 100%, 65%, 0.8), 0 0 50px hsla(60, 100%, 65%, 0.4);
+        }
+      }
+
+      .section-title {
+        color: hsl(var(--secondary));
+        font-size: 2rem;
+        text-align: left;
+        margin-bottom: 2rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        text-shadow: 0 0 15px hsla(60, 100%, 65%, 0.5);
+        animation: sectionGlow 4s ease-in-out infinite alternate;
+      }
+
+      @keyframes sectionGlow {
+        0% {
+          text-shadow: 0 0 15px hsla(60, 100%, 65%, 0.5);
+        }
+        100% {
+          text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.7);
+        }
+      }
+
+      .contact-card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-gothic);
+      }
+
+      .contact-text {
+        color: hsl(var(--card-foreground));
+        line-height: 1.7;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+
+      .contact-item {
+        background: hsl(var(--muted));
+        border: 1px solid hsl(var(--border));
+        border-radius: 8px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .contact-item:hover {
+        border-color: hsl(var(--secondary));
+        box-shadow: 0 0 15px hsla(60, 100%, 65%, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .contact-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .contact-label {
+        color: hsl(var(--secondary));
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .contact-value {
+        color: hsl(var(--card-foreground));
+        font-size: 1rem;
+      }
+
+      .contact-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .contact-link:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
+      }
+
+      .emergency-notice {
+        background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+        border: 2px solid hsl(var(--secondary));
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem 0;
+        text-align: center;
+        box-shadow: 0 0 20px hsla(60, 100%, 65%, 0.3);
+      }
+
+      .emergency-title {
+        color: hsl(var(--foreground));
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 1rem;
+      }
+
+      .emergency-text {
+        color: hsl(var(--foreground));
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+
+      .footer {
+        background: linear-gradient(180deg, hsl(var(--background)), hsl(var(--card)));
+        border-top: 1px solid hsl(var(--border));
+        margin-top: 6rem;
+        padding: 3rem 0 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, hsl(var(--secondary)), transparent);
+        box-shadow: 0 0 10px hsl(var(--secondary));
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section {
+        text-align: center;
+      }
+
+      .footer-title {
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-shadow: 0 0 10px hsla(60, 100%, 65%, 0.5);
+      }
+
+      .footer-subtitle {
+        color: hsl(var(--secondary));
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .footer-description,
+      .footer-text {
+        color: hsl(var(--muted-foreground));
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid hsl(var(--border));
+        margin: 0 2rem;
+      }
+
+      .footer-copyright {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.9rem;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .footer-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-link:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .contact-title {
+          font-size: 2.5rem;
+          letter-spacing: 0.2em;
+        }
+        
+        .section-title {
+          font-size: 1.5rem;
+          letter-spacing: 0.1em;
+        }
+        
+        .contact-card {
+          padding: 1.5rem;
+        }
+
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        
+        .footer {
+          padding: 2rem 0 1rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="contact-container">
+      <div class="contact-header">
+        <a href="index.html" class="back-link">← Back to NightKind Collective</a>
+        <div class="logo-container">
+          <img src="bat vector tracing1.svg" alt="NightKind Collective Logo" class="site-logo">
+        </div>
+        <h1 class="contact-title">CONTACT US</h1>
+      </div>
+
+      <!-- Emergency Notice -->
+      <div class="emergency-notice">
+        <h2 class="emergency-title">🐦 Emergency Wildlife Rescue</h2>
+        <p class="emergency-text">
+          If you've found an injured or orphaned bat, please contact Bat Conservation & Rescue QLD immediately. 
+          Do not attempt to handle the bat yourself. Call their 24/7 hotline for professional assistance.
+        </p>
+      </div>
+
+      <!-- Contact Information -->
+      <section>
+        <h2 class="section-title">Get In Touch</h2>
+        <article class="contact-card">
+          <p class="contact-text">
+            We'd love to hear from you! Whether you have questions about our products, want to learn more about bat conservation, or need assistance with your order, we're here to help.
+          </p>
+          
+          <div class="contact-grid">
+            <div class="contact-item">
+              <span class="contact-icon">📧</span>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">
+                <a href="mailto:info@nightkind.org" class="contact-link">info@nightkind.org</a>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <span class="contact-icon">🦇</span>
+              <div class="contact-label">Bat Rescue QLD</div>
+              <div class="contact-value">
+                <a href="https://bats.org.au/get-involved/donate/" class="contact-link" target="_blank">Support Bats QLD</a>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <span class="contact-icon">🌐</span>
+              <div class="contact-label">Website</div>
+              <div class="contact-value">
+                <a href="https://nightkind.org" class="contact-link">nightkind.org</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- Business Information -->
+      <section>
+        <h2 class="section-title">Business Information</h2>
+        <article class="contact-card">
+          <p class="contact-text">
+            <strong>Business Owner:</strong> Rachel Frappell<br>
+            <strong>Location:</strong> Queensland, Australia<br>
+            <strong>Business Type:</strong> Alternative Fashion & Conservation Support
+          </p>
+          <p class="contact-text">
+            NightKind Collective is committed to transparency and ethical business practices. We operate with the highest standards of customer service and environmental responsibility.
+          </p>
+        </article>
+      </section>
+
+      <!-- FAQ Section -->
+      <section>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <article class="contact-card">
+          <div style="margin-bottom: 2rem;">
+            <h3 style="color: hsl(var(--secondary)); margin-bottom: 1rem;">🛍️ Order & Shipping</h3>
+            <p class="contact-text">
+              <strong>Q: How long does shipping take?</strong><br>
+              A: Standard shipping within Australia takes 3-7 business days. International shipping varies by location.
+            </p>
+            <p class="contact-text">
+              <strong>Q: Do you ship internationally?</strong><br>
+              A: Yes, we ship worldwide! Shipping costs and delivery times vary by location.
+            </p>
+          </div>
+          
+          <div style="margin-bottom: 2rem;">
+            <h3 style="color: hsl(var(--secondary)); margin-bottom: 1rem;">🦇 Conservation</h3>
+            <p class="contact-text">
+              <strong>Q: How much of my purchase goes to bat conservation?</strong><br>
+              A: A significant portion of every sale directly supports Bat Conservation & Rescue QLD operations.
+            </p>
+            <p class="contact-text">
+              <strong>Q: Can I volunteer with bat rescue?</strong><br>
+              A: Yes! Contact Bat Conservation & Rescue QLD directly to learn about volunteer opportunities.
+            </p>
+          </div>
+          
+          <div>
+            <h3 style="color: hsl(var(--secondary)); margin-bottom: 1rem;">📞 General</h3>
+            <p class="contact-text">
+              <strong>Q: What if I have a problem with my order?</strong><br>
+              A: Contact us immediately at info@nightkind.org and we'll resolve any issues promptly.
+            </p>
+            <p class="contact-text">
+              <strong>Q: Do you offer refunds?</strong><br>
+              A: Yes, we offer refunds within 30 days of purchase for items in original condition.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <!-- Response Time -->
+      <section>
+        <h2 class="section-title">Response Time</h2>
+        <article class="contact-card">
+          <p class="contact-text">
+            We aim to respond to all inquiries within 24-48 hours during business days. For urgent matters related to wildlife rescue, please contact Bat Conservation & Rescue QLD directly.
+          </p>
+          <p class="contact-text">
+            Thank you for supporting our mission to protect Queensland's bat populations through alternative fashion!
+          </p>
+        </article>
+      </section>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">NightKind Collective</h3>
+          <p class="footer-description">
+            Alternative fashion with purpose. Supporting Queensland bat rescue through authentic subcultural style.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Conservation</h4>
+          <p class="footer-text">
+            Every purchase directly funds wildlife rescue operations and bat conservation efforts.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Community</h4>
+          <p class="footer-text">
+            Join the NightKind community and make a difference through style.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2024 NightKind Collective. All rights reserved. | <a href="privacy.html" class="footer-link">Privacy Policy</a></p>
+      </div>
+    </footer>
+  </body>
+</html> 
