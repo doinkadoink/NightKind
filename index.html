@@ -624,6 +624,70 @@
       setTimeout(addFooter, 2000);
       setTimeout(addFooter, 3000);
       window.addEventListener('load', addFooter);
+
+      // Fix hero section login button to match OUR MISSION button
+      function fixHeroLoginButton() {
+        // Look for login buttons in the hero section
+        const heroLoginButtons = document.querySelectorAll('button, a');
+        
+        heroLoginButtons.forEach(button => {
+          const text = (button.textContent || button.innerText || '').trim();
+          
+          // Find the LOGIN button in the hero section (not the navigation)
+          if (text === 'LOGIN' && !button.closest('header') && !button.closest('nav')) {
+            console.log('Found hero LOGIN button, fixing styling...');
+            
+            // Apply the same styling as OUR MISSION button
+            button.style.cssText = `
+              color: hsl(60, 100%, 65%) !important;
+              text-decoration: none !important;
+              font-family: 'Courier Prime', monospace !important;
+              font-size: 0.9rem !important;
+              text-transform: uppercase !important;
+              letter-spacing: 0.1em !important;
+              transition: all 0.3s ease !important;
+              padding: 0.75rem 1.5rem !important;
+              border: 1px solid hsl(60, 100%, 65%) !important;
+              border-radius: 4px !important;
+              background: transparent !important;
+              cursor: pointer !important;
+              min-width: 120px !important;
+              text-align: center !important;
+              display: inline-block !important;
+              margin: 0 0.5rem !important;
+            `;
+            
+            // Add hover effects
+            button.addEventListener('mouseenter', () => {
+              button.style.color = 'hsl(0, 0%, 9%) !important';
+              button.style.background = 'hsl(60, 100%, 65%) !important';
+              button.style.transform = 'translateY(-1px) !important';
+              button.style.boxShadow = '0 4px 8px rgba(255, 215, 0, 0.3) !important';
+            });
+            
+            button.addEventListener('mouseleave', () => {
+              button.style.color = 'hsl(60, 100%, 65%) !important';
+              button.style.background = 'transparent !important';
+              button.style.transform = 'translateY(0) !important';
+              button.style.boxShadow = 'none !important';
+            });
+            
+            // Add click handler to redirect to login page
+            button.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              window.location.href = 'login.html';
+            });
+          }
+        });
+      }
+
+      // Try to fix hero login button multiple times
+      setTimeout(fixHeroLoginButton, 1000);
+      setTimeout(fixHeroLoginButton, 2000);
+      setTimeout(fixHeroLoginButton, 3000);
+      setTimeout(fixHeroLoginButton, 5000);
+      window.addEventListener('load', fixHeroLoginButton);
     </script>
   </body>
 </html>
