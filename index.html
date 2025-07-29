@@ -627,6 +627,14 @@
 
         console.log('Creating LOGIN button in hero section...');
         
+        // Debug: Log all buttons to see what's available
+        const allButtons = document.querySelectorAll('button, a');
+        console.log('All buttons found:', allButtons.length);
+        allButtons.forEach((button, index) => {
+          const text = (button.textContent || button.innerText || '').trim();
+          console.log(`Button ${index}: "${text}"`);
+        });
+        
         // Look for OUR MISSION button to place LOGIN next to it
         const ourMissionButton = Array.from(document.querySelectorAll('button, a')).find(button => {
           const text = (button.textContent || button.innerText || '').trim();
@@ -634,6 +642,8 @@
         });
         
         if (ourMissionButton) {
+          console.log('Found OUR MISSION button:', ourMissionButton);
+          
           // Create new LOGIN button
           const loginButton = document.createElement('button');
           loginButton.textContent = 'LOGIN';
@@ -683,7 +693,68 @@
           ourMissionButton.parentNode.insertBefore(loginButton, ourMissionButton.nextSibling);
           console.log('LOGIN button created successfully!');
         } else {
-          console.log('OUR MISSION button not found, cannot place LOGIN button');
+          console.log('OUR MISSION button not found, trying alternative approach...');
+          
+          // Alternative: Look for EXPLORE COLLECTION button and place LOGIN next to it
+          const exploreButton = Array.from(document.querySelectorAll('button, a')).find(button => {
+            const text = (button.textContent || button.innerText || '').trim();
+            return text === 'EXPLORE COLLECTION';
+          });
+          
+          if (exploreButton) {
+            console.log('Found EXPLORE COLLECTION button, creating LOGIN next to it');
+            
+            // Create new LOGIN button
+            const loginButton = document.createElement('button');
+            loginButton.textContent = 'LOGIN';
+            loginButton.setAttribute('data-hero-login-fixed', 'true');
+            loginButton.style.cssText = `
+              color: hsl(60, 100%, 65%) !important;
+              text-decoration: none !important;
+              font-family: 'Courier Prime', monospace !important;
+              font-size: 0.9rem !important;
+              text-transform: uppercase !important;
+              letter-spacing: 0.1em !important;
+              transition: all 0.3s ease !important;
+              padding: 0.75rem 2rem !important;
+              border: 1px solid hsl(60, 100%, 65%) !important;
+              border-radius: 4px !important;
+              background: transparent !important;
+              cursor: pointer !important;
+              min-width: 140px !important;
+              text-align: center !important;
+              display: inline-block !important;
+              margin: 0 0.5rem !important;
+            `;
+            
+            // Add hover effects
+            loginButton.addEventListener('mouseenter', () => {
+              loginButton.style.color = 'hsl(0, 0%, 9%) !important';
+              loginButton.style.background = 'hsl(60, 100%, 65%) !important';
+              loginButton.style.transform = 'translateY(-1px) !important';
+              loginButton.style.boxShadow = '0 4px 8px rgba(255, 215, 0, 0.3) !important';
+            });
+            
+            loginButton.addEventListener('mouseleave', () => {
+              loginButton.style.color = 'hsl(60, 100%, 65%) !important';
+              loginButton.style.background = 'transparent !important';
+              loginButton.style.transform = 'translateY(0) !important';
+              loginButton.style.boxShadow = 'none !important';
+            });
+            
+            // Add click handler to redirect to login page
+            loginButton.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              window.location.href = 'login.html';
+            });
+            
+            // Insert after EXPLORE COLLECTION button
+            exploreButton.parentNode.insertBefore(loginButton, exploreButton.nextSibling);
+            console.log('LOGIN button created successfully next to EXPLORE COLLECTION!');
+          } else {
+            console.log('No suitable button found for LOGIN placement');
+          }
         }
       }
 
