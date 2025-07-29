@@ -263,12 +263,16 @@
 
       // Add user account navigation
       function addUserNavigation() {
-        // Look for navigation elements
+        // Look for navigation elements in the header only
         const navElements = document.querySelectorAll('a[href="/about"], a[href="/contact"], a[href="/shop"]');
         
         navElements.forEach(navElement => {
           const parent = navElement.parentElement;
-          if (parent && !parent.querySelector('.user-nav')) {
+          // Only add to header navigation, not other sections
+          if (parent && 
+              !parent.querySelector('.user-nav') && 
+              (parent.closest('header') || parent.closest('nav') || parent.tagName === 'NAV')) {
+            
             // Create user navigation container
             const userNav = document.createElement('div');
             userNav.className = 'user-nav';
@@ -591,90 +595,50 @@
 
       // Fix hero section login button to match OUR MISSION button
       function fixHeroLoginButton() {
-        // First, try to find existing LOGIN button in hero section
-        let heroLoginButton = null;
-        const heroButtons = document.querySelectorAll('button, a');
-        
-        heroButtons.forEach(button => {
+        // Check if user is logged in - if so, don't show login button
+        const user = localStorage.getItem('nightkindUser');
+        if (user) {
+          console.log('User is logged in, removing login button from hero section');
+          // Remove any existing login buttons from hero section
+          const existingLoginButtons = document.querySelectorAll('button, a');
+          existingLoginButtons.forEach(button => {
+            const text = (button.textContent || button.innerText || '').trim();
+            if (text === 'LOGIN' && 
+                !button.closest('header') && 
+                !button.closest('nav') &&
+                !button.hasAttribute('data-hero-login-fixed')) {
+              button.remove();
+            }
+          });
+          return;
+        }
+
+        // Remove any existing login buttons first to prevent duplicates
+        const existingLoginButtons = document.querySelectorAll('button, a');
+        existingLoginButtons.forEach(button => {
           const text = (button.textContent || button.innerText || '').trim();
-          
-          // Find the LOGIN button in the hero section (not the navigation)
           if (text === 'LOGIN' && 
               !button.closest('header') && 
-              !button.closest('nav')) {
-            heroLoginButton = button;
+              !button.closest('nav') &&
+              button.hasAttribute('data-hero-login-fixed')) {
+            button.remove();
           }
         });
+
+        console.log('Creating LOGIN button in hero section...');
         
-        // If no LOGIN button found, create one next to OUR MISSION
-        if (!heroLoginButton) {
-          console.log('No LOGIN button found, creating one...');
-          
-          // Look for OUR MISSION button to place LOGIN next to it
-          const ourMissionButton = Array.from(document.querySelectorAll('button, a')).find(button => {
-            const text = (button.textContent || button.innerText || '').trim();
-            return text === 'OUR MISSION';
-          });
-          
-          if (ourMissionButton) {
-            // Create new LOGIN button
-            const loginButton = document.createElement('button');
-            loginButton.textContent = 'LOGIN';
-            loginButton.href = 'login.html';
-            loginButton.style.cssText = `
-              color: hsl(60, 100%, 65%) !important;
-              text-decoration: none !important;
-              font-family: 'Courier Prime', monospace !important;
-              font-size: 0.9rem !important;
-              text-transform: uppercase !important;
-              letter-spacing: 0.1em !important;
-              transition: all 0.3s ease !important;
-              padding: 0.75rem 2rem !important;
-              border: 1px solid hsl(60, 100%, 65%) !important;
-              border-radius: 4px !important;
-              background: transparent !important;
-              cursor: pointer !important;
-              min-width: 140px !important;
-              text-align: center !important;
-              display: inline-block !important;
-              margin: 0 0.5rem !important;
-            `;
-            
-            // Add hover effects
-            loginButton.addEventListener('mouseenter', () => {
-              loginButton.style.color = 'hsl(0, 0%, 9%) !important';
-              loginButton.style.background = 'hsl(60, 100%, 65%) !important';
-              loginButton.style.transform = 'translateY(-1px) !important';
-              loginButton.style.boxShadow = '0 4px 8px rgba(255, 215, 0, 0.3) !important';
-            });
-            
-            loginButton.addEventListener('mouseleave', () => {
-              loginButton.style.color = 'hsl(60, 100%, 65%) !important';
-              loginButton.style.background = 'transparent !important';
-              loginButton.style.transform = 'translateY(0) !important';
-              loginButton.style.boxShadow = 'none !important';
-            });
-            
-            // Add click handler to redirect to login page
-            loginButton.addEventListener('click', (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              window.location.href = 'login.html';
-            });
-            
-            // Insert after OUR MISSION button
-            ourMissionButton.parentNode.insertBefore(loginButton, ourMissionButton.nextSibling);
-            heroLoginButton = loginButton;
-          }
-        } else if (!heroLoginButton.hasAttribute('data-hero-login-fixed')) {
-          // Style existing LOGIN button
-          console.log('Found existing hero LOGIN button, fixing styling...');
-          
-          // Mark this button as fixed to prevent duplicate handling
-          heroLoginButton.setAttribute('data-hero-login-fixed', 'true');
-          
-          // Apply the same styling as OUR MISSION button
-          heroLoginButton.style.cssText = `
+        // Look for OUR MISSION button to place LOGIN next to it
+        const ourMissionButton = Array.from(document.querySelectorAll('button, a')).find(button => {
+          const text = (button.textContent || button.innerText || '').trim();
+          return text === 'OUR MISSION';
+        });
+        
+        if (ourMissionButton) {
+          // Create new LOGIN button
+          const loginButton = document.createElement('button');
+          loginButton.textContent = 'LOGIN';
+          loginButton.setAttribute('data-hero-login-fixed', 'true');
+          loginButton.style.cssText = `
             color: hsl(60, 100%, 65%) !important;
             text-decoration: none !important;
             font-family: 'Courier Prime', monospace !important;
@@ -694,26 +658,32 @@
           `;
           
           // Add hover effects
-          heroLoginButton.addEventListener('mouseenter', () => {
-            heroLoginButton.style.color = 'hsl(0, 0%, 9%) !important';
-            heroLoginButton.style.background = 'hsl(60, 100%, 65%) !important';
-            heroLoginButton.style.transform = 'translateY(-1px) !important';
-            heroLoginButton.style.boxShadow = '0 4px 8px rgba(255, 215, 0, 0.3) !important';
+          loginButton.addEventListener('mouseenter', () => {
+            loginButton.style.color = 'hsl(0, 0%, 9%) !important';
+            loginButton.style.background = 'hsl(60, 100%, 65%) !important';
+            loginButton.style.transform = 'translateY(-1px) !important';
+            loginButton.style.boxShadow = '0 4px 8px rgba(255, 215, 0, 0.3) !important';
           });
           
-          heroLoginButton.addEventListener('mouseleave', () => {
-            heroLoginButton.style.color = 'hsl(60, 100%, 65%) !important';
-            heroLoginButton.style.background = 'transparent !important';
-            heroLoginButton.style.transform = 'translateY(0) !important';
-            heroLoginButton.style.boxShadow = 'none !important';
+          loginButton.addEventListener('mouseleave', () => {
+            loginButton.style.color = 'hsl(60, 100%, 65%) !important';
+            loginButton.style.background = 'transparent !important';
+            loginButton.style.transform = 'translateY(0) !important';
+            loginButton.style.boxShadow = 'none !important';
           });
           
           // Add click handler to redirect to login page
-          heroLoginButton.addEventListener('click', (e) => {
+          loginButton.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
             window.location.href = 'login.html';
           });
+          
+          // Insert after OUR MISSION button
+          ourMissionButton.parentNode.insertBefore(loginButton, ourMissionButton.nextSibling);
+          console.log('LOGIN button created successfully!');
+        } else {
+          console.log('OUR MISSION button not found, cannot place LOGIN button');
         }
       }
 
