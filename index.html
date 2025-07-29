@@ -634,8 +634,16 @@
           const text = (button.textContent || button.innerText || '').trim();
           
           // Find the LOGIN button in the hero section (not the navigation)
-          if (text === 'LOGIN' && !button.closest('header') && !button.closest('nav')) {
+          // Only target buttons that don't already have our styling applied
+          if (text === 'LOGIN' && 
+              !button.closest('header') && 
+              !button.closest('nav') && 
+              !button.hasAttribute('data-hero-login-fixed')) {
+            
             console.log('Found hero LOGIN button, fixing styling...');
+            
+            // Mark this button as fixed to prevent duplicate handling
+            button.setAttribute('data-hero-login-fixed', 'true');
             
             // Apply the same styling as OUR MISSION button
             button.style.cssText = `
@@ -682,12 +690,45 @@
         });
       }
 
+      // Clean up duplicate login buttons in Quick Links section
+      function cleanupDuplicateLoginButtons() {
+        // Look for Quick Links section
+        const quickLinksSection = document.querySelector('*:contains("QUICK LINKS")') || 
+                                 document.querySelector('[class*="quick"], [class*="links"]') ||
+                                 document.querySelector('footer, .footer');
+        
+        if (quickLinksSection) {
+          // Find all LOGIN buttons in the Quick Links area
+          const loginButtons = quickLinksSection.querySelectorAll('button, a');
+          let loginButtonCount = 0;
+          
+          loginButtons.forEach(button => {
+            const text = (button.textContent || button.innerText || '').trim();
+            if (text === 'LOGIN') {
+              loginButtonCount++;
+              
+              // Keep only the first LOGIN button, remove the rest
+              if (loginButtonCount > 1) {
+                console.log('Removing duplicate LOGIN button in Quick Links');
+                button.remove();
+              }
+            }
+          });
+        }
+      }
+
       // Try to fix hero login button multiple times
       setTimeout(fixHeroLoginButton, 1000);
       setTimeout(fixHeroLoginButton, 2000);
       setTimeout(fixHeroLoginButton, 3000);
       setTimeout(fixHeroLoginButton, 5000);
       window.addEventListener('load', fixHeroLoginButton);
+
+      // Clean up duplicate buttons
+      setTimeout(cleanupDuplicateLoginButtons, 1000);
+      setTimeout(cleanupDuplicateLoginButtons, 2000);
+      setTimeout(cleanupDuplicateLoginButtons, 3000);
+      window.addEventListener('load', cleanupDuplicateLoginButtons);
     </script>
   </body>
 </html>
