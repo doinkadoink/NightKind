@@ -268,6 +268,38 @@
         line-height: 1.6;
       }
 
+      .emergency-actions {
+        margin-top: 1.5rem;
+        text-align: center;
+      }
+
+      .emergency-link {
+        display: inline-block;
+        background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        margin-bottom: 1rem;
+      }
+
+      .emergency-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        background: linear-gradient(135deg, #ff5252, #ff7043);
+      }
+
+      .emergency-note {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 0;
+      }
+
       .footer {
         background: linear-gradient(180deg, hsl(var(--background)), hsl(var(--card)));
         border-top: 1px solid hsl(var(--border));
@@ -406,6 +438,14 @@
           If you've found an injured or orphaned bat, please contact Bat Conservation & Rescue QLD immediately. 
           Do not attempt to handle the bat yourself. Call their 24/7 hotline for professional assistance.
         </p>
+        <div class="emergency-actions">
+          <a href="https://www.batsqld.org.au/found-a-bat/" class="emergency-link" target="_blank">
+            🚨 Found a Bat? Get Emergency Help Here
+          </a>
+          <p class="emergency-note">
+            Visit the official Bats QLD rescue guide for detailed instructions on what to do when you find a bat in need.
+          </p>
+        </div>
       </div>
 
       <!-- Contact Information -->
