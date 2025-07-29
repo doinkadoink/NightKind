@@ -602,7 +602,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p class="footer-copyright">© 2024 NightKind Collective. All rights reserved. | <a href="privacy.html" class="footer-link">Privacy Policy</a></p>
+        <p class="footer-copyright">© 2024 NightKind Collective. All rights reserved. | <a href="privacy.html" class="footer-link">Privacy Policy</a> | <a href="login.html" class="footer-link" id="footerUserLink">Login</a></p>
       </div>
     </footer>
 
@@ -711,9 +711,25 @@
         const count = cart.reduce((total, item) => total + item.quantity, 0);
         document.getElementById('cartCount').textContent = count;
       }
+
+      // Update footer user link based on login status
+      function updateFooterUserLink() {
+        const footerUserLink = document.getElementById('footerUserLink');
+        if (footerUserLink) {
+          const user = localStorage.getItem('nightkindUser');
+          if (user) {
+            footerUserLink.href = 'account.html';
+            footerUserLink.textContent = 'Account';
+          } else {
+            footerUserLink.href = 'login.html';
+            footerUserLink.textContent = 'Login';
+          }
+        }
+      }
       
       // Initialize page
       updateCartCount();
+      updateFooterUserLink();
     </script>
   </body>
 </html> 

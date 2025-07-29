@@ -454,5 +454,25 @@
             </p>
         </div>
     </footer>
+
+    <script>
+        // Update navigation link based on login status
+        function updateUserNavLink() {
+            const userNavLink = document.getElementById('userNavLink');
+            if (userNavLink) {
+                const user = localStorage.getItem('nightkindUser');
+                if (user) {
+                    userNavLink.href = 'account.html';
+                    userNavLink.textContent = '👤 Account';
+                } else {
+                    userNavLink.href = 'login.html';
+                    userNavLink.textContent = '🔐 Login';
+                }
+            }
+        }
+
+        // Update navigation link when page loads
+        document.addEventListener('DOMContentLoaded', updateUserNavLink);
+    </script>
 </body>
 </html> 
