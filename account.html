@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - NightKind Collective</title>
+    <meta name="description" content="Manage your NightKind Collective account, view order history, and update your profile">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="bat vector tracing1.svg">
+    <link rel="icon" type="image/png" href="bat vector tracing1.svg">
+    
+    <!-- Fonts -->
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="index-CZEDu5tD.css">
+    
+    <style>
+      :root {
+        --background: 0 0% 3.9%;
+        --foreground: 0 0% 98%;
+        --card: 0 0% 3.9%;
+        --card-foreground: 0 0% 98%;
+        --popover: 0 0% 3.9%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 0 0% 98%;
+        --primary-foreground: 0 0% 9%;
+        --secondary: 60 100% 65%;
+        --secondary-foreground: 0 0% 9%;
+        --muted: 0 0% 14.9%;
+        --muted-foreground: 0 0% 63.9%;
+        --accent: 0 0% 14.9%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 0 0% 14.9%;
+        --input: 0 0% 14.9%;
+        --ring: 0 0% 83.1%;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .account-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      /* Bat Logo Header */
+      .logo-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .logo-container {
+        display: inline-block;
+        position: relative;
+        z-index: 10;
+      }
+
+      .site-logo {
+        width: 150px;
+        height: auto;
+        filter: drop-shadow(0 0 20px hsla(270, 100%, 70%, 0.8));
+        transition: all 0.4s ease;
+        animation: logoFloat 4s ease-in-out infinite;
+      }
+
+      .site-logo:hover {
+        filter: drop-shadow(0 0 30px hsla(270, 100%, 70%, 1));
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      @keyframes logoFloat {
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(2deg);
+        }
+      }
+
+      .logo-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, hsla(270, 100%, 70%, 0.3) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: glowPulse 3s ease-in-out infinite;
+        z-index: 1;
+      }
+
+      @keyframes glowPulse {
+        0%, 100% {
+          opacity: 0.3;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          opacity: 0.6;
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+      }
+
+      .account-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .account-title {
+        color: hsl(var(--secondary));
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        text-shadow: 0 0 15px hsla(60, 100%, 65%, 0.5);
+        animation: titleGlow 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes titleGlow {
+        0% {
+          text-shadow: 0 0 15px hsla(60, 100%, 65%, 0.5);
+        }
+        100% {
+          text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.7);
+        }
+      }
+
+      .welcome-message {
+        color: hsl(var(--muted-foreground));
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+
+      .back-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        margin-bottom: 2rem;
+        display: inline-block;
+        font-size: 1.1rem;
+        transition: color 0.3s;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border: 1px solid transparent;
+        border-radius: 4px;
+      }
+
+      .back-link:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
+        border-color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.1);
+      }
+
+      .account-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .profile-card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 0 20px hsla(60, 100%, 65%, 0.1);
+      }
+
+      .profile-title {
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .profile-info {
+        margin-bottom: 1.5rem;
+      }
+
+      .profile-label {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.25rem;
+      }
+
+      .profile-value {
+        color: hsl(var(--foreground));
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      .logout-btn {
+        background: hsl(var(--destructive));
+        color: hsl(var(--destructive-foreground));
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-family: 'Courier Prime', monospace;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+      }
+
+      .logout-btn:hover {
+        background: hsl(var(--destructive));
+        opacity: 0.8;
+        transform: translateY(-1px);
+      }
+
+      .orders-card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 0 20px hsla(60, 100%, 65%, 0.1);
+      }
+
+      .orders-title {
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .order-item {
+        border: 1px solid hsl(var(--border));
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .order-item:hover {
+        border-color: hsl(var(--secondary));
+        box-shadow: 0 0 15px hsla(60, 100%, 65%, 0.1);
+      }
+
+      .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .order-number {
+        color: hsl(var(--secondary));
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      .order-date {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.9rem;
+      }
+
+      .order-status {
+        background: hsl(var(--accent));
+        color: hsl(var(--accent-foreground));
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .order-total {
+        color: hsl(var(--foreground));
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-top: 1rem;
+        text-align: right;
+      }
+
+      .no-orders {
+        text-align: center;
+        color: hsl(var(--muted-foreground));
+        padding: 3rem 1rem;
+      }
+
+      .no-orders-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      .shop-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+
+      .shop-link:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
+      }
+
+      .footer {
+        background: linear-gradient(180deg, hsl(var(--background)), hsl(var(--card)));
+        border-top: 1px solid hsl(var(--border));
+        margin-top: 6rem;
+        padding: 3rem 0 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, hsl(var(--secondary)), transparent);
+        box-shadow: 0 0 10px hsl(var(--secondary));
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section {
+        text-align: center;
+      }
+
+      .footer-title {
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-shadow: 0 0 10px hsla(60, 100%, 65%, 0.5);
+      }
+
+      .footer-subtitle {
+        color: hsl(var(--secondary));
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .footer-description,
+      .footer-text {
+        color: hsl(var(--muted-foreground));
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid hsl(var(--border));
+        margin: 0 2rem;
+      }
+
+      .footer-copyright {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.9rem;
+      }
+
+      .footer-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-link:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .account-container {
+          padding: 1rem;
+        }
+        
+        .account-title {
+          font-size: 2rem;
+          letter-spacing: 0.1em;
+        }
+        
+        .account-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        
+        .profile-card,
+        .orders-card {
+          padding: 1.5rem;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        
+        .footer {
+          padding: 2rem 0 1rem;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="account-container">
+        <!-- Bat Logo Header -->
+        <div class="logo-header">
+            <div class="logo-container">
+                <img src="bat vector tracing1.svg" alt="NightKind Collective Logo" class="site-logo">
+            </div>
+            <div class="logo-glow"></div>
+        </div>
+
+        <div class="account-header">
+            <a href="/" class="back-link">← Back to NightKind Collective</a>
+            <h1 class="account-title">MY ACCOUNT</h1>
+            <p class="welcome-message" id="welcomeMessage">Welcome back!</p>
+        </div>
+
+        <div class="account-grid">
+            <!-- Profile Section -->
+            <div class="profile-card">
+                <h2 class="profile-title">Profile</h2>
+                <div class="profile-info">
+                    <div class="profile-label">Name</div>
+                    <div class="profile-value" id="userName">Loading...</div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-label">Email</div>
+                    <div class="profile-value" id="userEmail">Loading...</div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-label">Member Since</div>
+                    <div class="profile-value" id="userCreated">Loading...</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">LOGOUT</button>
+            </div>
+
+            <!-- Orders Section -->
+            <div class="orders-card">
+                <h2 class="orders-title">Order History</h2>
+                <div id="ordersList">
+                    <div class="no-orders">
+                        <div class="no-orders-icon">📦</div>
+                        <h3>No Orders Yet</h3>
+                        <p>Start shopping to see your order history here!</p>
+                        <p><a href="shop-categories.html" class="shop-link">Browse our collection →</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="footer-title">NightKind Collective</h3>
+                <p class="footer-description">
+                    Alternative fashion with purpose. Supporting Queensland bat rescue through authentic subcultural style.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-subtitle">Conservation</h4>
+                <p class="footer-text">
+                    Every purchase directly funds wildlife rescue operations and bat conservation efforts.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-subtitle">Community</h4>
+                <p class="footer-text">
+                    Building a community of like-minded individuals who share our passion for alternative fashion and wildlife conservation.
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copyright">
+                © 2025 NightKind Collective. All rights reserved. | 
+                <a href="privacy.html" class="footer-link">Privacy Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Check authentication status
+        function checkAuth() {
+            const user = localStorage.getItem('nightkindUser');
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'login.html';
+                return null;
+            }
+            return JSON.parse(user);
+        }
+
+        // Load user data
+        function loadUserData() {
+            const user = checkAuth();
+            if (!user) return;
+
+            // Update welcome message
+            document.getElementById('welcomeMessage').textContent = `Welcome back, ${user.name}!`;
+            
+            // Update profile information
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userEmail').textContent = user.email;
+            
+            // Format and display creation date
+            const createdDate = new Date(user.createdAt);
+            document.getElementById('userCreated').textContent = createdDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            // Load orders
+            loadOrders(user);
+        }
+
+        // Load user orders
+        function loadOrders(user) {
+            const ordersList = document.getElementById('ordersList');
+            
+            if (!user.orders || user.orders.length === 0) {
+                // Show no orders message (already in HTML)
+                return;
+            }
+
+            // Clear no orders message
+            ordersList.innerHTML = '';
+
+            // Display orders
+            user.orders.forEach(order => {
+                const orderElement = document.createElement('div');
+                orderElement.className = 'order-item';
+                
+                const orderDate = new Date(order.date);
+                const formattedDate = orderDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                orderElement.innerHTML = `
+                    <div class="order-header">
+                        <div class="order-number">Order #${order.id}</div>
+                        <div class="order-date">${formattedDate}</div>
+                        <div class="order-status">${order.status}</div>
+                    </div>
+                    <div class="order-items">
+                        ${order.items.map(item => `
+                            <div style="margin-bottom: 0.5rem;">
+                                <strong>${item.name}</strong> - Qty: ${item.quantity} - $${item.price.toFixed(2)}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="order-total">
+                        Total: $${order.total.toFixed(2)}
+                    </div>
+                `;
+
+                ordersList.appendChild(orderElement);
+            });
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('nightkindUser');
+            window.location.href = '/';
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadUserData);
+    </script>
+</body>
+</html> 

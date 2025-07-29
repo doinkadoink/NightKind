@@ -261,6 +261,85 @@
       // Also try when the window loads completely
       window.addEventListener('load', addLogoToMainPage);
 
+      // Add user account navigation
+      function addUserNavigation() {
+        // Look for navigation elements
+        const navElements = document.querySelectorAll('a[href="/about"], a[href="/contact"], a[href="/shop"]');
+        
+        navElements.forEach(navElement => {
+          const parent = navElement.parentElement;
+          if (parent && !parent.querySelector('.user-nav')) {
+            // Create user navigation container
+            const userNav = document.createElement('div');
+            userNav.className = 'user-nav';
+            userNav.style.cssText = `
+              display: flex;
+              gap: 1rem;
+              align-items: center;
+              margin-left: auto;
+            `;
+            
+            // Check if user is logged in
+            const user = localStorage.getItem('nightkindUser');
+            
+            if (user) {
+              // User is logged in - show account link
+              const accountLink = document.createElement('a');
+              accountLink.href = 'account.html';
+              accountLink.textContent = 'ACCOUNT';
+              accountLink.style.cssText = `
+                color: hsl(60, 100%, 65%);
+                text-decoration: none;
+                font-family: 'Courier Prime', monospace;
+                font-size: 0.9rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                transition: color 0.3s ease;
+              `;
+              accountLink.addEventListener('mouseenter', () => {
+                accountLink.style.color = 'hsl(0, 0%, 98%)';
+              });
+              accountLink.addEventListener('mouseleave', () => {
+                accountLink.style.color = 'hsl(60, 100%, 65%)';
+              });
+              
+              userNav.appendChild(accountLink);
+            } else {
+              // User is not logged in - show login link
+              const loginLink = document.createElement('a');
+              loginLink.href = 'login.html';
+              loginLink.textContent = 'LOGIN';
+              loginLink.style.cssText = `
+                color: hsl(60, 100%, 65%);
+                text-decoration: none;
+                font-family: 'Courier Prime', monospace;
+                font-size: 0.9rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                transition: color 0.3s ease;
+              `;
+              loginLink.addEventListener('mouseenter', () => {
+                loginLink.style.color = 'hsl(0, 0%, 98%)';
+              });
+              loginLink.addEventListener('mouseleave', () => {
+                loginLink.style.color = 'hsl(60, 100%, 65%)';
+              });
+              
+              userNav.appendChild(loginLink);
+            }
+            
+            // Add to navigation
+            parent.appendChild(userNav);
+          }
+        });
+      }
+
+      // Try to add user navigation
+      setTimeout(addUserNavigation, 1000);
+      setTimeout(addUserNavigation, 2000);
+      setTimeout(addUserNavigation, 3000);
+      window.addEventListener('load', addUserNavigation);
+
       // Add click handler for "Support Bats QLD" button
       function addBatsQLDButtonHandler() {
         const buttons = document.querySelectorAll('button, a, [class*="button"], [class*="btn"]');
