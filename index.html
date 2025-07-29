@@ -320,44 +320,8 @@
               });
               
               userNav.appendChild(accountLink);
-            } else {
-              // User is not logged in - show login link
-              const loginLink = document.createElement('a');
-              loginLink.href = 'login.html';
-              loginLink.textContent = 'LOGIN';
-              loginLink.style.cssText = `
-                color: hsl(60, 100%, 65%);
-                text-decoration: none;
-                font-family: 'Courier Prime', monospace;
-                font-size: 0.9rem;
-                text-transform: uppercase;
-                letter-spacing: 0.1em;
-                transition: all 0.3s ease;
-                padding: 0.75rem 1.5rem;
-                border: 1px solid hsl(60, 100%, 65%);
-                border-radius: 4px;
-                background: transparent;
-                cursor: pointer;
-                min-width: 100px;
-                text-align: center;
-                display: inline-block;
-                margin-left: 1rem;
-              `;
-              loginLink.addEventListener('mouseenter', () => {
-                loginLink.style.color = 'hsl(0, 0%, 9%)';
-                loginLink.style.background = 'hsl(60, 100%, 65%)';
-                loginLink.style.transform = 'translateY(-1px)';
-                loginLink.style.boxShadow = '0 4px 8px rgba(255, 215, 0, 0.3)';
-              });
-              loginLink.addEventListener('mouseleave', () => {
-                loginLink.style.color = 'hsl(60, 100%, 65%)';
-                loginLink.style.background = 'transparent';
-                loginLink.style.transform = 'translateY(0)';
-                loginLink.style.boxShadow = 'none';
-              });
-              
-              userNav.appendChild(loginLink);
             }
+            // Removed the else clause - no login button in header when user is not logged in
             
             // Add to navigation
             parent.appendChild(userNav);
@@ -654,12 +618,12 @@
               text-transform: uppercase !important;
               letter-spacing: 0.1em !important;
               transition: all 0.3s ease !important;
-              padding: 0.75rem 1.5rem !important;
+              padding: 0.75rem 2rem !important;
               border: 1px solid hsl(60, 100%, 65%) !important;
               border-radius: 4px !important;
               background: transparent !important;
               cursor: pointer !important;
-              min-width: 120px !important;
+              min-width: 140px !important;
               text-align: center !important;
               display: inline-block !important;
               margin: 0 0.5rem !important;
