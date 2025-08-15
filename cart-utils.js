@@ -237,16 +237,28 @@ class NightKindCart {
     localStorage.setItem('nightkindCartCount', count.toString());
   }
 
-  // Setup storage listener for cross-page communication
+  // Setup cross-page communication
   setupStorageListener() {
-    window.addEventListener('storage', (e) => {
-      if (e.key === 'nightkindCart') {
-        this.cart = JSON.parse(e.newValue || '[]');
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'nightkindCart') {
+        this.loadCart();
         this.updateCartCount();
-        this.notifyListeners();
-      } else if (e.key === 'nightkindWishlist') {
-        this.wishlist = JSON.parse(e.newValue || '[]');
         this.updateWishlistCount();
+        
+        // Dispatch custom event for other components
+        window.dispatchEvent(new CustomEvent('nightkindCartUpdated', {
+          detail: { cart: this.cart, wishlist: this.wishlist }
+        }));
+      }
+      
+      if (event.key === 'nightkindWishlist') {
+        this.loadWishlist();
+        this.updateWishlistCount();
+        
+        // Dispatch custom event for other components
+        window.dispatchEvent(new CustomEvent('nightkindWishlistUpdated', {
+          detail: { wishlist: this.wishlist }
+        }));
       }
     });
   }
@@ -504,7 +516,7 @@ class NightKindCart {
 
 // Notification system
 class CartNotification {
-  static show(message, type = 'success', duration = 3000) {
+  static show(message, type = 'success', duration = 4000) { // Increased default duration to 4 seconds
     // Remove existing notifications
     const existingNotifications = document.querySelectorAll('.cart-notification');
     existingNotifications.forEach(notification => {
@@ -540,7 +552,18 @@ class CartNotification {
       transition: transform 0.3s ease;
       max-width: 300px;
       word-wrap: break-word;
+      cursor: pointer;
     `;
+    
+    // Add click to dismiss functionality
+    notification.addEventListener('click', () => {
+      notification.style.transform = 'translateX(400px)';
+      setTimeout(() => {
+        if (document.body.contains(notification)) {
+          document.body.removeChild(notification);
+        }
+      }, 300);
+    });
     
     document.body.appendChild(notification);
     
@@ -549,7 +572,7 @@ class CartNotification {
       notification.style.transform = 'translateX(0)';
     }, 100);
     
-    // Hide notification
+    // Hide notification after duration
     setTimeout(() => {
       notification.style.transform = 'translateX(400px)';
       setTimeout(() => {
@@ -560,19 +583,19 @@ class CartNotification {
     }, duration);
   }
 
-  static success(message, duration) {
+  static success(message, duration = 4000) {
     this.show(message, 'success', duration);
   }
 
-  static error(message, duration) {
+  static error(message, duration = 5000) { // Longer duration for errors
     this.show(message, 'error', duration);
   }
 
-  static warning(message, duration) {
+  static warning(message, duration = 4000) {
     this.show(message, 'warning', duration);
   }
 
-  static info(message, duration) {
+  static info(message, duration = 4000) {
     this.show(message, 'info', duration);
   }
 }

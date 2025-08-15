@@ -12,6 +12,7 @@
     
     <link rel="stylesheet" href="fonts.css">
     <link rel="stylesheet" href="index-CZEDu5tD.css">
+    <link rel="stylesheet" href="cart-mini-panel.css">
     <style>
       .shop-container {
         max-width: 1200px;
@@ -239,244 +240,7 @@
         box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
       }
       
-      .cart-icon {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: #ffd700;
-        color: #000;
-        padding: 0.5rem;
-        border-radius: 50%;
-        cursor: pointer;
-        font-weight: bold;
-        z-index: 1000;
-        font-size: 1.2rem;
-        transition: transform 0.2s;
-      }
-      
-      .cart-icon:hover {
-        transform: scale(1.1);
-      }
-      
-      .cart-count {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        background: #ff4444;
-        color: white;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.8rem;
-      }
-
-      /* Cart Mini Panel Styles */
-      .cart-mini-panel {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 320px;
-        background: #2a2a2a;
-        border: 1px solid #444;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        z-index: 1001;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: all 0.3s ease;
-        margin-top: 10px;
-      }
-
-      .cart-mini-panel.show {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
-
-      .cart-mini-header {
-        background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
-        padding: 1rem;
-        border-bottom: 1px solid #444;
-        border-radius: 12px 12px 0 0;
-      }
-
-      .cart-mini-title {
-        color: #ffd700;
-        font-size: 1.1rem;
-        font-weight: bold;
-        margin: 0;
-        font-family: 'Courier Prime', monospace;
-      }
-
-      .cart-mini-content {
-        max-height: 300px;
-        overflow-y: auto;
-        padding: 0;
-      }
-
-      .cart-mini-item {
-        display: flex;
-        align-items: center;
-        padding: 1rem;
-        border-bottom: 1px solid #333;
-        transition: background-color 0.2s ease;
-      }
-
-      .cart-mini-item:hover {
-        background: #333;
-      }
-
-      .cart-mini-item:last-child {
-        border-bottom: none;
-      }
-
-      .cart-mini-item-image {
-        width: 40px;
-        height: 40px;
-        background: #444;
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        margin-right: 1rem;
-        flex-shrink: 0;
-      }
-
-      .cart-mini-item-details {
-        flex: 1;
-        min-width: 0;
-      }
-
-      .cart-mini-item-name {
-        color: #ffd700;
-        font-size: 0.9rem;
-        font-weight: bold;
-        margin: 0 0 0.25rem 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .cart-mini-item-size {
-        color: #888;
-        font-size: 0.8rem;
-        margin: 0 0 0.25rem 0;
-      }
-
-      .cart-mini-item-price {
-        color: #ccc;
-        font-size: 0.9rem;
-        font-weight: bold;
-        margin: 0;
-      }
-
-      .cart-mini-item-quantity {
-        display: flex;
-        align-items: center;
-        margin-left: 0.5rem;
-      }
-
-      .cart-mini-quantity-btn {
-        background: #444;
-        color: #fff;
-        border: none;
-        width: 24px;
-        height: 24px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.8rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.2s ease;
-      }
-
-      .cart-mini-quantity-btn:hover {
-        background: #555;
-      }
-
-      .cart-mini-quantity-display {
-        color: #fff;
-        font-size: 0.9rem;
-        margin: 0 0.5rem;
-        min-width: 20px;
-        text-align: center;
-      }
-
-      .cart-mini-footer {
-        background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
-        padding: 1rem;
-        border-top: 1px solid #444;
-        border-radius: 0 0 12px 12px;
-      }
-
-      .cart-mini-total {
-        color: #ffd700;
-        font-size: 1.1rem;
-        font-weight: bold;
-        margin: 0 0 1rem 0;
-        text-align: center;
-        font-family: 'Courier Prime', monospace;
-      }
-
-      .cart-mini-actions {
-        display: flex;
-        gap: 0.5rem;
-      }
-
-      .cart-mini-btn {
-        flex: 1;
-        background: #ffd700;
-        color: #000;
-        border: none;
-        padding: 0.75rem;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 0.9rem;
-        transition: all 0.2s ease;
-        text-decoration: none;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .cart-mini-btn:hover {
-        background: #ffed4e;
-        transform: translateY(-1px);
-      }
-
-      .cart-mini-btn.secondary {
-        background: #444;
-        color: #fff;
-      }
-
-      .cart-mini-btn.secondary:hover {
-        background: #555;
-      }
-
-      .cart-mini-empty {
-        padding: 2rem;
-        text-align: center;
-        color: #888;
-      }
-
-      .cart-mini-empty-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        opacity: 0.5;
-      }
-
-      .cart-mini-empty-text {
-        font-size: 1rem;
-        margin: 0;
-      }
+             /* Cart functionality is now handled by cart-mini-panel.css */
 
       /* Cart Notification Styles */
       .cart-notification {
@@ -517,27 +281,23 @@
     </style>
   </head>
   <body>
-    <div class="cart-icon" id="cartIcon">
-      🛒
-      <div class="cart-count" id="cartCount">0</div>
-      
-      <!-- Cart Mini Panel -->
-      <div class="cart-mini-panel" id="cartMiniPanel">
-        <div class="cart-mini-header">
-          <h3 class="cart-mini-title">Shopping Cart</h3>
-        </div>
-        <div class="cart-mini-content" id="cartMiniContent">
-          <!-- Cart items will be loaded here -->
-        </div>
-        <div class="cart-mini-footer">
-          <div class="cart-mini-total" id="cartMiniTotal">Total: $0.00</div>
-          <div class="cart-mini-actions">
-            <a href="cart.html" class="cart-mini-btn">View Cart</a>
-            <button class="cart-mini-btn secondary" onclick="clearCart()">Clear</button>
-          </div>
-        </div>
-      </div>
-    </div>
+         <!-- Cart Icon -->
+     <div class="cart-icon" onclick="window.location.href='cart.html'">
+       <div class="cart-count" id="cartCount">0</div>
+     </div>
+     
+     <!-- Cart Mini Panel -->
+     <div class="cart-mini-panel" id="cartMiniPanel">
+       <div class="cart-mini-header">
+         <h3 class="cart-mini-title">Shopping Cart</h3>
+       </div>
+       <div class="cart-mini-content" id="cartMiniContent">
+         <!-- Cart items will be loaded here -->
+       </div>
+       <div class="cart-mini-footer" id="cartMiniFooter">
+         <!-- Cart footer will be loaded here -->
+       </div>
+     </div>
     
     <div class="shop-container">
       <!-- Bat Logo Header -->
@@ -562,6 +322,7 @@
     </div>
     
     <script src="cart-utils.js"></script>
+    <script src="cart-mini-panel.js"></script>
     <script>
       // Product data for keychains
       const keychains = [
@@ -696,7 +457,7 @@
       }
 
       function hideCartMiniPanelDelayed() {
-        setTimeout(hideCartMiniPanel, 300);
+        setTimeout(hideCartMiniPanel, 1500); // Increased delay to 1.5 seconds for better usability
       }
 
       function renderCartMiniPanel() {
