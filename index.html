@@ -36,6 +36,43 @@
         }
       }
       
+      /* Fix floating header - make it stick to top when scrolling */
+      header, nav, [class*="header"], [class*="nav"] {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1000 !important;
+        background: hsl(0, 0%, 8%) !important;
+        backdrop-filter: blur(10px) !important;
+        border-bottom: 1px solid hsl(0, 0%, 14.9%) !important;
+        box-shadow: 0 4px 20px hsla(0, 0%, 0%, 0.3) !important;
+      }
+      
+      /* Ensure the header has proper background and styling */
+      .border-b.border-border.bg-background\/95,
+      nav.border-b.border-border.bg-background\/95 {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1000 !important;
+        background: hsla(0, 0%, 8%, 0.95) !important;
+        backdrop-filter: blur(10px) !important;
+        border-bottom: 1px solid hsl(0, 0%, 14.9%) !important;
+        box-shadow: 0 4px 20px hsla(0, 0%, 0%, 0.3) !important;
+      }
+      
+      /* Add top padding to body to account for fixed header */
+      body {
+        padding-top: 80px !important;
+      }
+      
+      /* Ensure main content doesn't overlap with fixed header */
+      main, .main, [class*="main"], #root > *:first-child {
+        margin-top: 80px !important;
+      }
+      
       /* Adjust overlay height to accommodate the logo */
       .absolute.inset-0.bg-black\/60 {
         height: auto !important;
@@ -1346,6 +1383,64 @@
       setTimeout(addFooter, 2000);
       setTimeout(addFooter, 3000);
       window.addEventListener('load', addFooter);
+
+      // Fix header floating behavior
+      function fixHeaderFloating() {
+        // Find all header/nav elements
+        const headerElements = document.querySelectorAll('header, nav, [class*="header"], [class*="nav"]');
+        
+        headerElements.forEach(header => {
+          if (!header.hasAttribute('data-floating-fixed')) {
+            header.setAttribute('data-floating-fixed', 'true');
+            
+            // Apply floating styles
+            header.style.cssText += `
+              position: fixed !important;
+              top: 0 !important;
+              left: 0 !important;
+              right: 0 !important;
+              z-index: 1000 !important;
+              background: hsla(0, 0%, 8%, 0.95) !important;
+              backdrop-filter: blur(10px) !important;
+              border-bottom: 1px solid hsl(0, 0%, 14.9%) !important;
+              box-shadow: 0 4px 20px hsla(0, 0%, 0%, 0.3) !important;
+            `;
+            
+            console.log('Fixed header floating behavior for:', header);
+          }
+        });
+        
+        // Also fix specific Tailwind classes
+        const tailwindHeaders = document.querySelectorAll('.border-b.border-border.bg-background\\/95');
+        tailwindHeaders.forEach(header => {
+          if (!header.hasAttribute('data-tailwind-fixed')) {
+            header.setAttribute('data-tailwind-fixed', 'true');
+            
+            header.style.cssText += `
+              position: fixed !important;
+              top: 0 !important;
+              left: 0 !important;
+              right: 0 !important;
+              z-index: 1000 !important;
+              background: hsla(0, 0%, 8%, 0.95) !important;
+              backdrop-filter: blur(10px) !important;
+              border-bottom: 1px solid hsl(0, 0%, 14.9%) !important;
+              box-shadow: 0 4px 20px hsla(0, 0%, 0%, 0.3) !important;
+            `;
+            
+            console.log('Fixed Tailwind header floating behavior for:', header);
+          }
+        });
+      }
+
+      // Try to fix header floating multiple times
+      setTimeout(fixHeaderFloating, 100);
+      setTimeout(fixHeaderFloating, 500);
+      setTimeout(fixHeaderFloating, 1000);
+      setTimeout(fixHeaderFloating, 2000);
+      setTimeout(fixHeaderFloating, 3000);
+      setTimeout(fixHeaderFloating, 5000);
+      window.addEventListener('load', fixHeaderFloating);
 
             // Fix hero section login button to match OUR MISSION button
       function fixHeroLoginButton() {
