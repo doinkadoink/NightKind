@@ -198,6 +198,20 @@
           inset 0 0 20px hsla(60, 100%, 65%, 0.05);
       }
 
+      .mobile-nav-menu .cart-link {
+        background: hsla(60, 100%, 65%, 0.1);
+        border-color: hsl(60, 100%, 65%);
+        color: hsl(60, 100%, 65%);
+      }
+
+      .mobile-nav-menu .cart-link:hover {
+        background: hsla(60, 100%, 65%, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 
+          0 12px 40px hsla(60, 100%, 65%, 0.3),
+          0 0 0 1px hsla(60, 100%, 65%, 0.2);
+      }
+
       .mobile-nav-menu .close-btn {
         position: absolute;
         top: 2rem;
@@ -496,6 +510,7 @@
             <a href="shop-categories.html" class="nav-link">Shop</a>
             <a href="about.html" class="nav-link">About</a>
             <a href="contact.html" class="nav-link">Contact</a>
+            <a href="cart.html" class="nav-link cart-link">🛒 Cart</a>
           </div>
         `;
 

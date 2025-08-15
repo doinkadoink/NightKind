@@ -220,6 +220,18 @@
         margin-bottom: 1.5rem;
       }
       
+      .conservation-impact {
+        color: #4CAF50;
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        background: rgba(76, 175, 80, 0.1);
+        border: 1px solid rgba(76, 175, 80, 0.3);
+        border-radius: 6px;
+        text-align: center;
+      }
+      
       .add-to-cart-btn {
         background: #ffd700;
         color: #000;
@@ -272,12 +284,437 @@
         justify-content: center;
         font-size: 0.8rem;
       }
+
+      .wishlist-icon {
+        position: fixed;
+        top: 20px;
+        right: 80px;
+        background: #ff6b6b;
+        color: white;
+        padding: 0.5rem;
+        border-radius: 50%;
+        cursor: pointer;
+        font-weight: bold;
+        z-index: 1000;
+        font-size: 1.2rem;
+        transition: transform 0.2s;
+      }
+      
+      .wishlist-icon:hover {
+        transform: scale(1.1);
+      }
+      
+      .wishlist-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ff4444;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+      }
+
+      /* Cart Mini Panel Styles */
+      .cart-mini-panel {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 320px;
+        background: #2a2a2a;
+        border: 1px solid #444;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        margin-top: 10px;
+      }
+
+      .cart-mini-panel.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .cart-mini-header {
+        background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+        padding: 1rem;
+        border-bottom: 1px solid #444;
+        border-radius: 12px 12px 0 0;
+      }
+
+      .cart-mini-title {
+        color: #ffd700;
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin: 0;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .cart-mini-content {
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 0;
+      }
+
+      .cart-mini-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        border-bottom: 1px solid #444;
+        transition: background-color 0.2s ease;
+      }
+
+      .cart-mini-item:hover {
+        background-color: #333;
+      }
+
+      .cart-mini-item:last-child {
+        border-bottom: none;
+      }
+
+      .cart-mini-item-image {
+        font-size: 2rem;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #333;
+        border-radius: 8px;
+        flex-shrink: 0;
+      }
+
+      .cart-mini-item-details {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .cart-mini-item-name {
+        color: #ffd700;
+        font-weight: bold;
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .cart-mini-item-size {
+        color: #ccc;
+        font-size: 0.8rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .cart-mini-item-price {
+        color: #ffd700;
+        font-weight: bold;
+        font-size: 0.9rem;
+      }
+
+      .cart-mini-item-quantity {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+      }
+
+      .cart-mini-quantity-btn {
+        background: #444;
+        color: #ccc;
+        border: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .cart-mini-quantity-btn:hover {
+        background: #ffd700;
+        color: #000;
+      }
+
+      .cart-mini-quantity-display {
+        color: #ccc;
+        font-weight: bold;
+        min-width: 20px;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+
+      .cart-mini-footer {
+        background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+        padding: 1rem;
+        border-top: 1px solid #444;
+        border-radius: 0 0 12px 12px;
+      }
+
+      .cart-mini-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        color: #ffd700;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      .cart-mini-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .cart-mini-btn {
+        flex: 1;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: all 0.2s ease;
+        font-size: 0.8rem;
+      }
+
+      .cart-mini-btn.primary {
+        background: #ffd700;
+        color: #000;
+      }
+
+      .cart-mini-btn.primary:hover {
+        background: #ffed4e;
+        transform: translateY(-1px);
+      }
+
+      .cart-mini-btn.secondary {
+        background: transparent;
+        color: #ccc;
+        border: 1px solid #444;
+      }
+
+      .cart-mini-btn.secondary:hover {
+        background: #444;
+        color: #fff;
+        border-color: #666;
+      }
+
+      .cart-mini-empty {
+        padding: 2rem;
+        text-align: center;
+        color: #888;
+      }
+
+      .cart-mini-empty-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      .cart-mini-empty-text {
+        font-size: 1rem;
+        margin: 0;
+      }
+
+      /* New styles for size selection */
+      .size-selection {
+        margin-bottom: 1.5rem;
+        text-align: left;
+        padding-left: 10px; /* Align with price */
+      }
+
+      .size-selection label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #ffd700;
+        font-size: 0.9rem;
+        font-weight: bold;
+      }
+
+      .size-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+
+      .size-btn {
+        background: #444;
+        color: #ccc;
+        border: 1px solid #666;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        min-width: 60px;
+        text-align: center;
+      }
+
+      .size-btn:hover {
+        background: #666;
+        border-color: #ffd700;
+        color: #ffd700;
+      }
+
+      .size-btn.selected {
+        background: #ffd700;
+        color: #000;
+        border-color: #ffd700;
+      }
+
+      /* Notification styles */
+      .cart-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #4CAF50;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        z-index: 10000;
+        font-family: 'Courier Prime', monospace;
+        font-weight: bold;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+      }
+
+      .cart-notification.error {
+        background: #f44336;
+      }
+
+      .cart-notification.success {
+        background: #4CAF50;
+      }
+
+      .cart-notification.warning {
+        background: #ff9800;
+      }
+
+      /* Wishlist button styles */
+      .wishlist-btn {
+        background: transparent;
+        color: #ff6b6b;
+        border: 2px solid #ff6b6b;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        margin-bottom: 1rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .wishlist-btn:hover {
+        background: #ff6b6b;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+      }
+
+      .wishlist-btn.in-wishlist {
+        background: #ff6b6b;
+        color: white;
+      }
+
+      .wishlist-btn.in-wishlist:hover {
+        background: #ff4444;
+        border-color: #ff4444;
+      }
+
+      /* Product card enhancements */
+      .product-card {
+        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+        border: 1px solid #444;
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .product-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+          transparent 0%, 
+          hsla(270, 100%, 70%, 0.1) 50%, 
+          transparent 100%);
+        transition: left 0.6s ease;
+        z-index: 1;
+      }
+
+      .product-card:hover::before {
+        left: 100%;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px hsla(270, 100%, 70%, 0.2);
+        border-color: hsla(270, 100%, 70%, 0.5);
+      }
+
+      .product-image {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        filter: drop-shadow(0 0 10px hsla(270, 100%, 70%, 0.5));
+        transition: all 0.3s ease;
+      }
+
+      .product-card:hover .product-image {
+        filter: drop-shadow(0 0 20px hsla(270, 100%, 70%, 0.8));
+        transform: scale(1.1);
+      }
     </style>
   </head>
   <body>
     <div class="cart-icon" onclick="window.location.href='cart.html'">
       🛒
       <div class="cart-count" id="cartCount">0</div>
+      
+      <!-- Cart Mini Panel -->
+      <div class="cart-mini-panel" id="cartMiniPanel">
+        <div class="cart-mini-header">
+          <h3 class="cart-mini-title">Shopping Cart</h3>
+        </div>
+        <div class="cart-mini-content" id="cartMiniContent">
+          <!-- Cart items will be loaded here -->
+        </div>
+        <div class="cart-mini-footer" id="cartMiniFooter">
+          <!-- Cart footer will be loaded here -->
+        </div>
+      </div>
+    </div>
+    
+    <div class="wishlist-icon" onclick="window.location.href='cart.html#wishlist'">
+      ❤️
+      <div class="wishlist-count" id="wishlistCount">0</div>
     </div>
     
     <div class="shop-container">
@@ -302,137 +739,123 @@
       </div>
     </div>
     
+    <script src="cart-utils.js"></script>
+    <script src="products.js"></script>
     <script>
-      // Product data for stickers
-      const stickers = [
-        {
-          id: 'sticker-1',
-          name: 'Gothic Bat Silhouette',
-          description: 'Elegant black bat with gothic details',
-          price: 5.00,
-          image: '🦇'
-        },
-        {
-          id: 'sticker-2',
-          name: 'Moonlit Bat',
-          description: 'Bat flying across a crescent moon',
-          price: 6.00,
-          image: '🌙'
-        },
-        {
-          id: 'sticker-3',
-          name: 'Vampire Bat',
-          description: 'Detailed vampire bat with red accents',
-          price: 7.00,
-          image: '🦇'
-        },
-        {
-          id: 'sticker-4',
-          name: 'Bat Skull',
-          description: 'Stylized bat skull with occult symbols',
-          price: 8.00,
-          image: '💀'
-        },
-        {
-          id: 'sticker-5',
-          name: 'Flying Bat Pack',
-          description: 'Set of 3 flying bat designs',
-          price: 12.00,
-          image: '🦇'
-        },
-        {
-          id: 'sticker-6',
-          name: 'Conservation Bat',
-          description: 'Bat with "Save the Bats" message',
-          price: 5.50,
-          image: '🦇'
-        },
-        {
-          id: 'sticker-7',
-          name: 'Gothic Cross Bat',
-          description: 'Bat with gothic cross design',
-          price: 6.50,
-          image: '✝️'
-        },
-        {
-          id: 'sticker-8',
-          name: 'Night Hunter',
-          description: 'Bat in hunting pose with stars',
-          price: 7.50,
-          image: '⭐'
-        },
-        {
-          id: 'sticker-9',
-          name: 'Bat Wings',
-          description: 'Detailed bat wing anatomy',
-          price: 6.00,
-          image: '🦇'
-        },
-        {
-          id: 'sticker-10',
-          name: 'Echo Location',
-          description: 'Bat with sound wave patterns',
-          price: 5.00,
-          image: '📡'
-        },
-        {
-          id: 'sticker-11',
-          name: 'Cave Dweller',
-          description: 'Bat in cave setting',
-          price: 6.00,
-          image: '🕳️'
-        },
-        {
-          id: 'sticker-12',
-          name: 'Bat Family',
-          description: 'Mother and baby bat design',
-          price: 8.00,
-          image: '🦇'
-        }
-      ];
-      
-      // Cart functionality
-      let cart = JSON.parse(localStorage.getItem('nightkindCart')) || [];
+      // Enhanced cart functionality using cart utilities and product catalog
+      let selectedSizes = {};
       
       function updateCartCount() {
-        const count = cart.reduce((total, item) => total + item.quantity, 0);
-        document.getElementById('cartCount').textContent = count;
+        // This is now handled by the cart utility
+        nightkindCart.updateCartCount();
+        nightkindCart.updateWishlistCount();
       }
-      
-      function addToCart(product) {
-        const existingItem = cart.find(item => item.id === product.id);
-        if (existingItem) {
-          existingItem.quantity += 1;
-        } else {
-          cart.push({ ...product, quantity: 1 });
+
+      function addToCart(product, size = null) {
+        try {
+          // Validate size selection
+          if (product.sizes && product.sizes.length > 1 && !size) {
+            CartNotification.error('Please select a size');
+            return;
+          }
+          
+          // Add to cart using utility
+          const finalSize = size || (product.sizes ? product.sizes[0] : null);
+          nightkindCart.addToCart(product, finalSize, 1);
+          
+          // Show success notification
+          CartNotification.success('Added to cart!');
+          
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          CartNotification.error('Failed to add item to cart');
         }
-        localStorage.setItem('nightkindCart', JSON.stringify(cart));
-        updateCartCount();
-        
-        // Show feedback
-        const btn = event.target;
-        const originalText = btn.textContent;
-        btn.textContent = 'Added!';
-        btn.style.background = '#4CAF50';
-        setTimeout(() => {
-          btn.textContent = originalText;
-          btn.style.background = '#ffd700';
-        }, 1000);
       }
-      
+
+      function addToWishlist(product) {
+        try {
+          nightkindCart.addToWishlist(product);
+          CartNotification.success('Added to wishlist!');
+          renderProducts(); // Re-render to update wishlist button state
+        } catch (error) {
+          console.error('Error adding to wishlist:', error);
+          CartNotification.error('Failed to add to wishlist');
+        }
+      }
+
+      function removeFromWishlist(productId) {
+        try {
+          if (nightkindCart.removeFromWishlist(productId)) {
+            CartNotification.warning('Removed from wishlist');
+            renderProducts(); // Re-render to update wishlist button state
+          }
+        } catch (error) {
+          console.error('Error removing from wishlist:', error);
+          CartNotification.error('Failed to remove from wishlist');
+        }
+      }
+
+      function isInWishlist(productId) {
+        return nightkindCart.getWishlistItems().some(item => item.id === productId);
+      }
+
+      function selectSize(productId, size) {
+        selectedSizes[productId] = size;
+        
+        // Update UI to show selected size
+        const sizeButtons = document.querySelectorAll(`[data-product="${productId}"] .size-btn`);
+        sizeButtons.forEach(btn => {
+          btn.classList.remove('selected');
+          if (btn.textContent === size) {
+            btn.classList.add('selected');
+          }
+        });
+      }
+
       function renderProducts() {
         const grid = document.getElementById('productGrid');
-        grid.innerHTML = stickers.map(product => `
-          <div class="product-card">
-            <div class="product-image">${product.image}</div>
-            <h3 class="product-title">${product.name}</h3>
-            <p class="product-description">${product.description}</p>
-            <div class="product-price">$${product.price.toFixed(2)}</div>
-            <button class="add-to-cart-btn" onclick="addToCart(${JSON.stringify(product)})">
-              Add to Cart
-            </button>
-          </div>
-        `).join('');
+        const products = ProductUtils.getProductsByCategory('stickers');
+        
+        grid.innerHTML = products.map(product => {
+          const inWishlist = isInWishlist(product.id);
+          const wishlistBtnText = inWishlist ? '❤️ Remove from Wishlist' : '🤍 Add to Wishlist';
+          const wishlistBtnClass = inWishlist ? 'wishlist-btn in-wishlist' : 'wishlist-btn';
+          const wishlistBtnOnclick = inWishlist ? 
+            `removeFromWishlist('${product.id}')` : 
+            `addToWishlist(${JSON.stringify(product)})`;
+          
+          return `
+            <div class="product-card" data-product="${product.id}">
+              <div class="product-image">${product.image}</div>
+              <h3 class="product-title">${product.name}</h3>
+              <p class="product-description">${product.description}</p>
+              <div class="product-price">$${product.price.toFixed(2)}</div>
+              <div class="conservation-impact">${product.conservationImpact}</div>
+              
+              ${product.sizes && product.sizes.length > 1 ? `
+                <div class="size-selection">
+                  <label>Size:</label>
+                  <div class="size-buttons">
+                    ${product.sizes.map(size => `
+                      <button class="size-btn ${size === (selectedSizes[product.id] || product.sizes[0]) ? 'selected' : ''}" 
+                              onclick="selectSize('${product.id}', '${size}')">
+                        ${size}
+                      </button>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+              
+              <button class="${wishlistBtnClass}" onclick="${wishlistBtnOnclick}">
+                ${wishlistBtnText}
+              </button>
+              
+              <button class="add-to-cart-btn" onclick="addToCart(${JSON.stringify(product)}, '${selectedSizes[product.id] || (product.sizes ? product.sizes[0] : null)}')">
+                Add to Cart
+              </button>
+            </div>
+          `;
+        }).join('');
       }
       
       // Initialize page

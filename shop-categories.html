@@ -484,6 +484,238 @@
         font-weight: bold;
       }
 
+      /* Cart Mini Panel */
+      .cart-mini-panel {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        width: 350px;
+        max-height: 500px;
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        box-shadow: 0 10px 40px hsla(270, 45%, 15%, 0.8);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+
+      .cart-mini-panel.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .cart-mini-header {
+        background: hsl(var(--secondary));
+        color: hsl(0, 0%, 9%);
+        padding: 1rem 1.5rem;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .cart-mini-title {
+        font-size: 1.1rem;
+      }
+
+      .cart-mini-close {
+        background: none;
+        border: none;
+        color: hsl(0, 0%, 9%);
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: background 0.2s ease;
+      }
+
+      .cart-mini-close:hover {
+        background: hsla(0, 0%, 0%, 0.1);
+      }
+
+      .cart-mini-content {
+        max-height: 350px;
+        overflow-y: auto;
+        padding: 1rem;
+      }
+
+      .cart-mini-item {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        border-bottom: 1px solid hsl(var(--border));
+        align-items: center;
+      }
+
+      .cart-mini-item:last-child {
+        border-bottom: none;
+      }
+
+      .cart-mini-item-image {
+        font-size: 2rem;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: hsla(270, 100%, 70%, 0.1);
+        border-radius: 6px;
+        border: 1px solid hsla(270, 100%, 70%, 0.3);
+        flex-shrink: 0;
+      }
+
+      .cart-mini-item-details {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .cart-mini-item-name {
+        color: hsl(var(--foreground));
+        font-weight: bold;
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .cart-mini-item-size {
+        color: hsl(var(--secondary));
+        font-size: 0.8rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .cart-mini-item-price {
+        color: hsl(var(--secondary));
+        font-weight: bold;
+        font-size: 0.9rem;
+      }
+
+      .cart-mini-item-quantity {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-left: auto;
+      }
+
+      .cart-mini-quantity-btn {
+        background: hsl(var(--secondary));
+        color: hsl(0, 0%, 9%);
+        border: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .cart-mini-quantity-btn:hover {
+        background: hsl(var(--secondary) / 0.8);
+        transform: scale(1.1);
+      }
+
+      .cart-mini-quantity-display {
+        color: hsl(var(--foreground));
+        font-weight: bold;
+        min-width: 20px;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+
+      .cart-mini-footer {
+        background: hsl(var(--muted));
+        padding: 1rem 1.5rem;
+        border-top: 1px solid hsl(var(--border));
+      }
+
+      .cart-mini-total {
+        display: flex;
+        justify-content: space-between;
+        color: hsl(var(--secondary));
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .cart-mini-actions {
+        display: flex;
+        gap: 0.75rem;
+      }
+
+      .cart-mini-btn {
+        flex: 1;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.8rem;
+        transition: all 0.2s ease;
+      }
+
+      .cart-mini-btn.primary {
+        background: hsl(var(--secondary));
+        color: hsl(0, 0%, 9%);
+      }
+
+      .cart-mini-btn.primary:hover {
+        background: hsl(var(--secondary) / 0.8);
+        transform: translateY(-1px);
+      }
+
+      .cart-mini-btn.secondary {
+        background: transparent;
+        color: hsl(var(--muted-foreground));
+        border: 1px solid hsl(var(--border));
+      }
+
+      .cart-mini-btn.secondary:hover {
+        color: hsl(var(--foreground));
+        border-color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.1);
+      }
+
+      .cart-mini-empty {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: hsl(var(--muted-foreground));
+      }
+
+      .cart-mini-empty .icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      .cart-mini-empty h3 {
+        color: hsl(var(--muted-foreground));
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .cart-mini-empty p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
       @media (max-width: 768px) {
         .shop-title {
           font-size: 2.5rem;
@@ -500,9 +732,40 @@
     </style>
   </head>
   <body>
-    <div class="cart-icon" onclick="window.location.href='cart.html'">
+    <div class="cart-icon" id="cartIcon">
       🛒
       <div class="cart-count" id="cartCount">0</div>
+      
+      <!-- Cart Mini Panel -->
+      <div class="cart-mini-panel" id="cartMiniPanel">
+        <div class="cart-mini-header">
+          <h3 class="cart-mini-title">Shopping Cart</h3>
+        </div>
+        <div class="cart-mini-content" id="cartMiniContent">
+          <!-- Cart items will be loaded here -->
+        </div>
+        <div class="cart-mini-footer">
+          <div class="cart-mini-total" id="cartMiniTotal">Total: $0.00</div>
+          <div class="cart-mini-actions">
+            <a href="cart.html" class="cart-mini-btn">View Cart</a>
+            <button class="cart-mini-btn secondary" onclick="clearCart()">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Mini Panel -->
+    <div class="cart-mini-panel" id="cartMiniPanel">
+      <div class="cart-mini-header">
+        <span class="cart-mini-title">Shopping Cart</span>
+        <button class="cart-mini-close" onclick="hideCartMiniPanel()">×</button>
+      </div>
+      <div class="cart-mini-content" id="cartMiniContent">
+        <!-- Cart items will be loaded here -->
+      </div>
+      <div class="cart-mini-footer" id="cartMiniFooter">
+        <!-- Cart footer will be loaded here -->
+      </div>
     </div>
 
     <div class="shop-container">
@@ -703,14 +966,147 @@
       }
     </style>
 
+    <script src="cart-utils.js"></script>
     <script>
-      // Cart functionality
-      let cart = JSON.parse(localStorage.getItem('nightkindCart')) || [];
+      // Cart functionality using cart utilities
       
       function updateCartCount() {
-        const count = cart.reduce((total, item) => total + item.quantity, 0);
-        document.getElementById('cartCount').textContent = count;
+        // This is now handled by the cart utility
+        nightkindCart.updateCartCount();
       }
+
+      // Cart Mini Panel functionality
+      let cartMiniPanelTimeout;
+
+      function showCartMiniPanel() {
+        clearTimeout(cartMiniPanelTimeout);
+        const panel = document.getElementById('cartMiniPanel');
+        panel.classList.add('show');
+        renderCartMiniPanel();
+      }
+
+      function hideCartMiniPanel() {
+        const panel = document.getElementById('cartMiniPanel');
+        panel.classList.remove('show');
+      }
+
+      function hideCartMiniPanelDelayed() {
+        cartMiniPanelTimeout = setTimeout(hideCartMiniPanel, 500);
+      }
+
+      // Cart mini panel event listeners
+      document.addEventListener('DOMContentLoaded', function() {
+        const cartIcon = document.querySelector('.cart-icon');
+        const cartMiniPanel = document.getElementById('cartMiniPanel');
+
+        // Show panel on hover
+        cartIcon.addEventListener('mouseenter', showCartMiniPanel);
+        cartIcon.addEventListener('mouseleave', hideCartMiniPanelDelayed);
+
+        // Keep panel open when hovering over it
+        cartMiniPanel.addEventListener('mouseenter', () => {
+          clearTimeout(cartMiniPanelTimeout);
+        });
+
+        cartMiniPanel.addEventListener('mouseleave', hideCartMiniPanelDelayed);
+      });
+
+      // Render cart mini panel
+      function renderCartMiniPanel() {
+        const content = document.getElementById('cartMiniContent');
+        const footer = document.getElementById('cartMiniFooter');
+
+        if (nightkindCart.isEmpty()) {
+          content.innerHTML = `
+            <div class="cart-mini-empty">
+              <div class="icon">🛒</div>
+              <h3>Your cart is empty</h3>
+              <p>Add some NightKind products to get started!</p>
+            </div>
+          `;
+          footer.innerHTML = `
+            <div class="cart-mini-actions">
+              <button class="cart-mini-btn secondary" onclick="window.location.href='shop-categories.html'">
+                Browse Products
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        // Render cart items
+        const cartItems = nightkindCart.getItems().slice(0, 3).map(item => `
+          <div class="cart-mini-item">
+            <div class="cart-mini-item-image">${item.image}</div>
+            <div class="cart-mini-item-details">
+              <div class="cart-mini-item-name">${item.name}</div>
+              ${item.size ? `<div class="cart-mini-item-size">Size: ${item.size}</div>` : ''}
+              <div class="cart-mini-item-price">$${item.price.toFixed(2)}</div>
+            </div>
+            <div class="cart-mini-item-quantity">
+              <button class="cart-mini-quantity-btn" onclick="updateCartItemQuantity('${item.id}', '${item.size || ''}', -1)">-</button>
+              <div class="cart-mini-quantity-display">${item.quantity}</div>
+              <button class="cart-mini-quantity-btn" onclick="updateCartItemQuantity('${item.id}', '${item.size || ''}', 1)">+</button>
+            </div>
+          </div>
+        `).join('');
+
+        // Add "more items" indicator if there are more than 3 items
+        if (nightkindCart.getItems().length > 3) {
+          cartItems += `
+            <div class="cart-mini-item" style="justify-content: center; color: hsl(var(--muted-foreground)); font-style: italic;">
+              +${nightkindCart.getItems().length - 3} more items
+            </div>
+          `;
+        }
+
+        content.innerHTML = cartItems;
+
+        // Calculate totals
+        const totals = nightkindCart.getCartTotal();
+
+        // Render footer
+        footer.innerHTML = `
+          <div class="cart-mini-total">
+            <span>Total:</span>
+            <span>$${totals.total.toFixed(2)}</span>
+          </div>
+          <div class="cart-mini-actions">
+            <button class="cart-mini-btn secondary" onclick="window.location.href='cart.html'">
+              View Cart
+            </button>
+            <button class="cart-mini-btn primary" onclick="window.location.href='cart.html'">
+              Checkout
+            </button>
+          </div>
+        `;
+      }
+
+      // Update cart item quantity from mini panel
+      function updateCartItemQuantity(itemId, size, change) {
+        const result = nightkindCart.updateQuantity(itemId, size, change);
+        
+        switch (result) {
+          case 'updated':
+            renderCartMiniPanel();
+            break;
+          case 'removed':
+            renderCartMiniPanel();
+            break;
+          case 'max_exceeded':
+            CartNotification.error('Maximum quantity is 99');
+            return;
+          case 'not_found':
+            CartNotification.error('Item not found in cart');
+            return;
+        }
+      }
+
+      // Listen for cart updates from other pages
+      nightkindCart.addListener(() => {
+        updateCartCount();
+        renderCartMiniPanel();
+      });
 
       // Update footer user link based on login status
       function updateFooterUserLink() {
