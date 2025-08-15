@@ -48,6 +48,390 @@
         min-height: auto !important;
         padding: 8rem 0 2rem 0 !important;
       }
+
+      /* Mobile Navigation Styles */
+      .mobile-nav-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 25px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 1001;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .mobile-nav-toggle span {
+        width: 100%;
+        height: 3px;
+        background: hsl(60, 100%, 65%);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+        transform-origin: center;
+      }
+
+      .mobile-nav-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .mobile-nav-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .mobile-nav-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      .mobile-nav-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, hsl(0, 0%, 8%), hsl(0, 0%, 12%));
+        z-index: 1000;
+        padding: 6rem 2rem 2rem;
+        overflow-y: auto;
+      }
+
+      .mobile-nav-menu.active {
+        display: block;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      .mobile-nav-menu .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+
+      .mobile-nav-menu .nav-link {
+        color: hsl(60, 100%, 85%);
+        text-decoration: none;
+        font-family: 'Courier Prime', monospace;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s ease;
+        padding: 1.5rem 3rem;
+        border: 2px solid transparent;
+        border-radius: 12px;
+        position: relative;
+        overflow: hidden;
+        background: hsla(0, 0%, 8%, 0.4);
+        backdrop-filter: blur(10px);
+        min-width: 250px;
+        text-align: center;
+        font-weight: 500;
+        box-shadow: 0 4px 20px hsla(0, 0%, 0%, 0.3);
+      }
+
+      .mobile-nav-menu .nav-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+          transparent, 
+          hsla(60, 100%, 65%, 0.3), 
+          transparent
+        );
+        transition: left 0.8s ease;
+        z-index: -1;
+      }
+
+      .mobile-nav-menu .nav-link::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, 
+          hsla(60, 100%, 65%, 0.05), 
+          transparent 30%, 
+          transparent 70%, 
+          hsla(60, 100%, 65%, 0.05)
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 10px;
+      }
+
+      .mobile-nav-menu .nav-link:hover::before {
+        left: 100%;
+      }
+
+      .mobile-nav-menu .nav-link:hover::after {
+        opacity: 1;
+      }
+
+      .mobile-nav-menu .nav-link:hover {
+        color: hsl(0, 0%, 98%);
+        border-color: hsl(60, 100%, 65%);
+        transform: translateY(-3px);
+        box-shadow: 
+          0 12px 40px hsla(60, 100%, 65%, 0.2),
+          0 0 0 1px hsla(60, 100%, 65%, 0.1),
+          inset 0 0 20px hsla(60, 100%, 65%, 0.05);
+        background: hsla(0, 0%, 8%, 0.6);
+      }
+
+      .mobile-nav-menu .nav-link.active {
+        color: hsl(60, 100%, 65%);
+        border-color: hsl(60, 100%, 65%);
+        background: hsla(60, 100%, 65%, 0.1);
+        box-shadow: 
+          0 8px 25px hsla(60, 100%, 65%, 0.15),
+          inset 0 0 20px hsla(60, 100%, 65%, 0.05);
+      }
+
+      .mobile-nav-menu .close-btn {
+        position: absolute;
+        top: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: none;
+        border: none;
+        color: hsl(60, 100%, 65%);
+        font-size: 2rem;
+        cursor: pointer;
+        padding: 0.75rem;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: hsla(0, 0%, 8%, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1px solid hsla(60, 100%, 65%, 0.2);
+      }
+
+      .mobile-nav-menu .close-btn:hover {
+        background: hsla(60, 100%, 65%, 0.1);
+        transform: translateX(-50%) rotate(90deg);
+        border-color: hsl(60, 100%, 65%);
+        box-shadow: 0 0 20px hsla(60, 100%, 65%, 0.3);
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Hide mobile nav on larger screens */
+      @media (min-width: 768px) {
+        .mobile-nav-toggle {
+          display: none !important;
+        }
+        
+        .mobile-nav-menu {
+          display: none !important;
+        }
+      }
+
+      /* Show mobile nav on smaller screens */
+      @media (max-width: 767px) {
+        .mobile-nav-toggle {
+          display: flex !important;
+        }
+      }
+
+      /* Ensure the mobile nav is above other elements */
+      .mobile-nav-menu {
+        z-index: 9999;
+      }
+
+      /* Responsive behavior for existing navigation */
+      .mobile-friendly {
+        position: relative;
+      }
+
+      .mobile-friendly .flex.items-center.justify-between {
+        position: relative;
+      }
+
+      /* Hide existing navigation items on mobile */
+      @media (max-width: 767px) {
+        .mobile-friendly a[href="/shop"],
+        .mobile-friendly a[href="/about"],
+        .mobile-friendly a[href="/contact"] {
+          display: none !important;
+        }
+        
+        .mobile-friendly .flex.items-center.justify-between {
+          justify-content: space-between !important;
+          position: relative !important;
+          min-height: 60px;
+        }
+        
+        /* Center the mobile toggle in the header */
+        .mobile-nav-toggle {
+          position: absolute !important;
+          left: 50% !important;
+          top: 50% !important;
+          transform: translate(-50%, -50%) !important;
+          margin: 0 !important;
+          order: unset !important;
+          z-index: 1002 !important;
+        }
+
+        /* Ensure logo/brand stays on the left */
+        .mobile-friendly .flex.items-center.justify-between > *:first-child {
+          position: relative !important;
+          z-index: 1001 !important;
+          margin-right: auto !important;
+        }
+
+        /* Ensure user nav stays on the right */
+        .mobile-friendly .user-nav {
+          position: relative !important;
+          z-index: 1001 !important;
+          margin-left: auto !important;
+        }
+      }
+
+      /* Show existing navigation items on larger screens */
+      @media (min-width: 768px) {
+        .mobile-friendly a[href="/shop"],
+        .mobile-friendly a[href="/about"],
+        .mobile-friendly a[href="/contact"] {
+          display: inline-block !important;
+        }
+        
+        .mobile-friendly .flex.items-center.justify-between {
+          justify-content: space-between !important;
+        }
+      }
+
+      /* Mobile navigation overlay improvements */
+      .mobile-nav-menu::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, 
+          hsla(0, 0%, 8%, 0.95), 
+          hsla(0, 0%, 12%, 0.95)
+        );
+        backdrop-filter: blur(10px);
+        z-index: -1;
+      }
+
+      /* Mobile navigation link animations */
+      .mobile-nav-menu .nav-link {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.5s ease forwards;
+      }
+
+      .mobile-nav-menu .nav-link:nth-child(1) { animation-delay: 0.1s; }
+      .mobile-nav-menu .nav-link:nth-child(2) { animation-delay: 0.2s; }
+      .mobile-nav-menu .nav-link:nth-child(3) { animation-delay: 0.3s; }
+      .mobile-nav-menu .nav-link:nth-child(4) { animation-delay: 0.4s; }
+
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Mobile navigation toggle improvements */
+      .mobile-nav-toggle:hover span {
+        background: hsl(60, 100%, 75%);
+        box-shadow: 0 0 10px hsla(60, 100%, 65%, 0.5);
+      }
+
+      .mobile-nav-toggle.active:hover span {
+        background: hsl(60, 100%, 75%);
+      }
+
+      /* Enhanced mobile user navigation styling */
+      .mobile-user-nav {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid hsla(60, 100%, 65%, 0.3);
+        text-align: center;
+        width: 100%;
+      }
+
+      .mobile-user-nav .nav-link {
+        background: hsla(60, 100%, 65%, 0.1) !important;
+        border-color: hsl(60, 100%, 65%) !important;
+        color: hsl(60, 100%, 65%) !important;
+        font-size: 1.2rem !important;
+        padding: 1.5rem 3rem !important;
+        min-width: 250px !important;
+        font-weight: 600 !important;
+        text-shadow: 0 0 10px hsla(60, 100%, 65%, 0.5);
+        border-radius: 12px !important;
+        backdrop-filter: blur(10px) !important;
+        box-shadow: 
+          0 4px 20px hsla(0, 0%, 0%, 0.3),
+          inset 0 0 20px hsla(60, 100%, 65%, 0.05) !important;
+      }
+
+      .mobile-user-nav .nav-link:hover {
+        background: hsla(60, 100%, 65%, 0.15) !important;
+        box-shadow: 
+          0 12px 40px hsla(60, 100%, 65%, 0.25),
+          0 0 0 1px hsla(60, 100%, 65%, 0.2),
+          inset 0 0 20px hsla(60, 100%, 65%, 0.1) !important;
+        transform: translateY(-3px) !important;
+        border-color: hsl(60, 100%, 75%) !important;
+      }
+
+      /* Mobile navigation background improvements */
+      .mobile-nav-menu::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, 
+          hsla(0, 0%, 8%, 0.95), 
+          hsla(0, 0%, 12%, 0.95)
+        );
+        backdrop-filter: blur(10px);
+        z-index: -1;
+      }
+
+      /* Additional mobile navigation refinements */
+      .mobile-nav-menu .nav-link:active {
+        transform: translateY(-1px);
+        transition: transform 0.1s ease;
+      }
+
+      .mobile-nav-menu .nav-link:focus {
+        outline: none;
+        box-shadow: 
+          0 0 0 2px hsla(60, 100%, 65%, 0.5),
+          0 8px 25px hsla(60, 100%, 65%, 0.2);
+      }
     </style>
   </head>
 
@@ -84,6 +468,303 @@
         banner.innerHTML = '⚠️ Running locally - Use <strong>start-server.bat</strong> for full functionality';
         document.body.appendChild(banner);
       }
+
+      // Mobile Navigation Functionality
+      function createMobileNavigation() {
+        // Check if mobile nav already exists
+        if (document.querySelector('.mobile-nav-toggle')) {
+          return;
+        }
+
+        // Create mobile nav toggle button
+        const mobileNavToggle = document.createElement('button');
+        mobileNavToggle.className = 'mobile-nav-toggle';
+        mobileNavToggle.setAttribute('aria-label', 'Toggle mobile navigation');
+        mobileNavToggle.innerHTML = `
+          <span></span>
+          <span></span>
+          <span></span>
+        `;
+
+        // Create mobile navigation menu
+        const mobileNavMenu = document.createElement('div');
+        mobileNavMenu.className = 'mobile-nav-menu';
+        mobileNavMenu.innerHTML = `
+          <button class="close-btn" aria-label="Close mobile navigation">×</button>
+          <div class="nav-links">
+            <a href="index.html" class="nav-link active">Home</a>
+            <a href="shop-categories.html" class="nav-link">Shop</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+          </div>
+        `;
+
+        // Add mobile nav to body
+        document.body.appendChild(mobileNavToggle);
+        document.body.appendChild(mobileNavMenu);
+
+        // Add mobile nav toggle to header when it exists
+        function addMobileNavToHeader() {
+          const header = document.querySelector('header, nav, [class*="header"], [class*="nav"]');
+          if (header && !header.querySelector('.mobile-nav-toggle')) {
+            // Find the right place to insert the toggle button
+            const headerContent = header.querySelector('.flex, .container, [class*="flex"]');
+            if (headerContent) {
+              // Ensure the header content is positioned relatively for absolute positioning
+              headerContent.style.position = 'relative';
+              headerContent.style.minHeight = '60px';
+              headerContent.appendChild(mobileNavToggle);
+            } else {
+              header.style.position = 'relative';
+              header.style.minHeight = '60px';
+              header.appendChild(mobileNavToggle);
+            }
+          }
+        }
+
+        // Try to add mobile nav to header multiple times
+        setTimeout(addMobileNavToHeader, 100);
+        setTimeout(addMobileNavToHeader, 500);
+        setTimeout(addMobileNavToHeader, 1000);
+        setTimeout(addMobileNavToHeader, 2000);
+
+        // Toggle mobile navigation
+        function toggleMobileNav() {
+          const isOpen = mobileNavMenu.classList.contains('active');
+          
+          if (isOpen) {
+            mobileNavMenu.classList.remove('active');
+            mobileNavToggle.classList.remove('active');
+            document.body.style.overflow = '';
+          } else {
+            mobileNavMenu.classList.add('active');
+            mobileNavToggle.classList.add('active');
+            document.body.style.overflow = 'hidden';
+          }
+        }
+
+        // Close mobile navigation
+        function closeMobileNav() {
+          mobileNavMenu.classList.remove('active');
+          mobileNavToggle.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+
+        // Event listeners
+        mobileNavToggle.addEventListener('click', toggleMobileNav);
+        mobileNavMenu.querySelector('.close-btn').addEventListener('click', closeMobileNav);
+
+        // Close mobile nav when clicking on a link
+        mobileNavMenu.querySelectorAll('.nav-link').forEach(link => {
+          link.addEventListener('click', closeMobileNav);
+        });
+
+        // Close mobile nav when clicking outside
+        mobileNavMenu.addEventListener('click', (e) => {
+          if (e.target === mobileNavMenu) {
+            closeMobileNav();
+          }
+        });
+
+        // Close mobile nav on escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && mobileNavMenu.classList.contains('active')) {
+            closeMobileNav();
+          }
+        });
+
+        // Close mobile nav on window resize if screen becomes large
+        window.addEventListener('resize', () => {
+          if (window.innerWidth >= 768 && mobileNavMenu.classList.contains('active')) {
+            closeMobileNav();
+          }
+        });
+
+        console.log('Mobile navigation created successfully');
+      }
+
+      // Create mobile navigation when page loads
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createMobileNavigation);
+      } else {
+        createMobileNavigation();
+      }
+
+      // Try multiple times to ensure it loads after React renders
+      setTimeout(createMobileNavigation, 1000);
+      setTimeout(createMobileNavigation, 2000);
+      setTimeout(createMobileNavigation, 3000);
+      setTimeout(createMobileNavigation, 5000);
+      
+      // Also try when the window loads completely
+      window.addEventListener('load', createMobileNavigation);
+
+      // Enhance existing React navigation for mobile
+      function enhanceReactNavigation() {
+        const reactNav = document.querySelector('nav.border-b.border-border.bg-background\\/95');
+        if (reactNav && !reactNav.hasAttribute('data-mobile-enhanced')) {
+          reactNav.setAttribute('data-mobile-enhanced', 'true');
+          
+          // Add mobile-friendly classes
+          reactNav.classList.add('mobile-friendly');
+          
+          // Find the navigation container
+          const navContainer = reactNav.querySelector('.flex.items-center.justify-between, .container, [class*="flex"]');
+          if (navContainer) {
+            // Ensure the container is mobile-friendly and positioned for centered toggle
+            navContainer.style.cssText += `
+              flex-wrap: wrap;
+              gap: 1rem;
+              position: relative;
+              min-height: 60px;
+              align-items: center;
+            `;
+            
+            // Add mobile navigation toggle if it doesn't exist
+            if (!navContainer.querySelector('.mobile-nav-toggle')) {
+              const mobileToggle = document.querySelector('.mobile-nav-toggle');
+              if (mobileToggle) {
+                navContainer.appendChild(mobileToggle);
+              }
+            }
+            
+            // Make navigation items responsive and ensure proper spacing
+            const navItems = navContainer.querySelectorAll('a[href]');
+            navItems.forEach(item => {
+              item.style.cssText += `
+                transition: all 0.3s ease;
+                white-space: nowrap;
+                position: relative;
+                z-index: 1001;
+              `;
+              
+              // Add hover effects
+              item.addEventListener('mouseenter', () => {
+                item.style.color = 'hsl(60, 100%, 65%)';
+                item.style.transform = 'translateY(-1px)';
+              });
+              
+              item.addEventListener('mouseleave', () => {
+                item.style.color = '';
+                item.style.transform = '';
+              });
+            });
+
+            // Ensure user navigation is properly positioned
+            const userNav = navContainer.querySelector('.user-nav');
+            if (userNav) {
+              userNav.style.cssText += `
+                position: relative;
+                z-index: 1001;
+                margin-left: auto;
+              `;
+            }
+          }
+          
+          console.log('React navigation enhanced for mobile');
+        }
+      }
+
+      // Try to enhance React navigation multiple times
+      setTimeout(enhanceReactNavigation, 1000);
+      setTimeout(enhanceReactNavigation, 2000);
+      setTimeout(enhanceReactNavigation, 3000);
+      setTimeout(enhanceReactNavigation, 5000);
+      window.addEventListener('load', enhanceReactNavigation);
+
+      // Add user navigation to mobile menu
+      function addUserNavToMobile() {
+        const mobileMenu = document.querySelector('.mobile-nav-menu .nav-links');
+        if (mobileMenu && !mobileMenu.querySelector('.mobile-user-nav')) {
+          // Create user navigation container
+          const userNav = document.createElement('div');
+          userNav.className = 'mobile-user-nav';
+          userNav.style.cssText = `
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid hsla(60, 100%, 65%, 0.3);
+            text-align: center;
+          `;
+          
+          // Check if user is logged in
+          const user = localStorage.getItem('nightkindUser');
+          
+          if (user) {
+            // User is logged in - show account link
+            const accountLink = document.createElement('a');
+            accountLink.href = 'account.html';
+            accountLink.textContent = 'ACCOUNT';
+            accountLink.className = 'nav-link';
+            accountLink.style.cssText += `
+              background: hsla(60, 100%, 65%, 0.1);
+              border-color: hsl(60, 100%, 65%);
+              color: hsl(60, 100%, 65%);
+              font-size: 1.2rem;
+              padding: 1.5rem 2rem;
+            `;
+            userNav.appendChild(accountLink);
+          } else {
+            // User is NOT logged in - show login button
+            const loginLink = document.createElement('a');
+            loginLink.href = 'login.html';
+            loginLink.textContent = 'LOGIN';
+            loginLink.className = 'nav-link';
+            loginLink.style.cssText += `
+              background: hsla(270, 35%, 35%, 0.2);
+              border-color: hsl(270, 35%, 35%);
+              color: hsl(60, 100%, 85%);
+              font-size: 1.2rem;
+              padding: 1.5rem 2rem;
+            `;
+            userNav.appendChild(loginLink);
+          }
+          
+          mobileMenu.appendChild(userNav);
+        }
+      }
+
+      // Try to add user nav to mobile menu multiple times
+      setTimeout(addUserNavToMobile, 1000);
+      setTimeout(addUserNavToMobile, 2000);
+      setTimeout(addUserNavToMobile, 3000);
+      setTimeout(addUserNavToMobile, 5000);
+      window.addEventListener('load', addUserNavToMobile);
+
+      // Update mobile navigation when login state changes
+      function updateMobileNavOnLoginChange() {
+        const mobileUserNav = document.querySelector('.mobile-user-nav');
+        if (mobileUserNav) {
+          // Remove existing user nav
+          mobileUserNav.remove();
+          // Re-add with updated state
+          setTimeout(addUserNavToMobile, 100);
+        }
+      }
+
+      // Listen for storage changes (login/logout)
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'nightkindUser') {
+          updateMobileNavOnLoginChange();
+        }
+      });
+
+      // Also update when localStorage is modified programmatically
+      const originalSetItem = localStorage.setItem;
+      const originalRemoveItem = localStorage.removeItem;
+      
+      localStorage.setItem = function(key, value) {
+        originalSetItem.apply(this, arguments);
+        if (key === 'nightkindUser') {
+          setTimeout(updateMobileNavOnLoginChange, 100);
+        }
+      };
+      
+      localStorage.removeItem = function(key) {
+        originalRemoveItem.apply(this, arguments);
+        if (key === 'nightkindUser') {
+          setTimeout(updateMobileNavOnLoginChange, 100);
+        }
+      };
 
       // Wait for the React app to load and render the content
       function waitForShopCards() {
@@ -183,34 +864,34 @@
           // Create logo container
           const logoContainer = document.createElement('div');
           logoContainer.className = 'nightkind-logo';
-          logoContainer.style.cssText = `
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-            padding: 0;
-            position: absolute;
-            top: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            width: 200px;
-            height: auto;
-          `;
+              logoContainer.style.cssText = `
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+                padding: 0;
+                position: absolute;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1000;
+                width: 200px;
+                height: auto;
+              `;
           
           // Create logo image
           const logo = document.createElement('img');
           logo.src = 'bat vector tracing1.svg';
           logo.alt = 'NightKind Collective Logo';
-          logo.style.cssText = `
-            width: 150px;
-            height: auto;
-            filter: drop-shadow(0 0 20px hsla(270, 100%, 70%, 0.8));
-            transition: all 0.4s ease;
-            cursor: pointer;
-            display: block;
-            animation: logoFloat 4s ease-in-out infinite;
-          `;
+              logo.style.cssText = `
+                width: 150px;
+                height: auto;
+                filter: drop-shadow(0 0 20px hsla(270, 100%, 70%, 0.8));
+                transition: all 0.4s ease;
+                cursor: pointer;
+                display: block;
+                animation: logoFloat 4s ease-in-out infinite;
+              `;
           
           // Add hover effects
           logo.addEventListener('mouseenter', () => {
@@ -324,8 +1005,46 @@
               });
               
               userNav.appendChild(accountLink);
+            } else {
+              // User is NOT logged in - show login button
+              const loginLink = document.createElement('a');
+              loginLink.href = 'login.html';
+              loginLink.textContent = 'LOGIN';
+              loginLink.style.cssText = `
+                color: hsl(60, 100%, 85%);
+                text-decoration: none;
+                font-family: 'Courier Prime', monospace;
+                font-size: 0.875rem;
+                font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                transition: all 0.3s ease;
+                padding: 0.5rem 1rem;
+                border: 1px solid hsl(0, 0%, 15%);
+                border-radius: 0.25rem;
+                background: hsl(0, 0%, 8%);
+                cursor: pointer;
+                min-width: 8rem;
+                text-align: center;
+                display: inline-block;
+                margin-left: 1rem;
+                line-height: 1.25rem;
+              `;
+              loginLink.addEventListener('mouseenter', () => {
+                loginLink.style.color = 'hsl(60, 100%, 85%)';
+                loginLink.style.background = 'hsl(270, 35%, 35%)';
+                loginLink.style.transform = 'translateY(-1px)';
+                loginLink.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
+              });
+              loginLink.addEventListener('mouseleave', () => {
+                loginLink.style.color = 'hsl(60, 100%, 85%)';
+                loginLink.style.background = 'hsl(0, 0%, 8%)';
+                loginLink.style.transform = 'translateY(0)';
+                loginLink.style.boxShadow = 'none';
+              });
+              
+              userNav.appendChild(loginLink);
             }
-            // Removed the else clause - no login button in header when user is not logged in
             
             // Add to navigation
             parent.appendChild(userNav);
@@ -577,8 +1296,28 @@
           privacyLink.style.textDecoration = 'none';
         });
 
+        const loginLink = document.createElement('a');
+        loginLink.href = 'login.html';
+        loginLink.textContent = 'Login';
+        loginLink.style.cssText = `
+          color: hsl(60, 100%, 65%);
+          text-decoration: none;
+          transition: color 0.3s ease;
+          margin-left: 0.5rem;
+        `;
+        loginLink.addEventListener('mouseenter', () => {
+          loginLink.style.color = 'hsl(0, 0%, 98%)';
+          loginLink.style.textDecoration = 'underline';
+        });
+        loginLink.addEventListener('mouseleave', () => {
+          loginLink.style.color = 'hsl(60, 100%, 65%)';
+          loginLink.style.textDecoration = 'none';
+        });
+
         copyright.textContent = '© 2025 NightKind Collective. All rights reserved. | ';
         copyright.appendChild(privacyLink);
+        copyright.appendChild(document.createTextNode(' | '));
+        copyright.appendChild(loginLink);
 
         footerBottom.appendChild(copyright);
         footer.appendChild(footerBottom);
@@ -597,6 +1336,7 @@
       function fixHeroLoginButton() {
         // Check if user is logged in - if so, don't show login button
         const user = localStorage.getItem('nightkindUser');
+        console.log('fixHeroLoginButton called, user logged in:', !!user);
         if (user) {
           console.log('User is logged in, removing login button from hero section');
           // Remove any existing login buttons from hero section
@@ -656,35 +1396,37 @@
             loginButton.textContent = 'LOGIN';
             loginButton.setAttribute('data-hero-login-fixed', 'true');
             loginButton.style.cssText = `
-              color: hsl(60, 100%, 65%) !important;
+              color: hsl(60, 100%, 85%) !important;
               text-decoration: none !important;
               font-family: 'Courier Prime', monospace !important;
-              font-size: 0.9rem !important;
+              font-size: 0.875rem !important;
+              font-weight: 500 !important;
               text-transform: uppercase !important;
               letter-spacing: 0.1em !important;
               transition: all 0.3s ease !important;
-              padding: 0.75rem 2rem !important;
-              border: 1px solid hsl(60, 100%, 65%) !important;
-              border-radius: 4px !important;
-              background: transparent !important;
+              padding: 0.5rem 1rem !important;
+              border: 1px solid hsl(0, 0%, 15%) !important;
+              border-radius: 0.25rem !important;
+              background: hsl(0, 0%, 8%) !important;
               cursor: pointer !important;
-              min-width: 140px !important;
+              min-width: 8rem !important;
               text-align: center !important;
               display: inline-block !important;
               margin: 0 0.5rem !important;
+              line-height: 1.25rem !important;
             `;
             
             // Add hover effects
             loginButton.addEventListener('mouseenter', () => {
-              loginButton.style.color = 'hsl(0, 0%, 9%) !important';
-              loginButton.style.background = 'hsl(60, 100%, 65%) !important';
+              loginButton.style.color = 'hsl(60, 100%, 85%) !important';
+              loginButton.style.background = 'hsl(270, 35%, 35%) !important';
               loginButton.style.transform = 'translateY(-1px) !important';
-              loginButton.style.boxShadow = '0 4px 8px rgba(255, 215, 0, 0.3) !important';
+              loginButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3) !important';
             });
             
             loginButton.addEventListener('mouseleave', () => {
-              loginButton.style.color = 'hsl(60, 100%, 65%) !important';
-              loginButton.style.background = 'transparent !important';
+              loginButton.style.color = 'hsl(60, 100%, 85%) !important';
+              loginButton.style.background = 'hsl(0, 0%, 8%) !important';
               loginButton.style.transform = 'translateY(0) !important';
               loginButton.style.boxShadow = 'none !important';
             });
@@ -717,35 +1459,37 @@
           loginButton.textContent = 'LOGIN';
           loginButton.setAttribute('data-hero-login-fixed', 'true');
           loginButton.style.cssText = `
-            color: hsl(60, 100%, 65%) !important;
+            color: hsl(60, 100%, 85%) !important;
             text-decoration: none !important;
             font-family: 'Courier Prime', monospace !important;
-            font-size: 0.9rem !important;
+            font-size: 0.875rem !important;
+            font-weight: 500 !important;
             text-transform: uppercase !important;
             letter-spacing: 0.1em !important;
             transition: all 0.3s ease !important;
-            padding: 0.75rem 2rem !important;
-            border: 1px solid hsl(60, 100%, 65%) !important;
-            border-radius: 4px !important;
-            background: transparent !important;
+            padding: 0.5rem 1rem !important;
+            border: 1px solid hsl(0, 0%, 15%) !important;
+            border-radius: 0.25rem !important;
+            background: hsl(0, 0%, 8%) !important;
             cursor: pointer !important;
-            min-width: 140px !important;
+            min-width: 8rem !important;
             text-align: center !important;
             display: inline-block !important;
             margin: 0 0.5rem !important;
+            line-height: 1.25rem !important;
           `;
           
           // Add hover effects
           loginButton.addEventListener('mouseenter', () => {
-            loginButton.style.color = 'hsl(0, 0%, 9%) !important';
-            loginButton.style.background = 'hsl(60, 100%, 65%) !important';
+            loginButton.style.color = 'hsl(60, 100%, 85%) !important';
+            loginButton.style.background = 'hsl(270, 35%, 35%) !important';
             loginButton.style.transform = 'translateY(-1px) !important';
-            loginButton.style.boxShadow = '0 4px 8px rgba(255, 215, 0, 0.3) !important';
+            loginButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3) !important';
           });
           
           loginButton.addEventListener('mouseleave', () => {
-            loginButton.style.color = 'hsl(60, 100%, 65%) !important';
-            loginButton.style.background = 'transparent !important';
+            loginButton.style.color = 'hsl(60, 100%, 85%) !important';
+            loginButton.style.background = 'hsl(0, 0%, 8%) !important';
             loginButton.style.transform = 'translateY(0) !important';
             loginButton.style.boxShadow = 'none !important';
           });
@@ -777,35 +1521,37 @@
             loginButton.textContent = 'LOGIN';
             loginButton.setAttribute('data-hero-login-fixed', 'true');
             loginButton.style.cssText = `
-              color: hsl(60, 100%, 65%) !important;
+              color: hsl(60, 100%, 85%) !important;
               text-decoration: none !important;
               font-family: 'Courier Prime', monospace !important;
-              font-size: 0.9rem !important;
+              font-size: 0.875rem !important;
+              font-weight: 500 !important;
               text-transform: uppercase !important;
               letter-spacing: 0.1em !important;
               transition: all 0.3s ease !important;
-              padding: 0.75rem 2rem !important;
-              border: 1px solid hsl(60, 100%, 65%) !important;
-              border-radius: 4px !important;
-              background: transparent !important;
+              padding: 0.5rem 1rem !important;
+              border: 1px solid hsl(0, 0%, 15%) !important;
+              border-radius: 0.25rem !important;
+              background: hsl(0, 0%, 8%) !important;
               cursor: pointer !important;
-              min-width: 140px !important;
+              min-width: 8rem !important;
               text-align: center !important;
               display: inline-block !important;
               margin: 0 0.5rem !important;
+              line-height: 1.25rem !important;
             `;
             
             // Add hover effects
             loginButton.addEventListener('mouseenter', () => {
-              loginButton.style.color = 'hsl(0, 0%, 9%) !important';
-              loginButton.style.background = 'hsl(60, 100%, 65%) !important';
+              loginButton.style.color = 'hsl(60, 100%, 85%) !important';
+              loginButton.style.background = 'hsl(270, 35%, 35%) !important';
               loginButton.style.transform = 'translateY(-1px) !important';
-              loginButton.style.boxShadow = '0 4px 8px rgba(255, 215, 0, 0.3) !important';
+              loginButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3) !important';
             });
             
             loginButton.addEventListener('mouseleave', () => {
-              loginButton.style.color = 'hsl(60, 100%, 65%) !important';
-              loginButton.style.background = 'transparent !important';
+              loginButton.style.color = 'hsl(60, 100%, 85%) !important';
+              loginButton.style.background = 'hsl(0, 0%, 8%) !important';
               loginButton.style.transform = 'translateY(0) !important';
               loginButton.style.boxShadow = 'none !important';
             });
@@ -853,12 +1599,48 @@
         }
       }
 
+      // Add debugging function to check login state
+      function debugLoginState() {
+        const user = localStorage.getItem('nightkindUser');
+        console.log('=== LOGIN STATE DEBUG ===');
+        console.log('User logged in:', !!user);
+        console.log('User data:', user);
+        console.log('localStorage keys:', Object.keys(localStorage));
+        console.log('========================');
+      }
+
       // Try to fix hero login button multiple times
       setTimeout(fixHeroLoginButton, 1000);
       setTimeout(fixHeroLoginButton, 2000);
       setTimeout(fixHeroLoginButton, 3000);
       setTimeout(fixHeroLoginButton, 5000);
       window.addEventListener('load', fixHeroLoginButton);
+      
+      // Debug login state
+      setTimeout(debugLoginState, 500);
+      setTimeout(debugLoginState, 2000);
+      window.addEventListener('load', debugLoginState);
+      
+      // Add test functions to window for debugging
+      window.testLoginButton = function() {
+        console.log('Testing login button visibility...');
+        // Clear login state to test
+        localStorage.removeItem('nightkindUser');
+        console.log('Cleared login state, refreshing page...');
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      };
+      
+      window.testLoggedInState = function() {
+        console.log('Testing logged in state...');
+        // Set fake login state
+        localStorage.setItem('nightkindUser', JSON.stringify({name: 'Test User', email: 'test@example.com'}));
+        console.log('Set test login state, refreshing page...');
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      };
 
       // Clean up duplicate buttons
       setTimeout(cleanupDuplicateLoginButtons, 1000);
