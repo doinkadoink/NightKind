@@ -79,6 +79,32 @@
         transform: translateY(-2px);
         box-shadow: 0 4px 15px hsla(60, 100%, 65%, 0.3);
       }
+
+      .pos-link {
+        color: hsl(var(--foreground));
+        text-decoration: none;
+        margin-left: 2rem;
+        display: inline-block;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        padding: 0.75rem 1.5rem;
+        border: 1px solid hsl(var(--secondary));
+        border-radius: 8px;
+        position: relative;
+        z-index: 10;
+        background: hsla(60, 100%, 65%, 0.2);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: bold;
+      }
+
+      .pos-link:hover {
+        color: hsl(var(--background));
+        background: hsl(var(--secondary));
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px hsla(60, 100%, 65%, 0.4);
+      }
       
       .cart-title {
         color: hsl(var(--secondary));
@@ -1003,6 +1029,7 @@
       <div class="cart-header">
         <a href="shop-categories.html" class="back-link">← Back to Shop</a>
         <h1 class="cart-title">SHOPPING CART</h1>
+        <a href="pos.html" class="pos-link">💳 POS Terminal</a>
       </div>
       
       <!-- Cart Navigation Tabs -->

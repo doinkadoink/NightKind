@@ -673,8 +673,391 @@ class ProductManager {
   }
 }
 
+// POS System for NightKind Collective
+class NightKindPOS {
+  constructor() {
+    this.transactions = this.loadTransactions();
+    this.currentTransaction = null;
+    this.paymentMethods = ['cash', 'card', 'digital_wallet', 'paypal'];
+    this.transactionCounter = this.getNextTransactionNumber();
+    this.init();
+  }
+
+  // Initialize POS system
+  init() {
+    this.setupTransactionListeners();
+    this.updateTransactionCounter();
+  }
+
+  // Load transactions from localStorage
+  loadTransactions() {
+    try {
+      return JSON.parse(localStorage.getItem('nightkindTransactions')) || [];
+    } catch (error) {
+      console.error('Error loading transactions:', error);
+      return [];
+    }
+  }
+
+  // Save transactions to localStorage
+  saveTransactions() {
+    try {
+      localStorage.setItem('nightkindTransactions', JSON.stringify(this.transactions));
+    } catch (error) {
+      console.error('Error saving transactions:', error);
+    }
+  }
+
+  // Get next transaction number
+  getNextTransactionNumber() {
+    const lastTransaction = this.transactions[this.transactions.length - 1];
+    if (!lastTransaction) return 1001;
+    return lastTransaction.transactionNumber + 1;
+  }
+
+  // Update transaction counter
+  updateTransactionCounter() {
+    this.transactionCounter = this.getNextTransactionNumber();
+  }
+
+  // Start a new transaction
+  startTransaction(cartItems = null) {
+    if (this.currentTransaction) {
+      throw new Error('Transaction already in progress');
+    }
+
+    const items = cartItems || nightkindCart.getItems();
+    if (items.length === 0) {
+      throw new Error('Cannot start transaction with empty cart');
+    }
+
+    this.currentTransaction = {
+      id: this.generateTransactionId(),
+      transactionNumber: this.transactionCounter,
+      items: [...items],
+      subtotal: this.calculateSubtotal(items),
+      tax: this.calculateTax(items),
+      total: 0,
+      status: 'pending',
+      timestamp: new Date().toISOString(),
+      paymentMethod: null,
+      paymentDetails: null,
+      customerInfo: null,
+      notes: '',
+      employeeId: null
+    };
+
+    this.currentTransaction.total = this.currentTransaction.subtotal + this.currentTransaction.tax;
+    
+    return this.currentTransaction;
+  }
+
+  // Generate unique transaction ID
+  generateTransactionId() {
+    const timestamp = Date.now().toString(36);
+    const random = Math.random().toString(36).substr(2, 5);
+    return `NK-${timestamp}-${random}`.toUpperCase();
+  }
+
+  // Calculate subtotal
+  calculateSubtotal(items) {
+    return items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  }
+
+  // Calculate tax (configurable rate)
+  calculateTax(items, taxRate = 0.08) {
+    const subtotal = this.calculateSubtotal(items);
+    return Math.round(subtotal * taxRate * 100) / 100;
+  }
+
+  // Add customer information to transaction
+  addCustomerInfo(customerInfo) {
+    if (!this.currentTransaction) {
+      throw new Error('No transaction in progress');
+    }
+
+    this.currentTransaction.customerInfo = {
+      name: customerInfo.name || '',
+      email: customerInfo.email || '',
+      phone: customerInfo.phone || '',
+      address: customerInfo.address || ''
+    };
+  }
+
+  // Add notes to transaction
+  addNotes(notes) {
+    if (!this.currentTransaction) {
+      throw new Error('No transaction in progress');
+    }
+    this.currentTransaction.notes = notes;
+  }
+
+  // Process payment
+  processPayment(paymentMethod, paymentDetails = {}) {
+    if (!this.currentTransaction) {
+      throw new Error('No transaction in progress');
+    }
+
+    if (!this.paymentMethods.includes(paymentMethod)) {
+      throw new Error('Invalid payment method');
+    }
+
+    // Validate payment details based on method
+    if (!this.validatePaymentDetails(paymentMethod, paymentDetails)) {
+      throw new Error('Invalid payment details');
+    }
+
+    this.currentTransaction.paymentMethod = paymentMethod;
+    this.currentTransaction.paymentDetails = paymentDetails;
+    this.currentTransaction.status = 'paid';
+    this.currentTransaction.paidAt = new Date().toISOString();
+
+    return this.currentTransaction;
+  }
+
+  // Validate payment details
+  validatePaymentDetails(method, details) {
+    switch (method) {
+      case 'cash':
+        return details.amount >= this.currentTransaction.total;
+      case 'card':
+        return details.cardNumber && details.expiry && details.cvv;
+      case 'digital_wallet':
+        return details.walletId && details.confirmation;
+      case 'paypal':
+        return details.paypalId && details.confirmation;
+      default:
+        return false;
+    }
+  }
+
+  // Calculate change for cash payments
+  calculateChange(amountPaid) {
+    if (!this.currentTransaction) {
+      throw new Error('No transaction in progress');
+    }
+    return Math.max(0, amountPaid - this.currentTransaction.total);
+  }
+
+  // Complete transaction
+  completeTransaction() {
+    if (!this.currentTransaction || this.currentTransaction.status !== 'paid') {
+      throw new Error('Transaction not ready for completion');
+    }
+
+    // Update inventory
+    this.updateInventory();
+
+    // Add to transaction history
+    this.transactions.push(this.currentTransaction);
+
+    // Clear cart
+    nightkindCart.clearCart();
+
+    // Save transactions
+    this.saveTransactions();
+
+    // Generate receipt
+    const receipt = this.generateReceipt();
+
+    // Reset for next transaction
+    const completedTransaction = this.currentTransaction;
+    this.currentTransaction = null;
+    this.updateTransactionCounter();
+
+    return {
+      transaction: completedTransaction,
+      receipt: receipt
+    };
+  }
+
+  // Update inventory after sale
+  updateInventory() {
+    if (!this.currentTransaction) return;
+
+    this.currentTransaction.items.forEach(item => {
+      // This would typically update a database
+      // For now, we'll just log the update
+      console.log(`Updating inventory: ${item.name} -${item.quantity}`);
+      
+      // In a real implementation, you'd call an API or update localStorage
+      // this.updateProductStock(item.id, item.quantity);
+    });
+  }
+
+  // Generate receipt
+  generateReceipt() {
+    if (!this.currentTransaction) {
+      throw new Error('No transaction to generate receipt for');
+    }
+
+    const transaction = this.currentTransaction;
+    const receipt = {
+      transactionId: transaction.id,
+      transactionNumber: transaction.transactionNumber,
+      timestamp: transaction.timestamp,
+      items: transaction.items.map(item => ({
+        name: item.name,
+        size: item.size,
+        quantity: item.quantity,
+        price: item.price,
+        total: item.price * item.quantity
+      })),
+      subtotal: transaction.subtotal,
+      tax: transaction.tax,
+      total: transaction.total,
+      paymentMethod: transaction.paymentMethod,
+      customerInfo: transaction.customerInfo,
+      notes: transaction.notes
+    };
+
+    return receipt;
+  }
+
+  // Cancel current transaction
+  cancelTransaction() {
+    if (!this.currentTransaction) {
+      throw new Error('No transaction to cancel');
+    }
+
+    this.currentTransaction = null;
+    return true;
+  }
+
+  // Get transaction history
+  getTransactionHistory(limit = 50) {
+    return this.transactions
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+      .slice(0, limit);
+  }
+
+  // Get transaction by ID
+  getTransactionById(transactionId) {
+    return this.transactions.find(t => t.id === transactionId);
+  }
+
+  // Get transactions by date range
+  getTransactionsByDateRange(startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    
+    return this.transactions.filter(t => {
+      const transactionDate = new Date(t.timestamp);
+      return transactionDate >= start && transactionDate <= end;
+    });
+  }
+
+  // Get sales summary
+  getSalesSummary(startDate = null, endDate = null) {
+    let transactions = this.transactions;
+    
+    if (startDate && endDate) {
+      transactions = this.getTransactionsByDateRange(startDate, endDate);
+    }
+
+    const summary = {
+      totalTransactions: transactions.length,
+      totalSales: 0,
+      totalItems: 0,
+      averageTransaction: 0,
+      paymentMethodBreakdown: {},
+      topProducts: {},
+      topCategories: {}
+    };
+
+    transactions.forEach(transaction => {
+      if (transaction.status === 'paid') {
+        summary.totalSales += transaction.total;
+        summary.totalItems += transaction.items.reduce((sum, item) => sum + item.quantity, 0);
+        
+        // Payment method breakdown
+        const method = transaction.paymentMethod;
+        summary.paymentMethodBreakdown[method] = (summary.paymentMethodBreakdown[method] || 0) + 1;
+        
+        // Top products
+        transaction.items.forEach(item => {
+          summary.topProducts[item.name] = (summary.topProducts[item.name] || 0) + item.quantity;
+          summary.topCategories[item.category] = (summary.topCategories[item.category] || 0) + item.quantity;
+        });
+      }
+    });
+
+    summary.averageTransaction = summary.totalTransactions > 0 ? 
+      summary.totalSales / summary.totalTransactions : 0;
+
+    return summary;
+  }
+
+  // Export transaction data
+  exportTransactions(format = 'json') {
+    const data = {
+      transactions: this.transactions,
+      summary: this.getSalesSummary(),
+      exportDate: new Date().toISOString()
+    };
+
+    if (format === 'csv') {
+      return this.convertToCSV(data);
+    }
+
+    const dataStr = JSON.stringify(data, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(dataBlob);
+    link.download = `nightkind-transactions-${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+  }
+
+  // Convert data to CSV format
+  convertToCSV(data) {
+    // Implementation for CSV conversion
+    // This would convert the transaction data to CSV format
+    return 'CSV conversion not yet implemented';
+  }
+
+  // Setup transaction event listeners
+  setupTransactionListeners() {
+    // Listen for cart changes to update current transaction
+    if (window.nightkindCart) {
+      window.nightkindCart.addListener(() => {
+        if (this.currentTransaction) {
+          this.currentTransaction.items = nightkindCart.getItems();
+          this.currentTransaction.subtotal = this.calculateSubtotal(this.currentTransaction.items);
+          this.currentTransaction.tax = this.calculateTax(this.currentTransaction.items);
+          this.currentTransaction.total = this.currentTransaction.subtotal + this.currentTransaction.tax;
+        }
+      });
+    }
+  }
+
+  // Get current transaction status
+  getCurrentTransactionStatus() {
+    if (!this.currentTransaction) {
+      return 'no_transaction';
+    }
+    return this.currentTransaction.status;
+  }
+
+  // Check if transaction is ready for payment
+  isTransactionReadyForPayment() {
+    return this.currentTransaction && 
+           this.currentTransaction.status === 'pending' && 
+           this.currentTransaction.items.length > 0;
+  }
+
+  // Check if transaction is ready for completion
+  isTransactionReadyForCompletion() {
+    return this.currentTransaction && 
+           this.currentTransaction.status === 'paid';
+  }
+}
+
 // Initialize global cart instance
 const nightkindCart = new NightKindCart();
+
+// Initialize global POS instance
+const nightkindPOS = new NightKindPOS();
 
 // Export for use in other scripts
 if (typeof module !== 'undefined' && module.exports) {
@@ -682,12 +1065,16 @@ if (typeof module !== 'undefined' && module.exports) {
     NightKindCart, 
     CartNotification, 
     ProductManager,
-    nightkindCart 
+    NightKindPOS,
+    nightkindCart,
+    nightkindPOS
   };
 } else {
   // Make available globally
   window.NightKindCart = NightKindCart;
   window.CartNotification = CartNotification;
   window.ProductManager = ProductManager;
+  window.NightKindPOS = NightKindPOS;
   window.nightkindCart = nightkindCart;
+  window.nightkindPOS = nightkindPOS;
 }

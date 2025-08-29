@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POS Terminal - NightKind Collective</title>
+    <meta name="description" content="NightKind Collective Point of Sale Terminal" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="bat vector tracing1.svg">
+    <link rel="icon" type="image/png" href="bat vector tracing1.svg">
+    
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="index-CZEDu5tD.css">
+    <style>
+      :root {
+        --background: 0 0% 8%;
+        --foreground: 60 100% 85%;
+        --card: 0 0% 12%;
+        --card-foreground: 60 100% 85%;
+        --primary: 270 45% 25%;
+        --secondary: 60 100% 65%;
+        --muted: 0 0% 18%;
+        --muted-foreground: 0 0% 65%;
+        --accent: 270 35% 35%;
+        --border: 0 0% 25%;
+        --destructive: 0 84% 60%;
+        --success: 142 76% 36%;
+        --warning: 38 92% 50%;
+        --shadow-gothic: 0 10px 40px -15px hsla(270, 45%, 15%, .8);
+        --shadow-glow: 0 0 30px hsla(60, 100%, 65%, .3);
+        --gradient-primary: linear-gradient(135deg, hsl(270, 45%, 25%), hsl(270, 35%, 35%));
+        --gradient-accent: linear-gradient(90deg, hsl(60, 100%, 65%), hsl(50, 100%, 70%));
+        --gradient-dark: linear-gradient(180deg, hsl(0, 0%, 8%), hsl(0, 0%, 12%));
+      }
+
+      body {
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .pos-container {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 2rem;
+        padding: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        min-height: 100vh;
+      }
+
+      .pos-main {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .pos-header {
+        text-align: center;
+        padding: 2rem;
+        background: hsl(var(--card));
+        border-radius: 12px;
+        border: 1px solid hsl(var(--border));
+        box-shadow: var(--shadow-gothic);
+      }
+
+      .pos-title {
+        color: hsl(var(--secondary));
+        font-size: 3rem;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6);
+      }
+
+      .pos-subtitle {
+        color: hsl(var(--muted-foreground));
+        font-size: 1.2rem;
+        margin: 1rem 0 0 0;
+      }
+
+      .pos-controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        padding: 2rem;
+        background: hsl(var(--card));
+        border-radius: 12px;
+        border: 1px solid hsl(var(--border));
+        box-shadow: var(--shadow-gothic);
+      }
+
+      .pos-button {
+        background: var(--gradient-primary);
+        color: hsl(var(--foreground));
+        border: 1px solid hsl(var(--border));
+        border-radius: 8px;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-family: 'Courier Prime', monospace;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .pos-button:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-glow);
+        border-color: hsl(var(--secondary));
+      }
+
+      .pos-button.primary {
+        background: var(--gradient-accent);
+        color: hsl(var(--background));
+      }
+
+      .pos-button.danger {
+        background: linear-gradient(135deg, hsl(var(--destructive)), hsl(var(--destructive) / 0.8));
+        color: white;
+      }
+
+      .pos-button.success {
+        background: linear-gradient(135deg, hsl(var(--success)), hsl(var(--success) / 0.8));
+        color: white;
+      }
+
+      .pos-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .transaction-status {
+        padding: 2rem;
+        background: hsl(var(--card));
+        border-radius: 12px;
+        border: 1px solid hsl(var(--border));
+        box-shadow: var(--shadow-gothic);
+      }
+
+      .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .status-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: hsl(var(--muted-foreground));
+      }
+
+      .status-dot.active {
+        background: hsl(var(--success));
+        box-shadow: 0 0 10px hsl(var(--success));
+      }
+
+      .status-dot.pending {
+        background: hsl(var(--warning));
+        box-shadow: 0 0 10px hsl(var(--warning));
+      }
+
+      .status-dot.error {
+        background: hsl(var(--destructive));
+        box-shadow: 0 0 10px hsl(var(--destructive));
+      }
+
+      .transaction-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .info-item {
+        text-align: center;
+        padding: 1rem;
+        background: hsl(var(--muted));
+        border-radius: 8px;
+        border: 1px solid hsl(var(--border));
+      }
+
+      .info-label {
+        font-size: 0.9rem;
+        color: hsl(var(--muted-foreground));
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.5rem;
+      }
+
+      .info-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: hsl(var(--secondary));
+      }
+
+      .pos-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .cart-panel {
+        background: hsl(var(--card));
+        border-radius: 12px;
+        border: 1px solid hsl(var(--border));
+        box-shadow: var(--shadow-gothic);
+        padding: 2rem;
+        max-height: 600px;
+        overflow-y: auto;
+      }
+
+      .cart-title {
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        margin: 0 0 1.5rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-align: center;
+      }
+
+      .cart-items {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background: hsl(var(--muted));
+        border-radius: 8px;
+        border: 1px solid hsl(var(--border));
+      }
+
+      .item-details {
+        flex: 1;
+      }
+
+      .item-name {
+        font-weight: bold;
+        color: hsl(var(--foreground));
+        margin-bottom: 0.25rem;
+      }
+
+      .item-meta {
+        font-size: 0.9rem;
+        color: hsl(var(--muted-foreground));
+      }
+
+      .item-price {
+        color: hsl(var(--secondary));
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      .cart-summary {
+        border-top: 1px solid hsl(var(--border));
+        padding-top: 1.5rem;
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .summary-total {
+        border-top: 2px solid hsl(var(--secondary));
+        padding-top: 1rem;
+        margin-top: 1rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: hsl(var(--secondary));
+      }
+
+      .payment-panel {
+        background: hsl(var(--card));
+        border-radius: 12px;
+        border: 1px solid hsl(var(--border));
+        box-shadow: var(--shadow-gothic);
+        padding: 2rem;
+      }
+
+      .payment-title {
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        margin: 0 0 1.5rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-align: center;
+      }
+
+      .payment-methods {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .payment-method {
+        padding: 1rem;
+        background: hsl(var(--muted));
+        border: 2px solid hsl(var(--border));
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .payment-method:hover {
+        border-color: hsl(var(--secondary));
+        background: hsl(var(--accent));
+      }
+
+      .payment-method.selected {
+        border-color: hsl(var(--secondary));
+        background: hsl(var(--accent));
+        box-shadow: 0 0 15px hsla(60, 100%, 65%, 0.3);
+      }
+
+      .payment-method-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .payment-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .input-label {
+        font-size: 0.9rem;
+        color: hsl(var(--muted-foreground));
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .pos-input {
+        background: hsl(var(--muted));
+        border: 1px solid hsl(var(--border));
+        border-radius: 6px;
+        padding: 0.75rem;
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        font-size: 1rem;
+      }
+
+      .pos-input:focus {
+        outline: none;
+        border-color: hsl(var(--secondary));
+        box-shadow: 0 0 10px hsla(60, 100%, 65%, 0.2);
+      }
+
+      .receipt-panel {
+        background: hsl(var(--card));
+        border-radius: 12px;
+        border: 1px solid hsl(var(--border));
+        box-shadow: var(--shadow-gothic);
+        padding: 2rem;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+
+      .receipt-title {
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        margin: 0 0 1.5rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-align: center;
+      }
+
+      .receipt-content {
+        background: white;
+        color: black;
+        padding: 1.5rem;
+        border-radius: 8px;
+        font-family: 'Courier Prime', monospace;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        white-space: pre-line;
+      }
+
+      .receipt-header {
+        text-align: center;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 1rem;
+      }
+
+      .receipt-items {
+        margin: 1rem 0;
+      }
+
+      .receipt-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .receipt-total {
+        border-top: 1px solid #ccc;
+        padding-top: 1rem;
+        margin-top: 1rem;
+        font-weight: bold;
+      }
+
+      .back-link {
+        position: fixed;
+        top: 2rem;
+        left: 2rem;
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        background: hsla(60, 100%, 65%, 0.1);
+        border: 1px solid transparent;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+
+      .back-link:hover {
+        color: hsl(var(--foreground));
+        border-color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.2);
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 1200px) {
+        .pos-container {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+        
+        .pos-sidebar {
+          order: -1;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .pos-container {
+          padding: 1rem;
+        }
+        
+        .pos-controls {
+          grid-template-columns: 1fr;
+        }
+        
+        .payment-methods {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="cart.html" class="back-link">← Back to Cart</a>
+    
+    <div class="pos-container">
+      <div class="pos-main">
+        <div class="pos-header">
+          <h1 class="pos-title">POS Terminal</h1>
+          <p class="pos-subtitle">NightKind Collective Point of Sale System</p>
+        </div>
+
+        <div class="pos-controls">
+          <button class="pos-button primary" id="startTransactionBtn" onclick="startNewTransaction()">
+            Start Transaction
+          </button>
+          <button class="pos-button" id="addCustomerBtn" onclick="showCustomerForm()" disabled>
+            Add Customer
+          </button>
+          <button class="pos-button" id="processPaymentBtn" onclick="showPaymentForm()" disabled>
+            Process Payment
+          </button>
+          <button class="pos-button success" id="completeTransactionBtn" onclick="completeTransaction()" disabled>
+            Complete Sale
+          </button>
+          <button class="pos-button danger" id="cancelTransactionBtn" onclick="cancelTransaction()" disabled>
+            Cancel Transaction
+          </button>
+          <button class="pos-button" onclick="exportTransactions()">
+            Export Data
+          </button>
+        </div>
+
+        <div class="transaction-status">
+          <div class="status-indicator">
+            <div class="status-dot" id="statusDot"></div>
+            <span id="statusText">No transaction in progress</span>
+          </div>
+          <div class="transaction-info" id="transactionInfo" style="display: none;">
+            <div class="info-item">
+              <div class="info-label">Transaction #</div>
+              <div class="info-value" id="transactionNumber">-</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Items</div>
+              <div class="info-value" id="itemCount">-</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Subtotal</div>
+              <div class="info-value" id="subtotal">-</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Tax</div>
+              <div class="info-value" id="tax">-</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Total</div>
+              <div class="info-value" id="total">-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pos-sidebar">
+        <div class="cart-panel">
+          <h3 class="cart-title">Current Cart</h3>
+          <div class="cart-items" id="cartItems">
+            <p style="text-align: center; color: hsl(var(--muted-foreground));">
+              Cart is empty
+            </p>
+          </div>
+          <div class="cart-summary" id="cartSummary" style="display: none;">
+            <div class="summary-row">
+              <span>Subtotal:</span>
+              <span id="cartSubtotal">$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Tax (8%):</span>
+              <span id="cartTax">$0.00</span>
+            </div>
+            <div class="summary-row summary-total">
+              <span>Total:</span>
+              <span id="cartTotal">$0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="payment-panel" id="paymentPanel" style="display: none;">
+          <h3 class="payment-title">Payment Method</h3>
+          <div class="payment-methods" id="paymentMethods">
+            <div class="payment-method" data-method="cash">
+              <div class="payment-method-icon">💵</div>
+              <div>Cash</div>
+            </div>
+            <div class="payment-method" data-method="card">
+              <div class="payment-method-icon">💳</div>
+              <div>Card</div>
+            </div>
+            <div class="payment-method" data-method="digital_wallet">
+              <div class="payment-method-icon">📱</div>
+              <div>Digital Wallet</div>
+            </div>
+            <div class="payment-method" data-method="paypal">
+              <div class="payment-method-icon">🔗</div>
+              <div>PayPal</div>
+            </div>
+          </div>
+          <div class="payment-inputs" id="paymentInputs" style="display: none;">
+            <!-- Payment inputs will be dynamically generated -->
+          </div>
+          <button class="pos-button primary" id="confirmPaymentBtn" onclick="confirmPayment()" style="display: none;">
+            Confirm Payment
+          </button>
+        </div>
+
+        <div class="receipt-panel" id="receiptPanel" style="display: none;">
+          <h3 class="receipt-title">Receipt</h3>
+          <div class="receipt-content" id="receiptContent">
+            <!-- Receipt content will be generated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer Information Modal -->
+    <div id="customerModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000;">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: hsl(var(--card)); padding: 2rem; border-radius: 12px; border: 1px solid hsl(var(--border)); min-width: 400px;">
+        <h3 style="color: hsl(var(--secondary)); margin: 0 0 1.5rem 0;">Customer Information</h3>
+        <div class="input-group">
+          <label class="input-label">Name</label>
+          <input type="text" class="pos-input" id="customerName" placeholder="Customer name">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Email</label>
+          <input type="email" class="pos-input" id="customerEmail" placeholder="customer@email.com">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Phone</label>
+          <input type="tel" class="pos-input" id="customerPhone" placeholder="(555) 123-4567">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Notes</label>
+          <textarea class="pos-input" id="customerNotes" placeholder="Special instructions or notes" rows="3"></textarea>
+        </div>
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+          <button class="pos-button" onclick="closeCustomerModal()">Cancel</button>
+          <button class="pos-button primary" onclick="saveCustomerInfo()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="cart-utils.js"></script>
+    <script>
+      let selectedPaymentMethod = null;
+      let customerInfo = {};
+
+      // Initialize POS system
+      document.addEventListener('DOMContentLoaded', function() {
+        updateCartDisplay();
+        updateTransactionStatus();
+        setupPaymentMethodSelection();
+      });
+
+      // Start new transaction
+      function startNewTransaction() {
+        try {
+          if (nightkindCart.getCartCount() === 0) {
+            alert('Cart is empty. Please add items before starting a transaction.');
+            return;
+          }
+
+          const transaction = nightkindPOS.startTransaction();
+          updateTransactionStatus();
+          updateButtons();
+          alert(`Transaction started! Transaction #${transaction.transactionNumber}`);
+        } catch (error) {
+          alert('Error starting transaction: ' + error.message);
+        }
+      }
+
+      // Show customer form
+      function showCustomerForm() {
+        document.getElementById('customerModal').style.display = 'block';
+      }
+
+      // Close customer modal
+      function closeCustomerModal() {
+        document.getElementById('customerModal').style.display = 'none';
+      }
+
+      // Save customer information
+      function saveCustomerInfo() {
+        customerInfo = {
+          name: document.getElementById('customerName').value,
+          email: document.getElementById('customerEmail').value,
+          phone: document.getElementById('customerPhone').value,
+          address: document.getElementById('customerNotes').value
+        };
+
+        try {
+          nightkindPOS.addCustomerInfo(customerInfo);
+          nightkindPOS.addNotes(document.getElementById('customerNotes').value);
+          closeCustomerModal();
+          updateTransactionStatus();
+          alert('Customer information saved!');
+        } catch (error) {
+          alert('Error saving customer info: ' + error.message);
+        }
+      }
+
+      // Show payment form
+      function showPaymentForm() {
+        document.getElementById('paymentPanel').style.display = 'block';
+        document.getElementById('paymentInputs').style.display = 'none';
+        document.getElementById('confirmPaymentBtn').style.display = 'none';
+        selectedPaymentMethod = null;
+      }
+
+      // Setup payment method selection
+      function setupPaymentMethodSelection() {
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        paymentMethods.forEach(method => {
+          method.addEventListener('click', function() {
+            // Remove previous selection
+            paymentMethods.forEach(m => m.classList.remove('selected'));
+            // Select current method
+            this.classList.add('selected');
+            selectedPaymentMethod = this.dataset.method;
+            showPaymentInputs(selectedPaymentMethod);
+          });
+        });
+      }
+
+      // Show payment inputs based on selected method
+      function showPaymentInputs(method) {
+        const paymentInputs = document.getElementById('paymentInputs');
+        const confirmBtn = document.getElementById('confirmPaymentBtn');
+        
+        let inputHTML = '';
+        
+        switch(method) {
+          case 'cash':
+            inputHTML = `
+              <div class="input-group">
+                <label class="input-label">Amount Received</label>
+                <input type="number" class="pos-input" id="cashAmount" placeholder="0.00" step="0.01" min="0">
+              </div>
+            `;
+            break;
+          case 'card':
+            inputHTML = `
+              <div class="input-group">
+                <label class="input-label">Card Number</label>
+                <input type="text" class="pos-input" id="cardNumber" placeholder="1234 5678 9012 3456">
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="input-group">
+                  <label class="input-label">Expiry</label>
+                  <input type="text" class="pos-input" id="cardExpiry" placeholder="MM/YY">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">CVV</label>
+                  <input type="text" class="pos-input" id="cardCvv" placeholder="123">
+                </div>
+              </div>
+            `;
+            break;
+          case 'digital_wallet':
+            inputHTML = `
+              <div class="input-group">
+                <label class="input-label">Wallet ID</label>
+                <input type="text" class="pos-input" id="walletId" placeholder="Wallet identifier">
+              </div>
+              <div class="input-group">
+                <label class="input-label">Confirmation</label>
+                <input type="text" class="pos-input" id="walletConfirmation" placeholder="Payment confirmation">
+              </div>
+            `;
+            break;
+          case 'paypal':
+            inputHTML = `
+              <div class="input-group">
+                <label class="input-label">PayPal ID</label>
+                <input type="text" class="pos-input" id="paypalId" placeholder="PayPal email or ID">
+              </div>
+              <div class="input-group">
+                <label class="input-label">Confirmation</label>
+                <input type="text" class="pos-input" id="paypalConfirmation" placeholder="Payment confirmation">
+              </div>
+            `;
+            break;
+        }
+        
+        paymentInputs.innerHTML = inputHTML;
+        paymentInputs.style.display = 'block';
+        confirmBtn.style.display = 'block';
+      }
+
+      // Confirm payment
+      function confirmPayment() {
+        if (!selectedPaymentMethod) {
+          alert('Please select a payment method first.');
+          return;
+        }
+
+        try {
+          const paymentDetails = getPaymentDetails(selectedPaymentMethod);
+          const transaction = nightkindPOS.processPayment(selectedPaymentMethod, paymentDetails);
+          
+          updateTransactionStatus();
+          updateButtons();
+          showReceipt();
+          
+          alert('Payment processed successfully!');
+        } catch (error) {
+          alert('Error processing payment: ' + error.message);
+        }
+      }
+
+      // Get payment details from form
+      function getPaymentDetails(method) {
+        const details = {};
+        
+        switch(method) {
+          case 'cash':
+            details.amount = parseFloat(document.getElementById('cashAmount').value) || 0;
+            break;
+          case 'card':
+            details.cardNumber = document.getElementById('cardNumber').value;
+            details.expiry = document.getElementById('cardExpiry').value;
+            details.cvv = document.getElementById('cardCvv').value;
+            break;
+          case 'digital_wallet':
+            details.walletId = document.getElementById('walletId').value;
+            details.confirmation = document.getElementById('walletConfirmation').value;
+            break;
+          case 'paypal':
+            details.paypalId = document.getElementById('paypalId').value;
+            details.confirmation = document.getElementById('paypalConfirmation').value;
+            break;
+        }
+        
+        return details;
+      }
+
+      // Complete transaction
+      function completeTransaction() {
+        try {
+          const result = nightkindPOS.completeTransaction();
+          updateTransactionStatus();
+          updateButtons();
+          updateCartDisplay();
+          showReceipt(result.receipt);
+          
+          alert(`Transaction completed! Receipt generated for Transaction #${result.transaction.transactionNumber}`);
+        } catch (error) {
+          alert('Error completing transaction: ' + error.message);
+        }
+      }
+
+      // Cancel transaction
+      function cancelTransaction() {
+        if (confirm('Are you sure you want to cancel this transaction?')) {
+          try {
+            nightkindPOS.cancelTransaction();
+            updateTransactionStatus();
+            updateButtons();
+            alert('Transaction cancelled.');
+          } catch (error) {
+            alert('Error cancelling transaction: ' + error.message);
+          }
+        }
+      }
+
+      // Show receipt
+      function showReceipt(receipt = null) {
+        const receiptPanel = document.getElementById('receiptPanel');
+        const receiptContent = document.getElementById('receiptContent');
+        
+        if (!receipt) {
+          receipt = nightkindPOS.generateReceipt();
+        }
+        
+        const receiptHTML = formatReceipt(receipt);
+        receiptContent.innerHTML = receiptHTML;
+        receiptPanel.style.display = 'block';
+      }
+
+      // Format receipt for display
+      function formatReceipt(receipt) {
+        let html = `
+          <div class="receipt-header">
+            <strong>NIGHTKIND COLLECTIVE</strong><br>
+            Point of Sale Receipt<br>
+            Transaction #${receipt.transactionNumber}<br>
+            ${new Date(receipt.timestamp).toLocaleString()}
+          </div>
+          <div class="receipt-items">
+        `;
+        
+        receipt.items.forEach(item => {
+          html += `
+            <div class="receipt-item">
+              <span>${item.name} ${item.size ? `(${item.size})` : ''} x${item.quantity}</span>
+              <span>$${(item.total).toFixed(2)}</span>
+            </div>
+          `;
+        });
+        
+        html += `
+          </div>
+          <div class="receipt-total">
+            <div class="receipt-item">
+              <span>Subtotal:</span>
+              <span>$${receipt.subtotal.toFixed(2)}</span>
+            </div>
+            <div class="receipt-item">
+              <span>Tax (8%):</span>
+              <span>$${receipt.tax.toFixed(2)}</span>
+            </div>
+            <div class="receipt-item">
+              <span><strong>TOTAL:</strong></span>
+              <span><strong>$${receipt.total.toFixed(2)}</strong></span>
+            </div>
+          </div>
+        `;
+        
+        if (receipt.customerInfo && receipt.customerInfo.name) {
+          html += `
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ccc;">
+              <strong>Customer:</strong> ${receipt.customerInfo.name}<br>
+              ${receipt.customerInfo.email ? `Email: ${receipt.customerInfo.email}<br>` : ''}
+              ${receipt.customerInfo.phone ? `Phone: ${receipt.customerInfo.phone}<br>` : ''}
+            </div>
+          `;
+        }
+        
+        if (receipt.notes) {
+          html += `
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ccc;">
+              <strong>Notes:</strong><br>
+              ${receipt.notes}
+            </div>
+          `;
+        }
+        
+        return html;
+      }
+
+      // Export transactions
+      function exportTransactions() {
+        try {
+          nightkindPOS.exportTransactions();
+          alert('Transaction data exported successfully!');
+        } catch (error) {
+          alert('Error exporting transactions: ' + error.message);
+        }
+      }
+
+      // Update transaction status display
+      function updateTransactionStatus() {
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+        const transactionInfo = document.getElementById('transactionInfo');
+        
+        const status = nightkindPOS.getCurrentTransactionStatus();
+        
+        switch(status) {
+          case 'no_transaction':
+            statusDot.className = 'status-dot';
+            statusText.textContent = 'No transaction in progress';
+            transactionInfo.style.display = 'none';
+            break;
+          case 'pending':
+            statusDot.className = 'status-dot pending';
+            statusText.textContent = 'Transaction pending payment';
+            transactionInfo.style.display = 'grid';
+            updateTransactionInfo();
+            break;
+          case 'paid':
+            statusDot.className = 'status-dot active';
+            statusText.textContent = 'Payment received - ready to complete';
+            transactionInfo.style.display = 'grid';
+            updateTransactionInfo();
+            break;
+        }
+      }
+
+      // Update transaction information
+      function updateTransactionInfo() {
+        if (!nightkindPOS.currentTransaction) return;
+        
+        const transaction = nightkindPOS.currentTransaction;
+        document.getElementById('transactionNumber').textContent = transaction.transactionNumber;
+        document.getElementById('itemCount').textContent = transaction.items.reduce((sum, item) => sum + item.quantity, 0);
+        document.getElementById('subtotal').textContent = `$${transaction.subtotal.toFixed(2)}`;
+        document.getElementById('tax').textContent = `$${transaction.tax.toFixed(2)}`;
+        document.getElementById('total').textContent = `$${transaction.total.toFixed(2)}`;
+      }
+
+      // Update button states
+      function updateButtons() {
+        const startBtn = document.getElementById('startTransactionBtn');
+        const addCustomerBtn = document.getElementById('addCustomerBtn');
+        const processPaymentBtn = document.getElementById('processPaymentBtn');
+        const completeBtn = document.getElementById('completeTransactionBtn');
+        const cancelBtn = document.getElementById('cancelTransactionBtn');
+        
+        const hasTransaction = nightkindPOS.currentTransaction !== null;
+        const isPending = hasTransaction && nightkindPOS.currentTransaction.status === 'pending';
+        const isPaid = hasTransaction && nightkindPOS.currentTransaction.status === 'paid';
+        
+        startBtn.disabled = hasTransaction;
+        addCustomerBtn.disabled = !hasTransaction;
+        processPaymentBtn.disabled = !isPending;
+        completeBtn.disabled = !isPaid;
+        cancelBtn.disabled = !hasTransaction;
+      }
+
+      // Update cart display
+      function updateCartDisplay() {
+        const cartItems = document.getElementById('cartItems');
+        const cartSummary = document.getElementById('cartSummary');
+        const items = nightkindCart.getItems();
+        
+        if (items.length === 0) {
+          cartItems.innerHTML = '<p style="text-align: center; color: hsl(var(--muted-foreground));">Cart is empty</p>';
+          cartSummary.style.display = 'none';
+          return;
+        }
+        
+        let itemsHTML = '';
+        items.forEach(item => {
+          itemsHTML += `
+            <div class="cart-item">
+              <div class="item-details">
+                <div class="item-name">${item.name}</div>
+                <div class="item-meta">
+                  ${item.size ? `Size: ${item.size} • ` : ''}Qty: ${item.quantity}
+                </div>
+              </div>
+              <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+            </div>
+          `;
+        });
+        
+        cartItems.innerHTML = itemsHTML;
+        
+        // Update summary
+        const subtotal = nightkindCart.getCartTotal();
+        const tax = subtotal * 0.08;
+        const total = subtotal + tax;
+        
+        document.getElementById('cartSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById('cartTax').textContent = `$${tax.toFixed(2)}`;
+        document.getElementById('cartTotal').textContent = `$${total.toFixed(2)}`;
+        cartSummary.style.display = 'block';
+      }
+
+      // Listen for cart changes
+      if (window.nightkindCart) {
+        window.nightkindCart.addListener(() => {
+          updateCartDisplay();
+          if (nightkindPOS.currentTransaction) {
+            updateTransactionInfo();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -18,6 +18,10 @@ The cart system consists of three main components:
 - `cart.html` - Full cart page with advanced features
 - `products.js` - Product catalog and data
 
+### POS System Files
+- `pos.html` - Professional POS terminal interface for staff
+- Enhanced `cart-utils.js` - Now includes NightKindPOS class for transaction management
+
 ### Implementation Files
 - `index.html` - Home page with cart integration
 - `shop-categories.html` - Shop categories with cart mini-panel
@@ -104,6 +108,15 @@ All product pages should use this consistent HTML structure:
 - **Export/Import**: Cart data persistence
 - **Statistics**: Cart analytics and insights
 
+### POS System Features
+- **Transaction Management**: Complete sales transaction workflow
+- **Payment Processing**: Multiple payment methods (cash, card, digital wallet, PayPal)
+- **Receipt Generation**: Professional digital receipts with customer information
+- **Customer Management**: Store customer details and notes
+- **Inventory Tracking**: Automatic stock updates after sales
+- **Sales Analytics**: Comprehensive reporting and data export
+- **Professional Interface**: Staff-friendly terminal design
+
 ### Styling Features
 - **Consistent Theme**: Gothic/alternative aesthetic
 - **Hover Effects**: Smooth animations and transitions
@@ -148,6 +161,35 @@ function addToCart(product, size = null) {
 }
 ```
 
+## POS Implementation Guide
+
+### 1. Access POS Terminal
+Navigate to `pos.html` or click the "💳 POS Terminal" button in the cart page.
+
+### 2. Start Transaction
+1. Add items to cart from product pages
+2. Click "Start Transaction" in POS terminal
+3. Add customer information (optional)
+4. Process payment using selected method
+5. Complete transaction to generate receipt
+
+### 3. Payment Methods
+- **Cash**: Enter amount received, system calculates change
+- **Card**: Enter card details (number, expiry, CVV)
+- **Digital Wallet**: Enter wallet ID and confirmation
+- **PayPal**: Enter PayPal ID and confirmation
+
+### 4. Transaction Workflow
+```
+Start Transaction → Add Customer Info → Process Payment → Complete Sale → Generate Receipt
+```
+
+### 5. Staff Training
+- Use POS terminal for all in-person sales
+- Always verify payment before completing transaction
+- Add customer information for better service
+- Use notes field for special instructions
+
 ## Cart Utilities API
 
 ### Core Methods
@@ -169,6 +211,32 @@ function addToCart(product, size = null) {
 - `nightkindCart.sortCart(criteria, direction)`
 - `nightkindCart.exportCart()`
 - `nightkindCart.importCart(jsonData)`
+
+## POS System API
+
+### Transaction Management
+- `nightkindPOS.startTransaction(cartItems)` - Start new transaction
+- `nightkindPOS.completeTransaction()` - Complete and finalize sale
+- `nightkindPOS.cancelTransaction()` - Cancel current transaction
+- `nightkindPOS.getCurrentTransactionStatus()` - Get transaction status
+
+### Payment Processing
+- `nightkindPOS.processPayment(method, details)` - Process payment
+- `nightkindPOS.calculateChange(amountPaid)` - Calculate change for cash
+- `nightkindPOS.validatePaymentDetails(method, details)` - Validate payment info
+
+### Customer Management
+- `nightkindPOS.addCustomerInfo(customerInfo)` - Add customer details
+- `nightkindPOS.addNotes(notes)` - Add transaction notes
+
+### Receipt & Reporting
+- `nightkindPOS.generateReceipt()` - Generate digital receipt
+- `nightkindPOS.getTransactionHistory(limit)` - Get sales history
+- `nightkindPOS.getSalesSummary(startDate, endDate)` - Get sales analytics
+- `nightkindPOS.exportTransactions(format)` - Export transaction data
+
+### Inventory Management
+- `nightkindPOS.updateInventory()` - Update stock after sale
 
 ## Notification System
 
@@ -249,6 +317,15 @@ window.debugCart = true;
 - **Advanced Analytics**: User behavior tracking
 - **A/B Testing**: Cart optimization experiments
 - **Multi-language**: Internationalization support
+
+### POS System Enhancements
+- **Hardware Integration**: Receipt printers, barcode scanners, cash drawers
+- **Payment Gateway**: Real credit card processing (Stripe, Square)
+- **Employee Management**: User roles, permissions, and time tracking
+- **Advanced Reporting**: Real-time dashboards and KPI tracking
+- **Inventory Management**: Low stock alerts and automatic reordering
+- **Customer Database**: Customer profiles, purchase history, and loyalty programs
+- **Multi-location Support**: Multiple store locations and centralized management
 
 ## Support
 
