@@ -442,33 +442,9 @@
         }
       }
 
-      /* CRITICAL: Force hide mobile nav on desktop regardless of other CSS */
-      .mobile-nav-toggle {
-        display: none;
-      }
-
-      .mobile-nav-menu {
-        display: none;
-      }
-
-      /* Only show mobile nav when screen is actually small */
-      @media (max-width: 767px) {
-        .mobile-nav-toggle {
-          display: flex !important;
-        }
-      }
-
-      /* Force hide on larger screens */
-      @media (min-width: 768px) {
-        .mobile-nav-toggle,
-        .mobile-nav-menu {
-          display: none !important;
-        }
-      }
-
       /* Ensure the mobile nav is above other elements */
       .mobile-nav-menu {
-        z-index: 9999;
+        z-index: 10000 !important;
       }
 
       /* Responsive behavior for existing navigation */
@@ -859,8 +835,15 @@
       function createMobileNavigation() {
         // Check if mobile nav already exists
         if (document.querySelector('.mobile-nav-toggle')) {
+          console.log('Mobile navigation already exists, skipping creation');
           return;
         }
+        
+        // Clean up any existing mobile navigation
+        const existingToggle = document.querySelector('.mobile-nav-toggle');
+        const existingMenu = document.querySelector('.mobile-nav-menu');
+        if (existingToggle) existingToggle.remove();
+        if (existingMenu) existingMenu.remove();
 
         // Create mobile nav toggle button
         const mobileNavToggle = document.createElement('button');
@@ -891,13 +874,20 @@
 
         // NEW APPROACH: Find the actual header and integrate properly
         function integrateMobileNav() {
-          // Look for the actual header that contains the navigation
-          const header = document.querySelector('header, nav, [class*="header"], [class*="nav"]');
-          if (!header) return;
+          try {
+            // Look for the actual header that contains the navigation
+            const header = document.querySelector('header, nav, [class*="header"], [class*="nav"]');
+            if (!header) {
+              console.log('No header found for mobile nav integration');
+              return;
+            }
 
-          // Find the navigation container within the header
-          const navContainer = header.querySelector('.flex.items-center.justify-between, .container, [class*="flex"]');
-          if (!navContainer) return;
+            // Find the navigation container within the header
+            const navContainer = header.querySelector('.flex.items-center.justify-between, .container, [class*="flex"]');
+            if (!navContainer) {
+              console.log('No navigation container found in header');
+              return;
+            }
 
           // Add mobile-friendly class to the header
           header.classList.add('mobile-friendly');
@@ -921,8 +911,12 @@
             top: 50% !important;
             transform: translate(-50%, -50%) !important;
             z-index: 1002 !important;
-            display: none !important;
           `;
+          
+          // Show the toggle on mobile screens
+          if (window.innerWidth <= 767) {
+            mobileNavToggle.style.display = 'flex';
+          }
           
           console.log('Mobile navigation integrated into header');
           
@@ -959,9 +953,19 @@
             if (window.innerWidth >= 768 && mobileNavMenu.classList.contains('active')) {
               closeMobileNav();
             }
+            
+            // Update toggle visibility based on screen size
+            if (window.innerWidth <= 767) {
+              mobileNavToggle.style.display = 'flex';
+            } else {
+              mobileNavToggle.style.display = 'none';
+            }
           });
           
-          console.log('Mobile navigation integrated into header with event listeners');
+                      console.log('Mobile navigation integrated into header with event listeners');
+          } catch (error) {
+            console.error('Error integrating mobile navigation:', error);
+          }
         }
 
         // Try to integrate mobile nav multiple times
@@ -972,6 +976,11 @@
 
         // Toggle mobile navigation
         function toggleMobileNav() {
+          if (!mobileNavMenu) {
+            console.error('Mobile nav menu not found');
+            return;
+          }
+          
           const isOpen = mobileNavMenu.classList.contains('active');
           console.log('Toggle called, current state:', isOpen);
           console.log('Mobile menu element:', mobileNavMenu);
@@ -1046,17 +1055,30 @@
             mobileNavMenu.style.scrollBehavior = 'smooth';
             mobileNavMenu.scrollTop = 0;
             
-            // Add touch scrolling support for mobile devices
-            mobileNavMenu.addEventListener('touchstart', function() {}, { passive: true });
-            mobileNavMenu.addEventListener('touchmove', function() {}, { passive: true });
+            // Add touch scrolling support for mobile devices (only once)
+            if (!mobileNavMenu.hasAttribute('data-touch-events-added')) {
+              mobileNavMenu.addEventListener('touchstart', function() {}, { passive: true });
+              mobileNavMenu.addEventListener('touchmove', function() {}, { passive: true });
+              mobileNavMenu.setAttribute('data-touch-events-added', 'true');
+            }
           }
         }
 
         // Close mobile navigation
         function closeMobileNav() {
-          mobileNavMenu.classList.remove('active');
-          mobileNavToggle.classList.remove('active');
+          if (mobileNavMenu) {
+            mobileNavMenu.classList.remove('active');
+          }
+          if (mobileNavToggle) {
+            mobileNavToggle.classList.remove('active');
+          }
           document.body.classList.remove('mobile-menu-open');
+          
+          // Reset body scroll
+          document.body.style.overflow = '';
+          document.body.style.position = '';
+          document.body.style.width = '';
+          document.body.style.height = '';
         }
 
         // Event listeners - these will be added in integrateMobileNav to avoid duplicates
@@ -1064,6 +1086,12 @@
 
 
         console.log('Mobile navigation created successfully');
+        
+        // Verify all elements were created successfully
+        if (!mobileNavToggle || !mobileNavMenu) {
+          console.error('Failed to create mobile navigation elements');
+          return;
+        }
       }
 
       // Create mobile navigation when page loads
@@ -1081,6 +1109,17 @@
       
       // Also try when the window loads completely
       window.addEventListener('load', createMobileNavigation);
+      
+      // Prevent multiple instances
+      let mobileNavCreated = false;
+      if (typeof createMobileNavigation === 'function') {
+        const originalCreateMobileNavigation = createMobileNavigation;
+        createMobileNavigation = function() {
+          if (mobileNavCreated) return;
+          mobileNavCreated = true;
+          originalCreateMobileNavigation();
+        };
+      }
 
       // Enhance existing React navigation for mobile
       function enhanceReactNavigation() {
