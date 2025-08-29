@@ -73,6 +73,43 @@
         margin-top: 80px !important;
       }
       
+      /* Ensure SUPPORT BATS button stays on top of header */
+      [data-bats-qld-handler="true"] {
+        position: relative !important;
+        z-index: 1001 !important;
+        top: 0 !important;
+      }
+      
+      /* Target React app header elements */
+      #root header,
+      #root nav,
+      #root [class*="header"],
+      #root [class*="nav"] {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1000 !important;
+        background: hsl(0, 0%, 8%) !important;
+        backdrop-filter: blur(10px) !important;
+        border-bottom: 1px solid hsl(0, 0%, 14.9%) !important;
+        box-shadow: 0 4px 20px hsla(0, 0%, 0%, 0.3) !important;
+      }
+      
+      /* Ensure SUPPORT BATS button has highest priority */
+      [data-bats-qld-handler="true"] {
+        position: relative !important;
+        z-index: 1002 !important;
+        top: 0 !important;
+        transform: translateZ(0) !important;
+      }
+      
+      /* Additional styling for SUPPORT BATS button */
+      [data-bats-qld-handler="true"] {
+        transform: translateZ(0) !important;
+        will-change: transform !important;
+      }
+      
       /* Adjust overlay height to accommodate the logo */
       .absolute.inset-0.bg-black\/60 {
         height: auto !important;
@@ -136,8 +173,33 @@
         z-index: 10000 !important;
         padding: 6rem 2rem 2rem !important;
         overflow-y: auto !important;
+        overflow-x: hidden !important;
         width: 100vw !important;
         height: 100vh !important;
+        box-sizing: border-box !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: thin !important;
+        scrollbar-color: hsl(60, 100%, 65%) hsla(0, 0%, 8%, 0.3) !important;
+      }
+      
+      /* Custom scrollbar for webkit browsers */
+      .mobile-nav-menu::-webkit-scrollbar {
+        width: 8px !important;
+      }
+      
+      .mobile-nav-menu::-webkit-scrollbar-track {
+        background: hsla(0, 0%, 8%, 0.3) !important;
+        border-radius: 4px !important;
+      }
+      
+      .mobile-nav-menu::-webkit-scrollbar-thumb {
+        background: hsl(60, 100%, 65%) !important;
+        border-radius: 4px !important;
+        border: 1px solid hsla(0, 0%, 8%, 0.5) !important;
+      }
+      
+      .mobile-nav-menu::-webkit-scrollbar-thumb:hover {
+        background: hsl(60, 100%, 75%) !important;
       }
 
       .mobile-nav-menu.active {
@@ -155,14 +217,15 @@
         flex-direction: column !important;
         gap: 2rem !important;
         align-items: center !important;
-        justify-content: center !important;
-        height: 100% !important;
+        justify-content: flex-start !important;
+        min-height: 100% !important;
         width: 100% !important;
-        max-width: 400px !important;
-        margin: 0 auto !important;
-        padding: 2rem !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 2rem 1rem 4rem 1rem !important;
         position: relative !important;
         z-index: 10001 !important;
+        box-sizing: border-box !important;
       }
 
       .mobile-nav-menu .nav-link {
@@ -173,16 +236,16 @@
         text-transform: uppercase !important;
         letter-spacing: 0.1em !important;
         transition: all 0.3s ease !important;
-        padding: 1.5rem 3rem !important;
+        padding: 1.5rem 2rem !important;
         border: 2px solid transparent !important;
         border-radius: 12px !important;
         position: relative !important;
         overflow: hidden !important;
         background: hsla(0, 0%, 8%, 0.4) !important;
         backdrop-filter: blur(10px) !important;
-        min-width: 250px !important;
-        max-width: 300px !important;
-        width: 100% !important;
+        min-width: 280px !important;
+        max-width: calc(100vw - 4rem) !important;
+        width: calc(100vw - 4rem) !important;
         text-align: center !important;
         font-weight: 500 !important;
         box-shadow: 0 4px 20px hsla(0, 0%, 0%, 0.3) !important;
@@ -191,6 +254,7 @@
         flex-shrink: 0 !important;
         flex-grow: 0 !important;
         order: unset !important;
+        box-sizing: border-box !important;
       }
 
       .mobile-nav-menu .nav-link::before {
@@ -337,6 +401,44 @@
       @media (max-width: 767px) {
         .mobile-nav-toggle {
           display: flex !important;
+        }
+        
+        /* Ensure mobile menu is properly sized on small screens */
+        .mobile-nav-menu {
+          width: 100vw !important;
+          height: 100vh !important;
+          max-width: 100vw !important;
+          max-height: 100vh !important;
+          left: 0 !important;
+          right: 0 !important;
+        }
+        
+        .mobile-nav-menu .nav-link {
+          width: calc(100vw - 2rem) !important;
+          max-width: calc(100vw - 2rem) !important;
+          min-width: 250px !important;
+        }
+      }
+      
+      /* Extra small screens */
+      @media (max-width: 480px) {
+        .mobile-nav-menu {
+          padding: 5rem 1rem 2rem 1rem !important;
+        }
+        
+        .mobile-nav-menu .nav-link {
+          width: calc(100vw - 2rem) !important;
+          max-width: calc(100vw - 2rem) !important;
+          min-width: 200px !important;
+          padding: 1.25rem 1.5rem !important;
+          font-size: 1.25rem !important;
+        }
+        
+        .mobile-nav-menu .close-btn {
+          top: 1.5rem !important;
+          right: 1.5rem !important;
+          width: 45px !important;
+          height: 45px !important;
         }
       }
 
@@ -692,6 +794,29 @@
         overflow: hidden !important;
         position: fixed !important;
         width: 100% !important;
+        height: 100% !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+      
+      /* Ensure mobile menu takes full screen and scrolls properly */
+      body.mobile-menu-open .mobile-nav-menu {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        scroll-behavior: smooth !important;
+      }
+      
+      /* Ensure nav links are properly spaced for scrolling */
+      body.mobile-menu-open .mobile-nav-menu .nav-links {
+        padding-bottom: 6rem !important;
+        min-height: calc(100vh - 2rem) !important;
       }
     </style>
   </head>
@@ -875,6 +1000,10 @@
             mobileNavMenu.style.bottom = '0';
             mobileNavMenu.style.width = '100vw';
             mobileNavMenu.style.height = '100vh';
+            mobileNavMenu.style.overflowY = 'auto';
+            mobileNavMenu.style.overflowX = 'hidden';
+            mobileNavMenu.style.boxSizing = 'border-box';
+            mobileNavMenu.style.webkitOverflowScrolling = 'touch';
             
             // Force proper layout for nav-links
             const navLinks = mobileNavMenu.querySelector('.nav-links');
@@ -883,12 +1012,13 @@
               navLinks.style.flexDirection = 'column';
               navLinks.style.gap = '2rem';
               navLinks.style.alignItems = 'center';
-              navLinks.style.justifyContent = 'center';
-              navLinks.style.height = '100%';
+              navLinks.style.justifyContent = 'flex-start';
+              navLinks.style.minHeight = '100%';
               navLinks.style.width = '100%';
-              navLinks.style.maxWidth = '400px';
-              navLinks.style.margin = '0 auto';
-              navLinks.style.padding = '2rem';
+              navLinks.style.maxWidth = '100%';
+              navLinks.style.margin = '0';
+              navLinks.style.padding = '2rem 1rem 4rem 1rem';
+              navLinks.style.boxSizing = 'border-box';
             }
             
             // Force proper layout for individual nav-links
@@ -899,6 +1029,10 @@
               link.style.position = 'relative';
               link.style.zIndex = '10002';
               link.style.order = index;
+              link.style.minWidth = '280px';
+              link.style.maxWidth = 'calc(100vw - 4rem)';
+              link.style.width = 'calc(100vw - 4rem)';
+              link.style.boxSizing = 'border-box';
             });
             
             console.log('Mobile menu styles applied:', {
@@ -907,6 +1041,14 @@
               visibility: mobileNavMenu.style.visibility,
               opacity: mobileNavMenu.style.opacity
             });
+            
+            // Ensure smooth scrolling and scroll to top
+            mobileNavMenu.style.scrollBehavior = 'smooth';
+            mobileNavMenu.scrollTop = 0;
+            
+            // Add touch scrolling support for mobile devices
+            mobileNavMenu.addEventListener('touchstart', function() {}, { passive: true });
+            mobileNavMenu.addEventListener('touchmove', function() {}, { passive: true });
           }
         }
 
@@ -1572,6 +1714,11 @@
             // Mark this button as handled
             button.setAttribute('data-bats-qld-handler', 'true');
             
+            // Ensure the button stays on top of the header
+            button.style.position = 'relative';
+            button.style.zIndex = '1001';
+            button.style.top = '0';
+            
             button.addEventListener('click', (e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -1592,6 +1739,64 @@
       
       // Also try when the window loads completely
       window.addEventListener('load', addBatsQLDButtonHandler);
+      
+      // Function to continuously monitor and fix SUPPORT BATS button positioning
+      function monitorBatsButtonPosition() {
+        const batsButtons = document.querySelectorAll('[data-bats-qld-handler="true"]');
+        batsButtons.forEach(button => {
+          // Ensure the button stays on top of the header
+          button.style.position = 'relative';
+          button.style.zIndex = '1001';
+          button.style.top = '0';
+        });
+      }
+      
+      // Monitor button positioning continuously
+      setInterval(monitorBatsButtonPosition, 1000);
+      window.addEventListener('load', monitorBatsButtonPosition);
+      
+      // Use MutationObserver to watch for DOM changes and maintain button positioning
+      function setupBatsButtonObserver() {
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'childList') {
+              // Check if any new nodes contain SUPPORT BATS buttons
+              mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                  const batsButtons = node.querySelectorAll && node.querySelectorAll('[data-bats-qld-handler="true"]');
+                  if (batsButtons) {
+                    batsButtons.forEach(button => {
+                      button.style.position = 'relative';
+                      button.style.zIndex = '1002';
+                      button.style.top = '0';
+                    });
+                  }
+                  
+                  // Also check if the node itself is a SUPPORT BATS button
+                  if (node.hasAttribute && node.hasAttribute('data-bats-qld-handler')) {
+                    node.style.position = 'relative';
+                    node.style.zIndex = '1002';
+                    node.style.top = '0';
+                  }
+                }
+              });
+            }
+          });
+        });
+        
+        // Start observing the root element for changes
+        const rootElement = document.getElementById('root');
+        if (rootElement) {
+          observer.observe(rootElement, {
+            childList: true,
+            subtree: true
+          });
+        }
+      }
+      
+      // Setup the observer when the page loads
+      window.addEventListener('load', setupBatsButtonObserver);
+      setTimeout(setupBatsButtonObserver, 1000);
 
       // Fix navigation links in the React app
       function fixNavigationLinks() {
