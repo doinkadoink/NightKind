@@ -398,6 +398,132 @@
         color: white;
       }
 
+      /* Pride product styling */
+      .product-card[data-product*="pride"] {
+        border: 2px solid transparent;
+        background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .product-card[data-product*="pride"]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, 
+          #ff0000, #ff8000, #ffff00, #00ff00, #0080ff, #8000ff, #ff0080);
+        animation: prideRainbow 3s linear infinite;
+      }
+
+      @keyframes prideRainbow {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+
+      .product-card[data-product*="pride"] .product-title {
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: prideTitleGlow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes prideTitleGlow {
+        0% { filter: brightness(1) saturate(1); }
+        100% { filter: brightness(1.2) saturate(1.3); }
+      }
+
+      .product-card[data-product*="pride"] .add-to-cart-btn {
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+        background-size: 300% 300%;
+        animation: prideButtonGlow 3s ease-in-out infinite;
+        color: white;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      }
+
+      @keyframes prideButtonGlow {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      .product-card[data-product*="pride"] .add-to-cart-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+      }
+
+      /* Pride badge */
+      .pride-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+        color: white;
+        padding: 0.3rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        animation: prideBadgeGlow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes prideBadgeGlow {
+        0% { box-shadow: 0 0 10px rgba(255, 107, 107, 0.5); }
+        100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+      }
+
+      /* Filter section styling */
+      .filter-section {
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .filter-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        background: #333;
+        color: #ccc;
+        border: 2px solid #555;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .filter-btn:hover {
+        background: #555;
+        border-color: #ffd700;
+        color: #ffd700;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+      }
+
+      .filter-btn.active {
+        background: linear-gradient(45deg, #ffd700, #ffed4e);
+        color: #000;
+        border-color: #ffd700;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      }
+
+      .filter-btn.active:hover {
+        background: linear-gradient(45deg, #ffed4e, #ffd700);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+      }
+
       .wishlist-btn.in-wishlist:hover {
         background: #ff4444;
         border-color: #ff4444;
@@ -492,6 +618,16 @@
         <p class="shop-description">
           Illustrative bat designs with alt/gothic motifs. High-quality vinyl stickers perfect for laptops, water bottles, and anywhere you want to show your support for bat conservation.
         </p>
+      </div>
+      
+      <!-- Filter Section -->
+      <div class="filter-section">
+        <div class="filter-buttons">
+          <button class="filter-btn active" onclick="filterProducts('all')">All Stickers</button>
+          <button class="filter-btn" onclick="filterProducts('pride')">Pride Collection</button>
+          <button class="filter-btn" onclick="filterProducts('gothic')">Gothic</button>
+          <button class="filter-btn" onclick="filterProducts('conservation')">Conservation</button>
+        </div>
       </div>
       
       <div class="product-grid" id="productGrid">
@@ -699,9 +835,34 @@
         });
       }
 
+      let currentFilter = 'all';
+      
+      function filterProducts(filter) {
+        currentFilter = filter;
+        
+        // Update active button
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        
+        renderProducts();
+      }
+      
       function renderProducts() {
         const grid = document.getElementById('productGrid');
-        const products = ProductUtils.getProductsByCategory('stickers');
+        let products = ProductUtils.getProductsByCategory('stickers');
+        
+        // Apply filter
+        if (currentFilter !== 'all') {
+          products = products.filter(product => {
+            if (currentFilter === 'pride') {
+              return product.tags.includes('pride') || product.tags.includes('lgbtq+');
+            } else {
+              return product.tags.includes(currentFilter);
+            }
+          });
+        }
         
         grid.innerHTML = products.map(product => {
           const inWishlist = isInWishlist(product.id);
@@ -713,6 +874,7 @@
           
           return `
             <div class="product-card" data-product="${product.id}">
+              ${product.tags.includes('pride') ? '<div class="pride-badge">Pride</div>' : ''}
               <div class="product-image">${product.image}</div>
               <h3 class="product-title">${product.name}</h3>
               <p class="product-description">${product.description}</p>

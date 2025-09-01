@@ -158,6 +158,174 @@ const NightKindProducts = {
       tags: ['family', 'mother', 'baby'],
       stockLevel: 33,
       conservationImpact: 'Supports 1.6 bat rescue operations'
+    },
+    {
+      id: 'sticker-pride-1',
+      name: 'Pride Bat Sticker',
+      description: 'Bat design with rainbow pride flag colors, celebrating LGBTQ+ pride',
+      price: 6.00,
+      image: '<img src="images/PRIDE_BAT_STICKER.png" alt="Pride Bat Sticker" style="width: 100px; height: 100px; object-fit: contain;">',
+      sizes: ['Small', 'Medium', 'Large'],
+      category: 'stickers',
+      inStock: true,
+      tags: ['pride', 'bat', 'rainbow', 'lgbtq+'],
+      stockLevel: 40,
+      conservationImpact: 'Supports 1.2 bat rescue operations',
+      prideVariant: 'pride'
+    },
+    {
+      id: 'sticker-pride-2',
+      name: 'Bisexual Bat Sticker',
+      description: 'Bat design with bisexual pride flag colors (pink, purple, blue)',
+      price: 6.00,
+      image: '<img src="images/BISEXUAL_BAT_STICKER.png" alt="Bisexual Bat Sticker" style="width: 100px; height: 100px; object-fit: contain;">',
+      sizes: ['Small', 'Medium', 'Large'],
+      category: 'stickers',
+      inStock: true,
+      tags: ['pride', 'bat', 'bisexual', 'lgbtq+'],
+      stockLevel: 40,
+      conservationImpact: 'Supports 1.2 bat rescue operations',
+      prideVariant: 'bisexual'
+    },
+    {
+      id: 'sticker-pride-3',
+      name: 'Polysexual Bat Sticker',
+      description: 'Bat design with polysexual pride flag colors (pink, green, blue)',
+      price: 6.00,
+      image: '<img src="images/POLYSEXUAL_BAT_STICKER.png" alt="Polysexual Bat Sticker" style="width: 100px; height: 100px; object-fit: contain;">',
+      sizes: ['Small', 'Medium', 'Large'],
+      category: 'stickers',
+      inStock: true,
+      tags: ['pride', 'bat', 'polysexual', 'lgbtq+'],
+      stockLevel: 40,
+      conservationImpact: 'Supports 1.2 bat rescue operations',
+      prideVariant: 'polysexual'
+    },
+    {
+      id: 'sticker-pride-4',
+      name: 'Pansexual Bat Sticker',
+      description: 'Bat design with pansexual pride flag colors (pink, yellow, blue)',
+      price: 6.00,
+      image: '<img src="images/PANSEXUAL_BAT_PRIDE.png" alt="Pansexual Bat Sticker" style="width: 100px; height: 100px; object-fit: contain;">',
+      sizes: ['Small', 'Medium', 'Large'],
+      category: 'stickers',
+      inStock: true,
+      tags: ['pride', 'bat', 'pansexual', 'lgbtq+'],
+      stockLevel: 40,
+      conservationImpact: 'Supports 1.2 bat rescue operations',
+      prideVariant: 'pansexual'
+    },
+    {
+      id: 'sticker-pride-5',
+      name: 'Demisexual Bat Sticker',
+      description: 'Bat design with demisexual pride flag colors (black, gray, white, purple)',
+      price: 6.00,
+      image: '<img src="images/DEMISEXUAL_BAT_STICKER.png" alt="Demisexual Bat Sticker" style="width: 100px; height: 100px; object-fit: contain;">',
+      sizes: ['Small', 'Medium', 'Large'],
+      category: 'stickers',
+      inStock: true,
+      tags: ['pride', 'bat', 'demisexual', 'lgbtq+'],
+      stockLevel: 40,
+      conservationImpact: 'Supports 1.2 bat rescue operations',
+      prideVariant: 'demisexual'
+    },
+    {
+      id: 'sticker-pride-6',
+      name: 'Asexual Bat Sticker',
+      description: 'Bat design with asexual pride flag colors (black, gray, white, purple)',
+      price: 6.00,
+      image: '<img src="images/ASEXUAL_BAT_STICKER.png" alt="Asexual Bat Sticker" style="width: 100px; height: 100px; object-fit: contain;">',
+      sizes: ['Small', 'Medium', 'Large'],
+      category: 'stickers',
+      inStock: true,
+      tags: ['pride', 'bat', 'asexual', 'lgbtq+'],
+      stockLevel: 40,
+      conservationImpact: 'Supports 1.2 bat rescue operations',
+      prideVariant: 'asexual'
+    },
+    {
+      id: 'sticker-pride-7',
+      name: 'Lesbian Pride Bat Sticker',
+      description: 'Bat design with lesbian pride flag colors (dark orange, orange, light orange, white, pink, dark pink, purple)',
+      price: 6.00,
+      image: '<img src="images/LESBIANPRIDE_BAT_STICKER.png" alt="Lesbian Pride Bat Sticker" style="width: 100px; height: 100px; object-fit: contain;">',
+      sizes: ['Small', 'Medium', 'Large'],
+      category: 'stickers',
+      inStock: true,
+      tags: ['pride', 'bat', 'lesbian', 'lgbtq+'],
+      stockLevel: 40,
+      conservationImpact: 'Supports 1.2 bat rescue operations',
+      prideVariant: 'lesbian'
+    },
+    {
+      id: 'sticker-pride-8',
+      name: 'Gay Men Pride Bat Sticker',
+      description: 'Bat design with gay men pride flag colors (green, blue, purple, pink, red, orange, yellow)',
+      price: 6.00,
+      image: '<img src="images/GAYMENPRIDE_BAT_STICKER.png" alt="Gay Men Pride Bat Sticker" style="width: 100px; height: 100px; object-fit: contain;">',
+      sizes: ['Small', 'Medium', 'Large'],
+      category: 'stickers',
+      inStock: true,
+      tags: ['pride', 'bat', 'gay', 'lgbtq+'],
+      stockLevel: 40,
+      conservationImpact: 'Supports 1.2 bat rescue operations',
+      prideVariant: 'gay'
+    },
+    {
+      id: 'sticker-pride-9',
+      name: 'Transgender Bat Sticker',
+      description: 'Bat design with transgender pride flag colors (light blue, pink, white)',
+      price: 6.00,
+      image: '<img src="images/TRANSGENDER_BAT_STICKER.png" alt="Transgender Bat Sticker" style="width: 100px; height: 100px; object-fit: contain;">',
+      sizes: ['Small', 'Medium', 'Large'],
+      category: 'stickers',
+      inStock: true,
+      tags: ['pride', 'bat', 'transgender', 'lgbtq+'],
+      stockLevel: 40,
+      conservationImpact: 'Supports 1.2 bat rescue operations',
+      prideVariant: 'transgender'
+    },
+    {
+      id: 'sticker-pride-10',
+      name: 'Aromantic Bat Sticker',
+      description: 'Bat design with aromantic pride flag colors (dark green, light green, white, gray, black)',
+      price: 6.00,
+      image: '<img src="images/AROMANTIC_BAT_STICKER.png" alt="Aromantic Bat Sticker" style="width: 100px; height: 100px; object-fit: contain;">',
+      sizes: ['Small', 'Medium', 'Large'],
+      category: 'stickers',
+      inStock: true,
+      tags: ['pride', 'bat', 'aromantic', 'lgbtq+'],
+      stockLevel: 40,
+      conservationImpact: 'Supports 1.2 bat rescue operations',
+      prideVariant: 'aromantic'
+    },
+    {
+      id: 'sticker-pride-11',
+      name: 'Non-Binary Bat Sticker',
+      description: 'Bat design with non-binary pride flag colors (yellow, white, purple, black)',
+      price: 6.00,
+      image: '<img src="images/NONBINARY_BAT_STICKER.png" alt="Non-Binary Bat Sticker" style="width: 100px; height: 100px; object-fit: contain;">',
+      sizes: ['Small', 'Medium', 'Large'],
+      category: 'stickers',
+      inStock: true,
+      tags: ['pride', 'bat', 'non-binary', 'lgbtq+'],
+      stockLevel: 40,
+      conservationImpact: 'Supports 1.2 bat rescue operations',
+      prideVariant: 'non-binary'
+    },
+    {
+      id: 'sticker-pride-12',
+      name: 'Intersex Bat Sticker',
+      description: 'Bat design with intersex pride flag colors (yellow background with purple circle)',
+      price: 6.00,
+      image: '<img src="images/INTERSEX_BAT_STICKER.png" alt="Intersex Bat Sticker" style="width: 100px; height: 100px; object-fit: contain;">',
+      sizes: ['Small', 'Medium', 'Large'],
+      category: 'stickers',
+      inStock: true,
+      tags: ['pride', 'bat', 'intersex', 'lgbtq+'],
+      stockLevel: 40,
+      conservationImpact: 'Supports 1.2 bat rescue operations',
+      prideVariant: 'intersex'
     }
   ],
 
@@ -459,6 +627,27 @@ const ProductUtils = {
       totalBatsSupported: totalBatsSupported,
       averagePrice: totalValue / allProducts.length
     };
+  },
+
+  // Get pride sticker variants
+  getPrideStickerVariants() {
+    return this.getAllProducts().filter(product => 
+      product.category === 'stickers' && product.prideVariant
+    );
+  },
+
+  // Get pride sticker by variant
+  getPrideStickerByVariant(variant) {
+    return this.getAllProducts().find(product => 
+      product.category === 'stickers' && product.prideVariant === variant
+    );
+  },
+
+  // Get all pride products
+  getPrideProducts() {
+    return this.getAllProducts().filter(product => 
+      product.tags.includes('pride') || product.tags.includes('lgbtq+')
+    );
   }
 };
 
