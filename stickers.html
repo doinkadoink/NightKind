@@ -476,6 +476,254 @@
         100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
       }
 
+      /* Fullscreen modal styles */
+      .fullscreen-modal {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(10px);
+        animation: modalFadeIn 0.3s ease-out;
+      }
+
+      @keyframes modalFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      .fullscreen-modal.show {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        position: relative;
+        max-width: 90vw;
+        max-height: 90vh;
+        text-align: center;
+        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+        border: 2px solid #ffd700;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+        animation: modalSlideIn 0.3s ease-out;
+      }
+
+      @keyframes modalSlideIn {
+        from { transform: scale(0.8) translateY(-50px); opacity: 0; }
+        to { transform: scale(1) translateY(0); opacity: 1; }
+      }
+
+      .modal-image {
+        max-width: 100%;
+        max-height: 70vh;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        margin-bottom: 1.5rem;
+      }
+
+      .modal-title {
+        color: #ffd700;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .modal-description {
+        color: #ccc;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .modal-price {
+        color: #ffd700;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      .modal-conservation {
+        color: #4CAF50;
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        padding: 0.8rem;
+        background: rgba(76, 175, 80, 0.1);
+        border: 1px solid rgba(76, 175, 80, 0.3);
+        border-radius: 8px;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        color: #aaa;
+        font-size: 2rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        background: none;
+        border: none;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+
+      .modal-close:hover {
+        color: #ffd700;
+        background: rgba(255, 215, 0, 0.1);
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+
+      .modal-btn {
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        min-width: 150px;
+      }
+
+      .modal-btn.primary {
+        background: linear-gradient(45deg, #ffd700, #ffed4e);
+        color: #000;
+      }
+
+      .modal-btn.primary:hover {
+        background: linear-gradient(45deg, #ffed4e, #ffd700);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+      }
+
+      .modal-btn.secondary {
+        background: transparent;
+        color: #ffd700;
+        border: 2px solid #ffd700;
+      }
+
+      .modal-btn.secondary:hover {
+        background: #ffd700;
+        color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+      }
+
+      .modal-btn.wishlist {
+        background: transparent;
+        color: #ff6b6b;
+        border: 2px solid #ff6b6b;
+      }
+
+      .modal-btn.wishlist:hover {
+        background: #ff6b6b;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+      }
+
+      .modal-btn.wishlist.in-wishlist {
+        background: #ff6b6b;
+        color: white;
+      }
+
+      /* Modal size selection styling */
+      .modal-size-selection {
+        margin: 1.5rem 0;
+        text-align: center;
+      }
+
+      .modal-size-selection .size-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .modal-size-selection .size-btn {
+        background: #444;
+        color: #ccc;
+        border: 1px solid #666;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        min-width: 60px;
+        text-align: center;
+      }
+
+      .modal-size-selection .size-btn:hover {
+        background: #666;
+        border-color: #ffd700;
+        color: #ffd700;
+      }
+
+      .modal-size-selection .size-btn.selected {
+        background: #ffd700;
+        color: #000;
+        border-color: #ffd700;
+      }
+
+      /* Product image clickable */
+      .product-image {
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .product-image:hover {
+        transform: scale(1.05);
+      }
+
+      .product-image.clickable {
+        position: relative;
+      }
+
+      .product-image.clickable::after {
+        content: '🔍 Click to view';
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 0.3rem 0.6rem;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        font-weight: bold;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .product-image.clickable:hover::after {
+        opacity: 1;
+      }
+
       /* Filter section styling */
       .filter-section {
         margin-bottom: 2rem;
@@ -633,6 +881,36 @@
       <div class="product-grid" id="productGrid">
         <!-- Products will be loaded here -->
       </div>
+
+      <!-- Fullscreen Modal -->
+      <div id="fullscreenModal" class="fullscreen-modal">
+        <div class="modal-content">
+          <button class="modal-close" onclick="closeFullscreenModal()">&times;</button>
+          <div id="modalImage" class="modal-image"></div>
+          <h2 id="modalTitle" class="modal-title"></h2>
+          <p id="modalDescription" class="modal-description"></p>
+          <div id="modalPrice" class="modal-price"></div>
+          <div id="modalConservation" class="modal-conservation"></div>
+          
+          <!-- Size selection for modal -->
+          <div id="modalSizeSelection" class="modal-size-selection" style="display: none;">
+            <label style="color: #ffd700; font-weight: bold; margin-bottom: 0.5rem; display: block;">Select Size:</label>
+            <div id="modalSizeButtons" class="size-buttons" style="justify-content: center; margin-bottom: 1rem;"></div>
+          </div>
+          
+          <div class="modal-actions">
+            <button id="modalWishlistBtn" class="modal-btn wishlist" onclick="toggleModalWishlist()">
+              🤍 Add to Wishlist
+            </button>
+            <button id="modalAddToCartBtn" class="modal-btn primary" onclick="addToCartFromModal()">
+              Add to Cart
+            </button>
+            <button class="modal-btn secondary" onclick="closeFullscreenModal()">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
     
     <script src="cart-utils.js"></script>
@@ -774,8 +1052,14 @@
         }
       }
 
-      function addToCart(product, size = null) {
+      function addToCartById(productId, size = null) {
         try {
+          const product = ProductUtils.getProductById(productId);
+          if (!product) {
+            CartNotification.error('Product not found');
+            return;
+          }
+
           // Validate size selection
           if (product.sizes && product.sizes.length > 1 && !size) {
             CartNotification.error('Please select a size');
@@ -795,8 +1079,13 @@
         }
       }
 
-      function addToWishlist(product) {
+      function addToWishlistById(productId) {
         try {
+          const product = ProductUtils.getProductById(productId);
+          if (!product) {
+            CartNotification.error('Product not found');
+            return;
+          }
           nightkindCart.addToWishlist(product);
           CartNotification.success('Added to wishlist!');
           renderProducts(); // Re-render to update wishlist button state
@@ -836,6 +1125,130 @@
       }
 
       let currentFilter = 'all';
+      let currentModalProduct = null;
+      
+      // Fullscreen modal functions
+      function openFullscreenModal(productId) {
+        const product = ProductUtils.getProductById(productId);
+        if (!product) return;
+        
+        currentModalProduct = product;
+        
+        // Update modal content
+        document.getElementById('modalImage').innerHTML = product.image;
+        document.getElementById('modalTitle').textContent = product.name;
+        document.getElementById('modalDescription').textContent = product.description;
+        document.getElementById('modalPrice').textContent = `$${product.price.toFixed(2)}`;
+        document.getElementById('modalConservation').textContent = product.conservationImpact;
+        
+        // Handle size selection
+        const sizeSelection = document.getElementById('modalSizeSelection');
+        const sizeButtons = document.getElementById('modalSizeButtons');
+        
+        if (product.sizes && product.sizes.length > 1) {
+          sizeSelection.style.display = 'block';
+          sizeButtons.innerHTML = product.sizes.map(size => `
+            <button class="size-btn ${size === (selectedSizes[product.id] || product.sizes[0]) ? 'selected' : ''}" 
+                    onclick="selectModalSize('${size}')">
+              ${size}
+            </button>
+          `).join('');
+        } else {
+          sizeSelection.style.display = 'none';
+        }
+        
+        // Update wishlist button state
+        updateModalWishlistButton(product.id);
+        
+        // Show modal
+        document.getElementById('fullscreenModal').classList.add('show');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      }
+      
+      function closeFullscreenModal() {
+        document.getElementById('fullscreenModal').classList.remove('show');
+        document.body.style.overflow = ''; // Restore scrolling
+        currentModalProduct = null;
+      }
+      
+      function updateModalWishlistButton(productId) {
+        const wishlistBtn = document.getElementById('modalWishlistBtn');
+        const inWishlist = isInWishlist(productId);
+        
+        if (inWishlist) {
+          wishlistBtn.textContent = '❤️ Remove from Wishlist';
+          wishlistBtn.classList.add('in-wishlist');
+        } else {
+          wishlistBtn.textContent = '🤍 Add to Wishlist';
+          wishlistBtn.classList.remove('in-wishlist');
+        }
+      }
+      
+      function toggleModalWishlist() {
+        if (!currentModalProduct) return;
+        
+        if (isInWishlist(currentModalProduct.id)) {
+          removeFromWishlist(currentModalProduct.id);
+        } else {
+          addToWishlistById(currentModalProduct.id);
+        }
+        
+        updateModalWishlistButton(currentModalProduct.id);
+        renderProducts(); // Update main page wishlist buttons
+      }
+      
+      function selectModalSize(size) {
+        if (!currentModalProduct) return;
+        
+        // Update selected size
+        selectedSizes[currentModalProduct.id] = size;
+        
+        // Update size button states
+        const sizeButtons = document.querySelectorAll('#modalSizeButtons .size-btn');
+        sizeButtons.forEach(btn => {
+          btn.classList.remove('selected');
+          if (btn.textContent === size) {
+            btn.classList.add('selected');
+          }
+        });
+        
+        // Update main page size selection
+        const mainSizeButtons = document.querySelectorAll(`[data-product="${currentModalProduct.id}"] .size-btn`);
+        mainSizeButtons.forEach(btn => {
+          btn.classList.remove('selected');
+          if (btn.textContent === size) {
+            btn.classList.add('selected');
+          }
+        });
+      }
+      
+      function addToCartFromModal() {
+        if (!currentModalProduct) return;
+        
+        // Get selected size from main page
+        const selectedSize = selectedSizes[currentModalProduct.id] || 
+                           (currentModalProduct.sizes ? currentModalProduct.sizes[0] : null);
+        
+        addToCartById(currentModalProduct.id, selectedSize);
+        closeFullscreenModal();
+      }
+      
+      // Close modal when clicking outside
+      document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('fullscreenModal');
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            closeFullscreenModal();
+          }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && modal.classList.contains('show')) {
+            closeFullscreenModal();
+          }
+        });
+      });
       
       function filterProducts(filter) {
         currentFilter = filter;
@@ -870,12 +1283,12 @@
           const wishlistBtnClass = inWishlist ? 'wishlist-btn in-wishlist' : 'wishlist-btn';
           const wishlistBtnOnclick = inWishlist ? 
             `removeFromWishlist('${product.id}')` : 
-            `addToWishlist(${JSON.stringify(product)})`;
+            `addToWishlistById('${product.id}')`;
           
           return `
             <div class="product-card" data-product="${product.id}">
               ${product.tags.includes('pride') ? '<div class="pride-badge">Pride</div>' : ''}
-              <div class="product-image">${product.image}</div>
+              <div class="product-image clickable" onclick="openFullscreenModal('${product.id}')">${product.image}</div>
               <h3 class="product-title">${product.name}</h3>
               <p class="product-description">${product.description}</p>
               <div class="product-price">$${product.price.toFixed(2)}</div>
@@ -899,7 +1312,7 @@
                 ${wishlistBtnText}
               </button>
               
-              <button class="add-to-cart-btn" onclick="addToCart(${JSON.stringify(product)}, '${selectedSizes[product.id] || (product.sizes ? product.sizes[0] : null)}')">
+              <button class="add-to-cart-btn" onclick="addToCartById('${product.id}', '${selectedSizes[product.id] || (product.sizes ? product.sizes[0] : null)}')">
                 Add to Cart
               </button>
             </div>
