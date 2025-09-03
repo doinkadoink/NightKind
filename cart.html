@@ -1014,6 +1014,526 @@
           font-size: 1.3rem;
         }
       }
+
+      /* Checkout Modal Styles */
+      .checkout-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        padding: 2rem;
+        box-sizing: border-box;
+      }
+
+      .checkout-modal-content {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        max-width: 800px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      }
+
+      .checkout-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 2rem 1rem;
+        border-bottom: 1px solid hsl(var(--border));
+      }
+
+      .checkout-header h2 {
+        color: hsl(var(--secondary));
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin: 0;
+      }
+
+      .checkout-close {
+        background: none;
+        border: none;
+        color: hsl(var(--muted-foreground));
+        font-size: 2rem;
+        cursor: pointer;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .checkout-close:hover {
+        background: hsl(var(--destructive));
+        color: white;
+      }
+
+      .checkout-body {
+        padding: 2rem;
+      }
+
+      .checkout-section {
+        margin-bottom: 2rem;
+      }
+
+      .checkout-section h3 {
+        color: hsl(var(--secondary));
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid hsl(var(--border));
+        padding-bottom: 0.5rem;
+      }
+
+      .checkout-items {
+        margin-bottom: 1rem;
+      }
+
+      .checkout-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid hsl(var(--border));
+      }
+
+      .checkout-item:last-child {
+        border-bottom: none;
+      }
+
+      .item-name {
+        flex: 1;
+        color: hsl(var(--foreground));
+        font-weight: bold;
+      }
+
+      .item-quantity {
+        color: hsl(var(--muted-foreground));
+        margin: 0 1rem;
+      }
+
+      .item-price {
+        color: hsl(var(--secondary));
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .checkout-totals {
+        background: hsla(60, 100%, 65%, 0.05);
+        border: 1px solid hsla(60, 100%, 65%, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+      }
+
+      .total-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        color: hsl(var(--muted-foreground));
+      }
+
+      .total-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .total-final {
+        color: hsl(var(--secondary));
+        font-weight: bold;
+        font-size: 1.2rem;
+        font-family: 'Courier Prime', monospace;
+        border-top: 1px solid hsl(var(--border));
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .checkout-form {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .form-group label {
+        color: hsl(var(--foreground));
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.9rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        background: hsl(var(--background));
+        border: 1px solid hsl(var(--border));
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: hsl(var(--secondary));
+        box-shadow: 0 0 0 2px hsla(60, 100%, 65%, 0.2);
+      }
+
+      .payment-methods {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .payment-option {
+        cursor: pointer;
+      }
+
+      .payment-option input[type="radio"] {
+        display: none;
+      }
+
+      .payment-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem;
+        border: 2px solid hsl(var(--border));
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        background: hsl(var(--card));
+      }
+
+      .payment-option input[type="radio"]:checked + .payment-label {
+        border-color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.1);
+        box-shadow: 0 0 0 1px hsl(var(--secondary));
+      }
+
+      .payment-icon {
+        font-size: 1.5rem;
+      }
+
+      .payment-text {
+        color: hsl(var(--foreground));
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.8rem;
+      }
+
+      .payment-details,
+      .cash-details {
+        background: hsla(60, 100%, 65%, 0.05);
+        border: 1px solid hsla(60, 100%, 65%, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1rem;
+      }
+
+      .change-display {
+        background: hsl(var(--success));
+        color: white;
+        padding: 0.75rem;
+        border-radius: 6px;
+        text-align: center;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        margin-top: 1rem;
+      }
+
+      .checkout-footer {
+        display: flex;
+        gap: 1rem;
+        padding: 2rem;
+        border-top: 1px solid hsl(var(--border));
+        background: hsl(var(--muted));
+      }
+
+      .checkout-btn {
+        flex: 1;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+      }
+
+      .checkout-btn.secondary {
+        background: transparent;
+        color: hsl(var(--muted-foreground));
+        border: 2px solid hsl(var(--border));
+      }
+
+      .checkout-btn.secondary:hover {
+        background: hsl(var(--border));
+        color: hsl(var(--foreground));
+      }
+
+      .checkout-btn.primary {
+        background: hsl(var(--secondary));
+        color: hsl(0, 0%, 9%);
+      }
+
+      .checkout-btn.primary:hover {
+        background: hsl(var(--secondary) / 0.8);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px hsla(60, 100%, 65%, 0.4);
+      }
+
+      /* Receipt Modal Styles */
+      .receipt-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10001;
+        padding: 2rem;
+        box-sizing: border-box;
+      }
+
+      .receipt-modal-content {
+        background: white;
+        border-radius: 12px;
+        max-width: 600px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        color: #333;
+      }
+
+      .receipt-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 2rem 1rem;
+        border-bottom: 2px solid #333;
+        background: #f8f8f8;
+      }
+
+      .receipt-header h2 {
+        color: #333;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin: 0;
+      }
+
+      .receipt-close {
+        background: none;
+        border: none;
+        color: #666;
+        font-size: 2rem;
+        cursor: pointer;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .receipt-close:hover {
+        background: #ff4444;
+        color: white;
+      }
+
+      .receipt-body {
+        padding: 2rem;
+      }
+
+      .receipt-info {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .receipt-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .receipt-items {
+        margin-bottom: 2rem;
+      }
+
+      .receipt-items h3 {
+        color: #333;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 0.5rem;
+      }
+
+      .receipt-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #eee;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .receipt-item:last-child {
+        border-bottom: none;
+      }
+
+      .receipt-totals {
+        background: #f8f8f8;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .receipt-total {
+        font-weight: bold;
+        border-top: 2px solid #333;
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+        font-size: 1.1rem;
+      }
+
+      .receipt-notes {
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: #f8f8f8;
+        border-radius: 8px;
+        border-left: 4px solid #333;
+      }
+
+      .receipt-notes h3 {
+        color: #333;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+      }
+
+      .receipt-footer {
+        text-align: center;
+        padding: 1rem;
+        background: #f8f8f8;
+        border-radius: 8px;
+        font-family: 'Courier Prime', monospace;
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      .receipt-actions {
+        display: flex;
+        gap: 1rem;
+        padding: 2rem;
+        border-top: 1px solid #ddd;
+        background: #f8f8f8;
+      }
+
+      .receipt-btn {
+        flex: 1;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+      }
+
+      .receipt-btn.secondary {
+        background: transparent;
+        color: #666;
+        border: 2px solid #ddd;
+      }
+
+      .receipt-btn.secondary:hover {
+        background: #ddd;
+        color: #333;
+      }
+
+      .receipt-btn.primary {
+        background: #333;
+        color: white;
+      }
+
+      .receipt-btn.primary:hover {
+        background: #555;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        .checkout-modal,
+        .receipt-modal {
+          padding: 1rem;
+        }
+        
+        .checkout-modal-content,
+        .receipt-modal-content {
+          max-height: 95vh;
+        }
+        
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        
+        .payment-methods {
+          grid-template-columns: 1fr 1fr;
+        }
+        
+        .checkout-footer,
+        .receipt-actions {
+          flex-direction: column;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1590,11 +2110,440 @@
           return;
         }
         
-        // For demo purposes, show a success message
-        CartNotification.warning('Checkout functionality coming soon! This is a demonstration site.');
+        // Start POS transaction
+        try {
+          const transaction = nightkindPOS.startTransaction();
+          showCheckoutModal(transaction);
+        } catch (error) {
+          console.error('Error starting checkout:', error);
+          CartNotification.error('Failed to start checkout process');
+        }
+      }
+
+      // Show checkout modal
+      function showCheckoutModal(transaction) {
+        const modal = document.createElement('div');
+        modal.className = 'checkout-modal';
+        modal.innerHTML = `
+          <div class="checkout-modal-content">
+            <div class="checkout-header">
+              <h2>Complete Your Order</h2>
+              <button class="checkout-close" onclick="closeCheckoutModal()">&times;</button>
+            </div>
+            
+            <div class="checkout-body">
+              <div class="checkout-section">
+                <h3>Order Summary</h3>
+                <div class="checkout-items">
+                  ${transaction.items.map(item => `
+                    <div class="checkout-item">
+                      <span class="item-name">${item.name} ${item.size ? `(${item.size})` : ''}</span>
+                      <span class="item-quantity">×${item.quantity}</span>
+                      <span class="item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="checkout-totals">
+                  <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span>$${transaction.subtotal.toFixed(2)}</span>
+                  </div>
+                  <div class="total-row">
+                    <span>Tax (8%):</span>
+                    <span>$${transaction.tax.toFixed(2)}</span>
+                  </div>
+                  <div class="total-row total-final">
+                    <span>Total:</span>
+                    <span>$${transaction.total.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="checkout-section">
+                <h3>Customer Information</h3>
+                <div class="checkout-form">
+                  <div class="form-group">
+                    <label for="customerName">Name *</label>
+                    <input type="text" id="customerName" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="customerEmail">Email *</label>
+                    <input type="email" id="customerEmail" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="customerPhone">Phone</label>
+                    <input type="tel" id="customerPhone">
+                  </div>
+                  <div class="form-group">
+                    <label for="customerAddress">Address</label>
+                    <textarea id="customerAddress" rows="3"></textarea>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="checkout-section">
+                <h3>Payment Method</h3>
+                <div class="payment-methods">
+                  <label class="payment-option">
+                    <input type="radio" name="paymentMethod" value="cash" checked>
+                    <span class="payment-label">
+                      <span class="payment-icon">💵</span>
+                      <span class="payment-text">Cash</span>
+                    </span>
+                  </label>
+                  <label class="payment-option">
+                    <input type="radio" name="paymentMethod" value="card">
+                    <span class="payment-label">
+                      <span class="payment-icon">💳</span>
+                      <span class="payment-text">Credit/Debit Card</span>
+                    </span>
+                  </label>
+                  <label class="payment-option">
+                    <input type="radio" name="paymentMethod" value="digital_wallet">
+                    <span class="payment-label">
+                      <span class="payment-icon">📱</span>
+                      <span class="payment-text">Digital Wallet</span>
+                    </span>
+                  </label>
+                  <label class="payment-option">
+                    <input type="radio" name="paymentMethod" value="paypal">
+                    <span class="payment-label">
+                      <span class="payment-icon">🅿️</span>
+                      <span class="payment-text">PayPal</span>
+                    </span>
+                  </label>
+                </div>
+                
+                <div id="paymentDetails" class="payment-details" style="display: none;">
+                  <div class="form-group">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="cardExpiry">Expiry</label>
+                      <input type="text" id="cardExpiry" placeholder="MM/YY">
+                    </div>
+                    <div class="form-group">
+                      <label for="cardCVV">CVV</label>
+                      <input type="text" id="cardCVV" placeholder="123">
+                    </div>
+                  </div>
+                </div>
+                
+                <div id="cashDetails" class="cash-details">
+                  <div class="form-group">
+                    <label for="cashAmount">Amount Received</label>
+                    <input type="number" id="cashAmount" step="0.01" min="${transaction.total}" value="${transaction.total}">
+                  </div>
+                  <div id="changeDisplay" class="change-display" style="display: none;">
+                    <span>Change Due: $<span id="changeAmount">0.00</span></span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="checkout-section">
+                <h3>Order Notes</h3>
+                <div class="form-group">
+                  <textarea id="orderNotes" rows="3" placeholder="Any special instructions or notes for your order..."></textarea>
+                </div>
+              </div>
+            </div>
+            
+            <div class="checkout-footer">
+              <button class="checkout-btn secondary" onclick="closeCheckoutModal()">Cancel</button>
+              <button class="checkout-btn primary" onclick="processPayment()">Complete Order</button>
+            </div>
+          </div>
+        `;
         
-        // In a real implementation, this would redirect to a checkout page
-        // window.location.href = 'checkout.html';
+        document.body.appendChild(modal);
+        
+        // Setup payment method change handler
+        setupPaymentMethodHandlers();
+        
+        // Setup cash amount change handler
+        setupCashAmountHandler();
+        
+        // Focus on first input
+        setTimeout(() => {
+          document.getElementById('customerName').focus();
+        }, 100);
+      }
+
+      // Setup payment method handlers
+      function setupPaymentMethodHandlers() {
+        const paymentMethods = document.querySelectorAll('input[name="paymentMethod"]');
+        const paymentDetails = document.getElementById('paymentDetails');
+        const cashDetails = document.getElementById('cashDetails');
+        
+        paymentMethods.forEach(method => {
+          method.addEventListener('change', (e) => {
+            if (e.target.value === 'cash') {
+              paymentDetails.style.display = 'none';
+              cashDetails.style.display = 'block';
+            } else {
+              paymentDetails.style.display = 'block';
+              cashDetails.style.display = 'none';
+            }
+          });
+        });
+      }
+
+      // Setup cash amount handler
+      function setupCashAmountHandler() {
+        const cashAmount = document.getElementById('cashAmount');
+        const changeDisplay = document.getElementById('changeDisplay');
+        const changeAmount = document.getElementById('changeAmount');
+        
+        if (cashAmount) {
+          cashAmount.addEventListener('input', () => {
+            const amount = parseFloat(cashAmount.value) || 0;
+            const total = nightkindPOS.currentTransaction.total;
+            const change = Math.max(0, amount - total);
+            
+            if (change > 0) {
+              changeAmount.textContent = change.toFixed(2);
+              changeDisplay.style.display = 'block';
+            } else {
+              changeDisplay.style.display = 'none';
+            }
+          });
+        }
+      }
+
+      // Process payment
+      function processPayment() {
+        // Validate customer information
+        const customerName = document.getElementById('customerName').value.trim();
+        const customerEmail = document.getElementById('customerEmail').value.trim();
+        
+        if (!customerName || !customerEmail) {
+          CartNotification.error('Please fill in required customer information');
+          return;
+        }
+        
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(customerEmail)) {
+          CartNotification.error('Please enter a valid email address');
+          return;
+        }
+        
+        // Get payment method
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+        
+        // Validate payment details
+        let paymentDetails = {};
+        let isValid = true;
+        
+        if (paymentMethod === 'cash') {
+          const cashAmount = parseFloat(document.getElementById('cashAmount').value);
+          if (cashAmount < nightkindPOS.currentTransaction.total) {
+            CartNotification.error('Insufficient cash amount');
+            isValid = false;
+          }
+          paymentDetails = { amount: cashAmount };
+        } else if (paymentMethod === 'card') {
+          const cardNumber = document.getElementById('cardNumber').value.trim();
+          const cardExpiry = document.getElementById('cardExpiry').value.trim();
+          const cardCVV = document.getElementById('cardCVV').value.trim();
+          
+          if (!cardNumber || !cardExpiry || !cardCVV) {
+            CartNotification.error('Please fill in all card details');
+            isValid = false;
+          } else {
+            paymentDetails = {
+              cardNumber: cardNumber,
+              expiry: cardExpiry,
+              cvv: cardCVV
+            };
+          }
+        } else if (paymentMethod === 'digital_wallet') {
+          paymentDetails = {
+            walletId: 'demo_wallet_' + Date.now(),
+            confirmation: 'confirmed_' + Math.random().toString(36).substr(2, 9)
+          };
+        } else if (paymentMethod === 'paypal') {
+          paymentDetails = {
+            paypalId: 'demo_paypal_' + Date.now(),
+            confirmation: 'confirmed_' + Math.random().toString(36).substr(2, 9)
+          };
+        }
+        
+        if (!isValid) return;
+        
+        try {
+          // Add customer information
+          nightkindPOS.addCustomerInfo({
+            name: customerName,
+            email: customerEmail,
+            phone: document.getElementById('customerPhone').value.trim(),
+            address: document.getElementById('customerAddress').value.trim()
+          });
+          
+          // Add order notes
+          const notes = document.getElementById('orderNotes').value.trim();
+          if (notes) {
+            nightkindPOS.addNotes(notes);
+          }
+          
+          // Process payment
+          nightkindPOS.processPayment(paymentMethod, paymentDetails);
+          
+          // Complete transaction
+          const result = nightkindPOS.completeTransaction();
+          
+          // Show success message
+          CartNotification.success(`Order completed! Transaction #${result.transaction.transactionNumber}`);
+          
+          // Close modal
+          closeCheckoutModal();
+          
+          // Show receipt
+          showReceipt(result.receipt);
+          
+          // Refresh cart
+          renderCart();
+          
+        } catch (error) {
+          console.error('Payment processing error:', error);
+          CartNotification.error('Payment processing failed: ' + error.message);
+        }
+      }
+
+      // Close checkout modal
+      function closeCheckoutModal() {
+        const modal = document.querySelector('.checkout-modal');
+        if (modal) {
+          modal.remove();
+        }
+        
+        // Cancel current transaction if it exists
+        if (nightkindPOS.currentTransaction) {
+          nightkindPOS.cancelTransaction();
+        }
+      }
+
+      // Show receipt
+      function showReceipt(receipt) {
+        const modal = document.createElement('div');
+        modal.className = 'receipt-modal';
+        modal.innerHTML = `
+          <div class="receipt-modal-content">
+            <div class="receipt-header">
+              <h2>Order Confirmation</h2>
+              <button class="receipt-close" onclick="closeReceiptModal()">&times;</button>
+            </div>
+            
+            <div class="receipt-body">
+              <div class="receipt-info">
+                <div class="receipt-row">
+                  <span>Transaction #:</span>
+                  <span>${receipt.transactionNumber}</span>
+                </div>
+                <div class="receipt-row">
+                  <span>Date:</span>
+                  <span>${new Date(receipt.timestamp).toLocaleString()}</span>
+                </div>
+                ${receipt.customerInfo ? `
+                  <div class="receipt-row">
+                    <span>Customer:</span>
+                    <span>${receipt.customerInfo.name}</span>
+                  </div>
+                  <div class="receipt-row">
+                    <span>Email:</span>
+                    <span>${receipt.customerInfo.email}</span>
+                  </div>
+                ` : ''}
+              </div>
+              
+              <div class="receipt-items">
+                <h3>Items Ordered</h3>
+                ${receipt.items.map(item => `
+                  <div class="receipt-item">
+                    <span class="item-name">${item.name} ${item.size ? `(${item.size})` : ''}</span>
+                    <span class="item-quantity">×${item.quantity}</span>
+                    <span class="item-price">$${item.total.toFixed(2)}</span>
+                  </div>
+                `).join('')}
+              </div>
+              
+              <div class="receipt-totals">
+                <div class="receipt-row">
+                  <span>Subtotal:</span>
+                  <span>$${receipt.subtotal.toFixed(2)}</span>
+                </div>
+                <div class="receipt-row">
+                  <span>Tax:</span>
+                  <span>$${receipt.tax.toFixed(2)}</span>
+                </div>
+                <div class="receipt-row receipt-total">
+                  <span>Total:</span>
+                  <span>$${receipt.total.toFixed(2)}</span>
+                </div>
+                <div class="receipt-row">
+                  <span>Payment Method:</span>
+                  <span>${receipt.paymentMethod.charAt(0).toUpperCase() + receipt.paymentMethod.slice(1)}</span>
+                </div>
+              </div>
+              
+              ${receipt.notes ? `
+                <div class="receipt-notes">
+                  <h3>Order Notes</h3>
+                  <p>${receipt.notes}</p>
+                </div>
+              ` : ''}
+              
+              <div class="receipt-footer">
+                <p>Thank you for supporting NightKind Collective!</p>
+                <p>Your purchase helps fund bat conservation efforts in Queensland.</p>
+              </div>
+            </div>
+            
+            <div class="receipt-actions">
+              <button class="receipt-btn secondary" onclick="closeReceiptModal()">Close</button>
+              <button class="receipt-btn primary" onclick="printReceipt()">Print Receipt</button>
+            </div>
+          </div>
+        `;
+        
+        document.body.appendChild(modal);
+      }
+
+      // Close receipt modal
+      function closeReceiptModal() {
+        const modal = document.querySelector('.receipt-modal');
+        if (modal) {
+          modal.remove();
+        }
+      }
+
+      // Print receipt
+      function printReceipt() {
+        const receiptContent = document.querySelector('.receipt-modal-content');
+        if (receiptContent) {
+          const printWindow = window.open('', '_blank');
+          printWindow.document.write(`
+            <html>
+              <head>
+                <title>NightKind Collective - Receipt</title>
+                <style>
+                  body { font-family: 'Courier Prime', monospace; margin: 20px; }
+                  .receipt-header { text-align: center; margin-bottom: 20px; }
+                  .receipt-row { display: flex; justify-content: space-between; margin: 5px 0; }
+                  .receipt-total { font-weight: bold; border-top: 1px solid #000; padding-top: 5px; }
+                  .receipt-footer { text-align: center; margin-top: 20px; font-size: 0.9em; }
+                </style>
+              </head>
+              <body>
+                ${receiptContent.innerHTML}
+              </body>
+            </html>
+          `);
+          printWindow.document.close();
+          printWindow.print();
+        }
       }
 
       // Listen for cart updates from other pages
