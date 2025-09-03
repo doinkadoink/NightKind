@@ -340,7 +340,7 @@
       /* Notification styles */
       .cart-notification {
         position: fixed;
-        top: 20px;
+        top: 80px;
         right: 20px;
         background: #4CAF50;
         color: white;
@@ -520,12 +520,47 @@
       }
 
       .modal-image {
-        max-width: 100%;
-        max-height: 70vh;
-        object-fit: contain;
+        width: 100%;
+        height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
         border-radius: 10px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         margin-bottom: 1.5rem;
+        border: 2px solid #ffd700;
+        overflow: hidden;
+      }
+
+      .modal-image img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+        cursor: zoom-in;
+      }
+
+      .modal-image img:hover {
+        transform: scale(1.05);
+        cursor: zoom-out;
+      }
+
+      .modal-image.zoomed img {
+        transform: scale(1.5);
+        cursor: zoom-out;
+      }
+
+      .modal-image:hover .zoom-indicator {
+        opacity: 1 !important;
+      }
+
+      .modal-image.zoomed .zoom-indicator {
+        opacity: 1 !important;
+        content: '🔍 Click to zoom out';
       }
 
       .modal-title {
@@ -695,9 +730,34 @@
       .product-image {
         cursor: pointer;
         transition: transform 0.3s ease;
+        width: 100%;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid #444;
+      }
+
+      .product-image img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        transition: transform 0.3s ease;
       }
 
       .product-image:hover {
+        transform: scale(1.02);
+        border-color: #ffd700;
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+      }
+
+      .product-image:hover img {
         transform: scale(1.05);
       }
 
@@ -706,18 +766,20 @@
       }
 
       .product-image.clickable::after {
-        content: '🔍 Click to view';
+        content: '🔍 Click to view full size';
         position: absolute;
         bottom: 10px;
         right: 10px;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.9);
         color: white;
-        padding: 0.3rem 0.6rem;
+        padding: 0.4rem 0.8rem;
         border-radius: 6px;
         font-size: 0.7rem;
         font-weight: bold;
         opacity: 0;
         transition: opacity 0.3s ease;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        backdrop-filter: blur(5px);
       }
 
       .product-image.clickable:hover::after {
@@ -886,7 +948,11 @@
       <div id="fullscreenModal" class="fullscreen-modal">
         <div class="modal-content">
           <button class="modal-close" onclick="closeFullscreenModal()">&times;</button>
-          <div id="modalImage" class="modal-image"></div>
+          <div id="modalImage" class="modal-image">
+            <div class="zoom-indicator" style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.8rem; opacity: 0; transition: opacity 0.3s ease;">
+              🔍 Click to zoom
+            </div>
+          </div>
           <h2 id="modalTitle" class="modal-title"></h2>
           <p id="modalDescription" class="modal-description"></p>
           <div id="modalPrice" class="modal-price"></div>
@@ -1118,7 +1184,7 @@
         const sizeButtons = document.querySelectorAll(`[data-product="${productId}"] .size-btn`);
         sizeButtons.forEach(btn => {
           btn.classList.remove('selected');
-          if (btn.textContent === size) {
+          if (btn.textContent.trim() === size) {
             btn.classList.add('selected');
           }
         });
@@ -1134,8 +1200,22 @@
         
         currentModalProduct = product;
         
-        // Update modal content
-        document.getElementById('modalImage').innerHTML = product.image;
+        // Extract image source from the product image HTML
+        let imageSrc = '';
+        if (product.image.includes('<img')) {
+          const imgMatch = product.image.match(/src="([^"]+)"/);
+          if (imgMatch) {
+            imageSrc = imgMatch[1];
+          }
+        }
+        
+        // Update modal content with full-sized image
+        if (imageSrc) {
+          document.getElementById('modalImage').innerHTML = `<img src="${imageSrc}" alt="${product.name}" onclick="toggleModalZoom()" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
+        } else {
+          document.getElementById('modalImage').innerHTML = product.image;
+        }
+        
         document.getElementById('modalTitle').textContent = product.name;
         document.getElementById('modalDescription').textContent = product.description;
         document.getElementById('modalPrice').textContent = `$${product.price.toFixed(2)}`;
@@ -1148,8 +1228,8 @@
         if (product.sizes && product.sizes.length > 1) {
           sizeSelection.style.display = 'block';
           sizeButtons.innerHTML = product.sizes.map(size => `
-            <button class="size-btn ${size === (selectedSizes[product.id] || product.sizes[0]) ? 'selected' : ''}" 
-                    onclick="selectModalSize('${size}')">
+            <button class="size-btn modal-size-btn ${size === (selectedSizes[product.id] || product.sizes[0]) ? 'selected' : ''}" 
+                    data-size="${size}">
               ${size}
             </button>
           `).join('');
@@ -1169,6 +1249,20 @@
         document.getElementById('fullscreenModal').classList.remove('show');
         document.body.style.overflow = ''; // Restore scrolling
         currentModalProduct = null;
+        // Reset zoom state
+        document.getElementById('modalImage').classList.remove('zoomed');
+      }
+      
+      function toggleModalZoom() {
+        const modalImage = document.getElementById('modalImage');
+        const zoomIndicator = modalImage.querySelector('.zoom-indicator');
+        modalImage.classList.toggle('zoomed');
+        
+        if (modalImage.classList.contains('zoomed')) {
+          zoomIndicator.textContent = '🔍 Click to zoom out';
+        } else {
+          zoomIndicator.textContent = '🔍 Click to zoom';
+        }
       }
       
       function updateModalWishlistButton(productId) {
@@ -1203,11 +1297,11 @@
         // Update selected size
         selectedSizes[currentModalProduct.id] = size;
         
-        // Update size button states
-        const sizeButtons = document.querySelectorAll('#modalSizeButtons .size-btn');
-        sizeButtons.forEach(btn => {
+        // Update modal size button states
+        const modalSizeButtons = document.querySelectorAll('#modalSizeButtons .size-btn');
+        modalSizeButtons.forEach(btn => {
           btn.classList.remove('selected');
-          if (btn.textContent === size) {
+          if (btn.getAttribute('data-size') === size) {
             btn.classList.add('selected');
           }
         });
@@ -1216,7 +1310,7 @@
         const mainSizeButtons = document.querySelectorAll(`[data-product="${currentModalProduct.id}"] .size-btn`);
         mainSizeButtons.forEach(btn => {
           btn.classList.remove('selected');
-          if (btn.textContent === size) {
+          if (btn.textContent.trim() === size) {
             btn.classList.add('selected');
           }
         });
@@ -1246,6 +1340,25 @@
         document.addEventListener('keydown', function(e) {
           if (e.key === 'Escape' && modal.classList.contains('show')) {
             closeFullscreenModal();
+          }
+        });
+        
+        // Event delegation for size buttons
+        document.addEventListener('click', function(e) {
+          if (e.target.classList.contains('size-btn')) {
+            if (e.target.classList.contains('modal-size-btn')) {
+              // Modal size button
+              const size = e.target.getAttribute('data-size');
+              selectModalSize(size);
+            } else {
+              // Main page size button
+              const productCard = e.target.closest('[data-product]');
+              if (productCard) {
+                const productId = productCard.getAttribute('data-product');
+                const size = e.target.textContent.trim();
+                selectSize(productId, size);
+              }
+            }
           }
         });
       });
@@ -1299,8 +1412,7 @@
                   <label>Size:</label>
                   <div class="size-buttons">
                     ${product.sizes.map(size => `
-                      <button class="size-btn ${size === (selectedSizes[product.id] || product.sizes[0]) ? 'selected' : ''}" 
-                              onclick="selectSize('${product.id}', '${size}')">
+                      <button class="size-btn ${size === (selectedSizes[product.id] || product.sizes[0]) ? 'selected' : ''}">
                         ${size}
                       </button>
                     `).join('')}

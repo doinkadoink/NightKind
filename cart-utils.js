@@ -538,7 +538,7 @@ class CartNotification {
     
     notification.style.cssText = `
       position: fixed;
-      top: 20px;
+      top: 80px;
       right: 20px;
       background: ${colors[type] || colors.success};
       color: white;
