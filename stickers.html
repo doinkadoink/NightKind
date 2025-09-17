@@ -1126,14 +1126,20 @@
             return;
           }
 
+          // Clean up size parameter - handle undefined/null strings
+          let cleanSize = size;
+          if (size === 'undefined' || size === 'null' || size === '') {
+            cleanSize = null;
+          }
+
           // Validate size selection
-          if (product.sizes && product.sizes.length > 1 && !size) {
+          if (product.sizes && product.sizes.length > 1 && !cleanSize) {
             CartNotification.error('Please select a size');
             return;
           }
           
           // Add to cart using utility
-          const finalSize = size || (product.sizes ? product.sizes[0] : null);
+          const finalSize = cleanSize || (product.sizes ? product.sizes[0] : null);
           nightkindCart.addToCart(product, finalSize, 1);
           
           // Show success notification
@@ -1424,7 +1430,7 @@
                 ${wishlistBtnText}
               </button>
               
-              <button class="add-to-cart-btn" onclick="addToCartById('${product.id}', '${selectedSizes[product.id] || (product.sizes ? product.sizes[0] : null)}')">
+              <button class="add-to-cart-btn" onclick="addToCartById('${product.id}', selectedSizes['${product.id}'] || '${product.sizes ? product.sizes[0] : ''}')">
                 Add to Cart
               </button>
             </div>
