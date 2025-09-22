@@ -1151,15 +1151,19 @@
         }
       }
 
-      function addToWishlistById(productId) {
+      function addToWishlistById(productId, size = null) {
         try {
           const product = ProductUtils.getProductById(productId);
           if (!product) {
             CartNotification.error('Product not found');
             return;
           }
-          nightkindCart.addToWishlist(product);
-          CartNotification.success('Added to wishlist!');
+          
+          // Use provided size or get selected size from UI
+          const selectedSize = size || selectedSizes[productId] || (product.sizes ? product.sizes[0] : null);
+          
+          nightkindCart.addToWishlist(product, selectedSize);
+          CartNotification.success(`Added to wishlist! (Size: ${selectedSize || 'N/A'})`);
           renderProducts(); // Re-render to update wishlist button state
         } catch (error) {
           console.error('Error adding to wishlist:', error);
@@ -1290,7 +1294,10 @@
         if (isInWishlist(currentModalProduct.id)) {
           removeFromWishlist(currentModalProduct.id);
         } else {
-          addToWishlistById(currentModalProduct.id);
+          // Get the selected size from modal or use default
+          const selectedSize = selectedSizes[currentModalProduct.id] || 
+                             (currentModalProduct.sizes ? currentModalProduct.sizes[0] : null);
+          addToWishlistById(currentModalProduct.id, selectedSize);
         }
         
         updateModalWishlistButton(currentModalProduct.id);

@@ -1760,9 +1760,10 @@
       }
 
       // Remove from wishlist
-      function removeFromWishlist(productId) {
-        if (nightkindCart.removeFromWishlist(productId)) {
-          CartNotification.warning('Removed from wishlist');
+      function removeFromWishlist(productId, size = null) {
+        if (nightkindCart.removeFromWishlist(productId, size)) {
+          const sizeText = size ? ` (Size: ${size})` : '';
+          CartNotification.warning(`Removed from wishlist${sizeText}`);
           renderWishlist();
         }
       }
@@ -1770,7 +1771,8 @@
       // Move from wishlist to cart
       function moveToCart(productId, size = null, quantity = 1) {
         if (nightkindCart.moveToCart(productId, size, quantity)) {
-          CartNotification.success('Moved to cart!');
+          const sizeText = size ? ` (Size: ${size})` : '';
+          CartNotification.success(`Moved to cart!${sizeText}`);
           renderWishlist();
           renderCart();
         }
@@ -1997,12 +1999,13 @@
               <div class="item-name">${item.name}</div>
               <div class="item-description">${item.description}</div>
               <div class="item-price">$${item.price.toFixed(2)}</div>
+              ${item.size ? `<div class="item-size">Size: ${item.size}</div>` : ''}
             </div>
             <div class="wishlist-actions">
-              <button class="wishlist-btn" onclick="moveToCart('${item.id}')">
+              <button class="wishlist-btn" onclick="moveToCart('${item.id}', '${item.size || ''}')">
                 Add to Cart
               </button>
-              <button class="wishlist-btn remove" onclick="removeFromWishlist('${item.id}')">
+              <button class="wishlist-btn remove" onclick="removeFromWishlist('${item.id}', '${item.size || ''}')">
                 Remove
               </button>
             </div>

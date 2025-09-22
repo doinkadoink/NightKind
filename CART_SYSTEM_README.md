@@ -103,7 +103,7 @@ All product pages should use this consistent HTML structure:
 - **Add to Cart**: Products with size selection
 - **Quantity Management**: Increase/decrease with validation (max 99)
 - **Remove Items**: Individual item removal
-- **Wishlist**: Save items for later
+- **Wishlist**: Save items for later with size information preserved
 - **Search & Filter**: Find items in cart
 - **Export/Import**: Cart data persistence
 - **Statistics**: Cart analytics and insights
@@ -201,9 +201,9 @@ Start Transaction → Add Customer Info → Process Payment → Complete Sale �
 - `nightkindCart.getCartTotal()`
 
 ### Wishlist Methods
-- `nightkindCart.addToWishlist(product)`
-- `nightkindCart.removeFromWishlist(productId)`
-- `nightkindCart.moveToCart(productId, size, quantity)`
+- `nightkindCart.addToWishlist(product, size)` - Add item to wishlist with size information
+- `nightkindCart.removeFromWishlist(productId, size)` - Remove item from wishlist (specific size or all variants)
+- `nightkindCart.moveToCart(productId, size, quantity)` - Move item from wishlist to cart using saved size
 
 ### Utility Methods
 - `nightkindCart.searchCart(query)`

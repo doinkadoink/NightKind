@@ -90,15 +90,20 @@ class NightKindCart {
   }
 
   // Add item to wishlist
-  addToWishlist(product) {
+  addToWishlist(product, size = null) {
     if (!product || !product.id) {
       throw new Error('Invalid product');
     }
 
-    // Check if already in wishlist
-    if (!this.wishlist.find(item => item.id === product.id)) {
+    // Create a unique identifier for the wishlist item (product + size combination)
+    const wishlistKey = `${product.id}_${size || 'default'}`;
+    
+    // Check if this specific product+size combination already exists in wishlist
+    if (!this.wishlist.find(item => item.wishlistKey === wishlistKey)) {
       const wishlistItem = {
         ...product,
+        size: size || (product.sizes ? product.sizes[0] : null),
+        wishlistKey: wishlistKey,
         addedAt: new Date().toISOString()
       };
       this.wishlist.push(wishlistItem);
@@ -108,10 +113,18 @@ class NightKindCart {
     return this.wishlist;
   }
 
-  // Remove item from wishlist
-  removeFromWishlist(productId) {
+  // Remove item from wishlist (can remove by productId or by wishlistKey)
+  removeFromWishlist(productId, size = null) {
     const initialLength = this.wishlist.length;
-    this.wishlist = this.wishlist.filter(item => item.id !== productId);
+    
+    if (size !== null) {
+      // Remove specific product+size combination
+      const wishlistKey = `${productId}_${size}`;
+      this.wishlist = this.wishlist.filter(item => item.wishlistKey !== wishlistKey);
+    } else {
+      // Remove all variants of this product (backward compatibility)
+      this.wishlist = this.wishlist.filter(item => item.id !== productId);
+    }
     
     if (this.wishlist.length < initialLength) {
       this.saveWishlist();
@@ -122,10 +135,24 @@ class NightKindCart {
 
   // Move item from wishlist to cart
   moveToCart(productId, size = null, quantity = 1) {
-    const wishlistItem = this.wishlist.find(item => item.id === productId);
+    // If size is provided, look for that specific product+size combination
+    // If not provided, look for any variant of the product
+    let wishlistItem;
+    
+    if (size !== null) {
+      const wishlistKey = `${productId}_${size}`;
+      wishlistItem = this.wishlist.find(item => item.wishlistKey === wishlistKey);
+    } else {
+      // Find any variant of this product and use its stored size
+      wishlistItem = this.wishlist.find(item => item.id === productId);
+      if (wishlistItem) {
+        size = wishlistItem.size; // Use the size that was saved with the wishlist item
+      }
+    }
+    
     if (wishlistItem) {
-      this.addToCart(wishlistItem, size, quantity);
-      this.removeFromWishlist(productId);
+      this.addToCart(wishlistItem, size || wishlistItem.size, quantity);
+      this.removeFromWishlist(productId, size || wishlistItem.size);
       return true;
     }
     return false;
