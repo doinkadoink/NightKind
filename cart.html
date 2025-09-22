@@ -1708,15 +1708,14 @@
       let isStripeMode = true;
 
       // Initialize Stripe (replace with your publishable key)
-      const STRIPE_PUBLISHABLE_KEY = 'pk_test_51234567890abcdef...'; // Replace with your actual key
+      const STRIPE_PUBLISHABLE_KEY = 'pk_test_YOUR_KEY_HERE'; // Replace with your actual test key from Stripe Dashboard
       
       function initializeStripe() {
         try {
-          // For demo purposes, we'll simulate Stripe initialization
-          // In production, uncomment the line below and add your real Stripe key
-          // stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+          // Initialize Stripe with your actual key
+          stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
           
-          console.log('Stripe initialized (demo mode)');
+          console.log('Stripe initialized successfully');
           setupStripeElements();
         } catch (error) {
           console.error('Failed to initialize Stripe:', error);
@@ -1727,7 +1726,8 @@
 
       function setupStripeElements() {
         if (!stripe) {
-          console.log('Stripe not available - using demo mode');
+          console.log('Stripe not available - falling back to demo mode');
+          switchToManualMode();
           return;
         }
 
