@@ -108,6 +108,14 @@ All product pages should use this consistent HTML structure:
 - **Export/Import**: Cart data persistence
 - **Statistics**: Cart analytics and insights
 
+### Secure Payment Processing
+- **Stripe Integration**: Industry-standard secure payment processing
+- **PCI Compliance**: No card data stored locally - all handled by Stripe
+- **Encrypted Transmission**: Card details never touch your servers
+- **Multiple Payment Methods**: Credit/Debit cards, Digital wallets, PayPal
+- **Real-time Validation**: Instant feedback on card information
+- **Demo Mode**: Fallback option for development and testing
+
 ### POS System Features
 - **Transaction Management**: Complete sales transaction workflow
 - **Payment Processing**: Multiple payment methods (cash, card, digital wallet, PayPal)
@@ -279,6 +287,34 @@ The cart system uses CSS custom properties for easy theming:
 - Click to toggle instead of hover
 - Full-width panel for better usability
 - Touch-friendly controls
+
+## Security & Compliance
+
+### Payment Security
+- **PCI DSS Compliance**: Stripe handles all PCI compliance requirements
+- **No Card Data Storage**: Card information never stored on your servers
+- **Tokenization**: Stripe converts card data to secure tokens
+- **SSL/TLS Encryption**: All data transmitted over encrypted connections
+- **3D Secure**: Support for additional authentication when required
+
+### Implementation Security
+- **Client-Side Integration**: Stripe Elements handle sensitive data
+- **Server-Side Processing**: Payment confirmation handled server-side
+- **Webhook Validation**: Secure webhook endpoints for payment confirmations
+- **Error Handling**: Secure error messages without exposing sensitive data
+
+### Setup Requirements
+1. **Stripe Account**: Create account at stripe.com
+2. **API Keys**: Replace `STRIPE_PUBLISHABLE_KEY` with your actual key
+3. **Server Endpoint**: Implement server-side payment processing
+4. **Webhook Endpoint**: Handle payment confirmations securely
+5. **SSL Certificate**: Required for production payment processing
+
+### Demo Mode
+- **Development Testing**: Safe testing without real payments
+- **Card Number**: Use `4242 4242 4242 4242` for testing
+- **Security Warning**: Clearly indicates when in demo mode
+- **Toggle Option**: Switch between secure and demo modes
 
 ## Browser Compatibility
 

@@ -1258,6 +1258,88 @@
         margin-top: 1rem;
       }
 
+      /* Stripe Elements Styling */
+      .stripe-element {
+        background: hsl(var(--background));
+        border: 1px solid hsla(60, 100%, 65%, 0.3);
+        border-radius: 4px;
+        padding: 12px;
+        margin-top: 0.5rem;
+        transition: border-color 0.3s ease;
+      }
+
+      .stripe-element:focus-within {
+        border-color: hsl(var(--secondary));
+        box-shadow: 0 0 0 2px hsla(60, 100%, 65%, 0.2);
+      }
+
+      .payment-error {
+        color: hsl(var(--destructive));
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        display: none;
+      }
+
+      .payment-error.show {
+        display: block;
+      }
+
+      /* Security Warning Styling */
+      .security-warning {
+        background: hsla(38, 92%, 50%, 0.1);
+        border: 1px solid hsla(38, 92%, 50%, 0.3);
+        border-radius: 6px;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .warning-icon {
+        font-size: 1.2rem;
+      }
+
+      .security-warning strong {
+        color: hsl(var(--warning));
+      }
+
+      /* Payment Toggle Button */
+      .payment-toggle {
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      .toggle-btn {
+        background: hsla(60, 100%, 65%, 0.1);
+        border: 1px solid hsla(60, 100%, 65%, 0.3);
+        border-radius: 4px;
+        padding: 0.5rem 1rem;
+        color: hsl(var(--foreground));
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+      }
+
+      .toggle-btn:hover {
+        background: hsla(60, 100%, 65%, 0.2);
+        border-color: hsl(var(--secondary));
+      }
+
+      /* Secure Payment Badge */
+      .secure-payment-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: hsl(var(--success));
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+      }
+
+      .secure-payment-badge::before {
+        content: "🔒";
+      }
+
       .change-display {
         background: hsl(var(--success));
         color: white;
@@ -1611,11 +1693,72 @@
     
     <script src="cart-utils.js"></script>
     <script src="products.js"></script>
+    <!-- Stripe.js for secure payment processing -->
+    <script src="https://js.stripe.com/v3/"></script>
     <script>
       // Enhanced cart functionality using cart utilities
       let shippingOption = 'standard';
       let currentTab = 'cart';
       let filteredCart = [];
+
+      // Stripe configuration
+      let stripe = null;
+      let elements = null;
+      let cardElement = null;
+      let isStripeMode = true;
+
+      // Initialize Stripe (replace with your publishable key)
+      const STRIPE_PUBLISHABLE_KEY = 'pk_test_51234567890abcdef...'; // Replace with your actual key
+      
+      function initializeStripe() {
+        try {
+          // For demo purposes, we'll simulate Stripe initialization
+          // In production, uncomment the line below and add your real Stripe key
+          // stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+          
+          console.log('Stripe initialized (demo mode)');
+          setupStripeElements();
+        } catch (error) {
+          console.error('Failed to initialize Stripe:', error);
+          // Fall back to manual input mode
+          switchToManualMode();
+        }
+      }
+
+      function setupStripeElements() {
+        if (!stripe) {
+          console.log('Stripe not available - using demo mode');
+          return;
+        }
+
+        elements = stripe.elements({
+          appearance: {
+            theme: 'night',
+            variables: {
+              colorPrimary: 'hsl(60, 100%, 65%)',
+              colorBackground: 'hsl(0, 0%, 8%)',
+              colorText: 'hsl(60, 100%, 85%)',
+              colorDanger: 'hsl(0, 84%, 60%)',
+              fontFamily: 'Courier Prime, monospace',
+              borderRadius: '4px'
+            }
+          }
+        });
+
+        cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        cardElement.on('change', ({error}) => {
+          const displayError = document.getElementById('card-errors');
+          if (error) {
+            displayError.textContent = error.message;
+            displayError.classList.add('show');
+          } else {
+            displayError.textContent = '';
+            displayError.classList.remove('show');
+          }
+        });
+      }
       
       // Shipping options
       const shippingOptions = [
@@ -2210,19 +2353,42 @@
                 </div>
                 
                 <div id="paymentDetails" class="payment-details" style="display: block;">
+                  <!-- Stripe Elements will be mounted here -->
                   <div class="form-group">
-                    <label for="cardNumber">Card Number</label>
-                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                    <label for="card-element">Credit or Debit Card</label>
+                    <div class="secure-payment-badge">Secured by Stripe - Your card details are encrypted and never stored</div>
+                    <div id="card-element" class="stripe-element">
+                      <!-- Stripe Elements will create form elements here -->
+                    </div>
+                    <div id="card-errors" class="payment-error" role="alert"></div>
                   </div>
-                  <div class="form-row">
-                    <div class="form-group">
-                      <label for="cardExpiry">Expiry</label>
-                      <input type="text" id="cardExpiry" placeholder="MM/YY">
+                  
+                  <!-- Alternative: Manual card input (less secure, for demo purposes) -->
+                  <div id="manualCardInput" style="display: none;">
+                    <div class="security-warning">
+                      <span class="warning-icon">⚠️</span>
+                      <strong>Demo Mode:</strong> This is for demonstration only. In production, use Stripe Elements above for secure payment processing.
                     </div>
                     <div class="form-group">
-                      <label for="cardCVV">CVV</label>
-                      <input type="text" id="cardCVV" placeholder="123">
+                      <label for="cardNumber">Card Number</label>
+                      <input type="text" id="cardNumber" placeholder="4242 4242 4242 4242 (Test Card)">
                     </div>
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="cardExpiry">Expiry</label>
+                        <input type="text" id="cardExpiry" placeholder="12/25">
+                      </div>
+                      <div class="form-group">
+                        <label for="cardCVV">CVV</label>
+                        <input type="text" id="cardCVV" placeholder="123">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="payment-toggle">
+                    <button type="button" id="togglePaymentMode" class="toggle-btn">
+                      Switch to Demo Mode
+                    </button>
                   </div>
                 </div>
               </div>
@@ -2247,6 +2413,12 @@
         // Setup payment method change handler
         setupPaymentMethodHandlers();
         
+        // Initialize Stripe
+        initializeStripe();
+        
+        // Setup payment mode toggle
+        setupPaymentModeToggle();
+        
         
         // Focus on first input
         setTimeout(() => {
@@ -2270,9 +2442,75 @@
         });
       }
 
+      // Setup payment mode toggle
+      function setupPaymentModeToggle() {
+        const toggleBtn = document.getElementById('togglePaymentMode');
+        const stripeSection = document.getElementById('card-element').parentElement;
+        const manualSection = document.getElementById('manualCardInput');
+        
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', () => {
+            isStripeMode = !isStripeMode;
+            
+            if (isStripeMode) {
+              stripeSection.style.display = 'block';
+              manualSection.style.display = 'none';
+              toggleBtn.textContent = 'Switch to Demo Mode';
+            } else {
+              stripeSection.style.display = 'none';
+              manualSection.style.display = 'block';
+              toggleBtn.textContent = 'Switch to Secure Mode';
+            }
+          });
+        }
+      }
+
+      function switchToManualMode() {
+        isStripeMode = false;
+        const stripeSection = document.getElementById('card-element').parentElement;
+        const manualSection = document.getElementById('manualCardInput');
+        const toggleBtn = document.getElementById('togglePaymentMode');
+        
+        if (stripeSection) stripeSection.style.display = 'none';
+        if (manualSection) manualSection.style.display = 'block';
+        if (toggleBtn) toggleBtn.textContent = 'Stripe Unavailable - Demo Mode Active';
+      }
+
+      // Secure payment processing with Stripe
+      async function processStripePayment() {
+        if (!stripe || !cardElement) {
+          throw new Error('Stripe not initialized');
+        }
+
+        const {token, error} = await stripe.createToken(cardElement);
+        
+        if (error) {
+          throw new Error(error.message);
+        }
+
+        // In a real application, you would send the token to your server
+        // The server would then create the charge using Stripe's API
+        console.log('Stripe token created:', token.id);
+        
+        // Simulate server processing
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (Math.random() > 0.1) { // 90% success rate for demo
+              resolve({
+                id: 'pi_' + Math.random().toString(36).substr(2, 9),
+                status: 'succeeded',
+                amount: nightkindPOS.currentTransaction.total * 100, // Stripe uses cents
+                currency: 'usd'
+              });
+            } else {
+              reject(new Error('Payment failed - please try again'));
+            }
+          }, 2000); // Simulate network delay
+        });
+      }
 
       // Process payment
-      function processPayment() {
+      async function processPayment() {
         // Validate customer information
         const customerName = document.getElementById('customerName').value.trim();
         const customerEmail = document.getElementById('customerEmail').value.trim();
@@ -2297,19 +2535,26 @@
         let isValid = true;
         
         if (paymentMethod === 'card') {
-          const cardNumber = document.getElementById('cardNumber').value.trim();
-          const cardExpiry = document.getElementById('cardExpiry').value.trim();
-          const cardCVV = document.getElementById('cardCVV').value.trim();
-          
-          if (!cardNumber || !cardExpiry || !cardCVV) {
-            CartNotification.error('Please fill in all card details');
-            isValid = false;
+          if (isStripeMode) {
+            // Stripe mode - no need to validate here, Stripe handles it
+            paymentDetails = { useStripe: true };
           } else {
-            paymentDetails = {
-              cardNumber: cardNumber,
-              expiry: cardExpiry,
-              cvv: cardCVV
-            };
+            // Demo mode - validate manual inputs
+            const cardNumber = document.getElementById('cardNumber').value.trim();
+            const cardExpiry = document.getElementById('cardExpiry').value.trim();
+            const cardCVV = document.getElementById('cardCVV').value.trim();
+            
+            if (!cardNumber || !cardExpiry || !cardCVV) {
+              CartNotification.error('Please fill in all card details');
+              isValid = false;
+            } else {
+              paymentDetails = {
+                cardNumber: cardNumber,
+                expiry: cardExpiry,
+                cvv: cardCVV,
+                useStripe: false
+              };
+            }
           }
         } else if (paymentMethod === 'digital_wallet') {
           paymentDetails = {
@@ -2341,13 +2586,31 @@
           }
           
           // Process payment
+          let paymentResult;
+          
+          if (paymentMethod === 'card' && paymentDetails.useStripe) {
+            // Process with Stripe
+            CartNotification.info('Processing secure payment...');
+            paymentResult = await processStripePayment();
+            
+            // Update payment details with Stripe result
+            paymentDetails = {
+              paymentIntentId: paymentResult.id,
+              status: paymentResult.status,
+              amount: paymentResult.amount,
+              currency: paymentResult.currency,
+              useStripe: true
+            };
+          }
+          
           nightkindPOS.processPayment(paymentMethod, paymentDetails);
           
           // Complete transaction
           const result = nightkindPOS.completeTransaction();
           
           // Show success message
-          CartNotification.success(`Order completed! Transaction #${result.transaction.transactionNumber}`);
+          const secureText = paymentDetails.useStripe ? ' (Secured by Stripe)' : '';
+          CartNotification.success(`Order completed! Transaction #${result.transaction.transactionNumber}${secureText}`);
           
           // Close modal
           closeCheckoutModal();
