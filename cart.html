@@ -1250,8 +1250,7 @@
         font-size: 0.8rem;
       }
 
-      .payment-details,
-      .cash-details {
+      .payment-details {
         background: hsla(60, 100%, 65%, 0.05);
         border: 1px solid hsla(60, 100%, 65%, 0.2);
         border-radius: 8px;
@@ -2188,14 +2187,7 @@
                 <h3>Payment Method</h3>
                 <div class="payment-methods">
                   <label class="payment-option">
-                    <input type="radio" name="paymentMethod" value="cash" checked>
-                    <span class="payment-label">
-                      <span class="payment-icon">💵</span>
-                      <span class="payment-text">Cash</span>
-                    </span>
-                  </label>
-                  <label class="payment-option">
-                    <input type="radio" name="paymentMethod" value="card">
+                    <input type="radio" name="paymentMethod" value="card" checked>
                     <span class="payment-label">
                       <span class="payment-icon">💳</span>
                       <span class="payment-text">Credit/Debit Card</span>
@@ -2217,7 +2209,7 @@
                   </label>
                 </div>
                 
-                <div id="paymentDetails" class="payment-details" style="display: none;">
+                <div id="paymentDetails" class="payment-details" style="display: block;">
                   <div class="form-group">
                     <label for="cardNumber">Card Number</label>
                     <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
@@ -2231,16 +2223,6 @@
                       <label for="cardCVV">CVV</label>
                       <input type="text" id="cardCVV" placeholder="123">
                     </div>
-                  </div>
-                </div>
-                
-                <div id="cashDetails" class="cash-details">
-                  <div class="form-group">
-                    <label for="cashAmount">Amount Received</label>
-                    <input type="number" id="cashAmount" step="0.01" min="${transaction.total}" value="${transaction.total}">
-                  </div>
-                  <div id="changeDisplay" class="change-display" style="display: none;">
-                    <span>Change Due: $<span id="changeAmount">0.00</span></span>
                   </div>
                 </div>
               </div>
@@ -2265,8 +2247,6 @@
         // Setup payment method change handler
         setupPaymentMethodHandlers();
         
-        // Setup cash amount change handler
-        setupCashAmountHandler();
         
         // Focus on first input
         setTimeout(() => {
@@ -2278,42 +2258,18 @@
       function setupPaymentMethodHandlers() {
         const paymentMethods = document.querySelectorAll('input[name="paymentMethod"]');
         const paymentDetails = document.getElementById('paymentDetails');
-        const cashDetails = document.getElementById('cashDetails');
         
         paymentMethods.forEach(method => {
           method.addEventListener('change', (e) => {
-            if (e.target.value === 'cash') {
-              paymentDetails.style.display = 'none';
-              cashDetails.style.display = 'block';
-            } else {
+            if (e.target.value === 'card') {
               paymentDetails.style.display = 'block';
-              cashDetails.style.display = 'none';
+            } else {
+              paymentDetails.style.display = 'none';
             }
           });
         });
       }
 
-      // Setup cash amount handler
-      function setupCashAmountHandler() {
-        const cashAmount = document.getElementById('cashAmount');
-        const changeDisplay = document.getElementById('changeDisplay');
-        const changeAmount = document.getElementById('changeAmount');
-        
-        if (cashAmount) {
-          cashAmount.addEventListener('input', () => {
-            const amount = parseFloat(cashAmount.value) || 0;
-            const total = nightkindPOS.currentTransaction.total;
-            const change = Math.max(0, amount - total);
-            
-            if (change > 0) {
-              changeAmount.textContent = change.toFixed(2);
-              changeDisplay.style.display = 'block';
-            } else {
-              changeDisplay.style.display = 'none';
-            }
-          });
-        }
-      }
 
       // Process payment
       function processPayment() {
@@ -2340,14 +2296,7 @@
         let paymentDetails = {};
         let isValid = true;
         
-        if (paymentMethod === 'cash') {
-          const cashAmount = parseFloat(document.getElementById('cashAmount').value);
-          if (cashAmount < nightkindPOS.currentTransaction.total) {
-            CartNotification.error('Insufficient cash amount');
-            isValid = false;
-          }
-          paymentDetails = { amount: cashAmount };
-        } else if (paymentMethod === 'card') {
+        if (paymentMethod === 'card') {
           const cardNumber = document.getElementById('cardNumber').value.trim();
           const cardExpiry = document.getElementById('cardExpiry').value.trim();
           const cardCVV = document.getElementById('cardCVV').value.trim();
