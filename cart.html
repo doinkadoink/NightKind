@@ -1707,6 +1707,8 @@
     <script src="products.js"></script>
     <!-- Stripe.js for secure payment processing -->
     <script src="https://js.stripe.com/v3/"></script>
+    <!-- EmailJS for sending order confirmation emails -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
       // Enhanced cart functionality using cart utilities
       let shippingOption = 'standard';
@@ -1719,8 +1721,17 @@
       let cardElement = null;
       let isStripeMode = true;
 
+      // EmailJS configuration
+      let emailService = null;
+      let isEmailEnabled = true;
+
       // Initialize Stripe (replace with your publishable key)
       const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SA2UTQvPhK322os6nwl988dEXrIdSCz0VqNFSI9E1EZ2DcOqx53y9T8HWAyubSVDcQMwEJJ6hZ0nuSLy1nTjRyM00C3sZRq2N'; // Live Stripe key for production
+      
+      // EmailJS configuration (you'll need to replace these with your actual EmailJS credentials)
+      const EMAILJS_SERVICE_ID = 'service_nightkind'; // Replace with your EmailJS service ID
+      const EMAILJS_TEMPLATE_ID = 'template_order_confirmation'; // Replace with your EmailJS template ID
+      const EMAILJS_PUBLIC_KEY = 'your_emailjs_public_key'; // Replace with your EmailJS public key
       
       function initializeStripe() {
         try {
@@ -1733,6 +1744,19 @@
           console.error('Failed to initialize Stripe:', error);
           // Fall back to manual input mode
           switchToManualMode();
+        }
+      }
+
+      function initializeEmailService() {
+        try {
+          // Initialize EmailJS
+          emailjs.init(EMAILJS_PUBLIC_KEY);
+          emailService = emailjs;
+          console.log('EmailJS initialized successfully');
+        } catch (error) {
+          console.error('Failed to initialize EmailJS:', error);
+          isEmailEnabled = false;
+          CartNotification.warning('Email notifications are currently unavailable');
         }
       }
 
@@ -2428,6 +2452,9 @@
         // Initialize Stripe
         initializeStripe();
         
+        // Initialize EmailJS
+        initializeEmailService();
+        
         // Setup payment mode toggle
         setupPaymentModeToggle();
         
@@ -2486,6 +2513,56 @@
         if (stripeSection) stripeSection.style.display = 'none';
         if (manualSection) manualSection.style.display = 'block';
         if (toggleBtn) toggleBtn.textContent = 'Stripe Unavailable - Demo Mode Active';
+      }
+
+      // Send order confirmation email
+      async function sendOrderConfirmationEmail(customerInfo, receipt) {
+        if (!isEmailEnabled || !emailService) {
+          console.log('Email service not available');
+          return false;
+        }
+
+        try {
+          // Prepare email template data
+          const templateParams = {
+            to_email: customerInfo.email,
+            to_name: customerInfo.name,
+            transaction_number: receipt.transactionNumber,
+            order_date: new Date(receipt.timestamp).toLocaleDateString(),
+            order_time: new Date(receipt.timestamp).toLocaleTimeString(),
+            customer_name: customerInfo.name,
+            customer_email: customerInfo.email,
+            customer_phone: customerInfo.phone || 'Not provided',
+            customer_address: customerInfo.address || 'Not provided',
+            items_list: receipt.items.map(item => 
+              `${item.name} ${item.size ? `(${item.size})` : ''} - Qty: ${item.quantity} - $${item.total.toFixed(2)}`
+            ).join('\n'),
+            subtotal: receipt.subtotal.toFixed(2),
+            tax: receipt.tax.toFixed(2),
+            total: receipt.total.toFixed(2),
+            payment_method: receipt.paymentMethod.charAt(0).toUpperCase() + receipt.paymentMethod.slice(1),
+            order_notes: receipt.notes || 'No special instructions',
+            company_name: 'NightKind Collective',
+            company_email: 'orders@nightkindcollective.com', // Replace with your actual email
+            website_url: window.location.origin,
+            conservation_message: 'Thank you for supporting bat conservation efforts in Queensland!'
+          };
+
+          // Send email using EmailJS
+          const result = await emailService.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            templateParams
+          );
+
+          console.log('Order confirmation email sent successfully:', result);
+          return true;
+
+        } catch (error) {
+          console.error('Failed to send order confirmation email:', error);
+          CartNotification.warning('Order completed, but confirmation email could not be sent');
+          return false;
+        }
       }
 
       // Secure payment processing with Stripe
@@ -2620,9 +2697,16 @@
           // Complete transaction
           const result = nightkindPOS.completeTransaction();
           
+          // Send order confirmation email
+          const emailSent = await sendOrderConfirmationEmail(
+            nightkindPOS.currentTransaction.customerInfo,
+            result.receipt
+          );
+          
           // Show success message
           const secureText = paymentDetails.useStripe ? ' (Secured by Stripe)' : '';
-          CartNotification.success(`Order completed! Transaction #${result.transaction.transactionNumber}${secureText}`);
+          const emailText = emailSent ? ' Confirmation email sent!' : '';
+          CartNotification.success(`Order completed! Transaction #${result.transaction.transactionNumber}${secureText}${emailText}`);
           
           // Close modal
           closeCheckoutModal();
