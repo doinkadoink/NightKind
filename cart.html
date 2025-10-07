@@ -1709,6 +1709,21 @@
     <script src="https://js.stripe.com/v3/"></script>
     <!-- EmailJS for sending order confirmation emails -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    <!-- Script loading verification -->
+    <script>
+      // Check if required scripts are loaded
+      if (typeof nightkindCart === 'undefined') {
+        console.error('cart-utils.js failed to load');
+        document.body.innerHTML = `
+          <div style="padding: 2rem; text-align: center; color: #ff4444;">
+            <h1>Script Loading Error</h1>
+            <p>The cart system failed to load. Please check that cart-utils.js is accessible.</p>
+            <button onclick="location.reload()">Refresh Page</button>
+          </div>
+        `;
+      }
+    </script>
     <script>
       // Enhanced cart functionality using cart utilities
       let shippingOption = 'standard';
@@ -2018,9 +2033,28 @@
 
       // Render cart
       function renderCart() {
-        const cartContent = document.getElementById('cartContent');
-        
-        if (nightkindCart.isEmpty()) {
+        try {
+          const cartContent = document.getElementById('cartContent');
+          
+          if (!cartContent) {
+            console.error('Cart content element not found');
+            return;
+          }
+          
+          if (!nightkindCart || typeof nightkindCart.isEmpty !== 'function') {
+            console.error('Cart system not properly initialized');
+            cartContent.innerHTML = `
+              <div class="empty-cart">
+                <div class="icon">⚠️</div>
+                <h3>Cart System Error</h3>
+                <p>Cart system is not properly initialized. Please refresh the page.</p>
+                <button class="cart-action-btn" onclick="location.reload()">Refresh Page</button>
+              </div>
+            `;
+            return;
+          }
+          
+          if (nightkindCart.isEmpty()) {
           cartContent.innerHTML = `
             <div class="empty-cart">
               <div class="icon">🛒</div>
@@ -2053,7 +2087,7 @@
             <div class="item-details">
               <div class="item-name">${item.name}</div>
               <div class="item-description">${item.description}</div>
-              ${item.size ? `<div class="item-size">Size: ${item.size}</div>` : ''}
+              ${item.size ? '<div class="item-size">Size: ' + item.size + '</div>' : ''}
               <div class="item-price">$${item.price.toFixed(2)}</div>
             </div>
             <div class="item-quantity">
@@ -2149,6 +2183,20 @@
             Continue Shopping
           </a>
         `;
+        } catch (error) {
+          console.error('Error rendering cart:', error);
+          const cartContent = document.getElementById('cartContent');
+          if (cartContent) {
+            cartContent.innerHTML = `
+              <div class="empty-cart">
+                <div class="icon">⚠️</div>
+                <h3>Cart Rendering Error</h3>
+                <p>There was an error rendering the cart. Please refresh the page.</p>
+                <button class="cart-action-btn" onclick="location.reload()">Refresh Page</button>
+              </div>
+            `;
+          }
+        }
       }
 
       // Render wishlist
@@ -2177,7 +2225,7 @@
               <div class="item-name">${item.name}</div>
               <div class="item-description">${item.description}</div>
               <div class="item-price">$${item.price.toFixed(2)}</div>
-              ${item.size ? `<div class="item-size">Size: ${item.size}</div>` : ''}
+              ${item.size ? '<div class="item-size">Size: ' + item.size + '</div>' : ''}
             </div>
             <div class="wishlist-actions">
               <button class="wishlist-btn" onclick="moveToCart('${item.id}', '${item.size || ''}')">
@@ -2222,7 +2270,7 @@
             <div class="saved-item-info">
               <div class="saved-item-name">${item.name}</div>
               <div class="saved-item-details">
-                ${item.size ? `Size: ${item.size} • ` : ''}Qty: ${item.quantity} • $${item.price.toFixed(2)}
+                ${item.size ? 'Size: ' + item.size + ' • ' : ''}Qty: ${item.quantity} • $${item.price.toFixed(2)}
               </div>
             </div>
             <div class="saved-item-actions">
@@ -2318,7 +2366,7 @@
                 <div class="checkout-items">
                   ${transaction.items.map(item => `
                     <div class="checkout-item">
-                      <span class="item-name">${item.name} ${item.size ? `(${item.size})` : ''}</span>
+                      <span class="item-name">${item.name} ${item.size ? '(' + item.size + ')' : ''}</span>
                       <span class="item-quantity">×${item.quantity}</span>
                       <span class="item-price">$${(item.price * item.quantity).toFixed(2)}</span>
                     </div>
@@ -2535,7 +2583,7 @@
             customer_phone: customerInfo.phone || 'Not provided',
             customer_address: customerInfo.address || 'Not provided',
             items_list: receipt.items.map(item => 
-              `${item.name} ${item.size ? `(${item.size})` : ''} - Qty: ${item.quantity} - $${item.total.toFixed(2)}`
+              `${item.name} ${item.size ? '(' + item.size + ')' : ''} - Qty: ${item.quantity} - $${item.total.toFixed(2)}`
             ).join('\n'),
             subtotal: receipt.subtotal.toFixed(2),
             tax: receipt.tax.toFixed(2),
@@ -2867,15 +2915,37 @@
 
       // Initialize page
       document.addEventListener('DOMContentLoaded', function() {
-        // Initialize cart and wishlist counts
-        nightkindCart.updateCartCount();
-        nightkindCart.updateWishlistCount();
-        
-        // Initialize filtered cart
-        filteredCart = nightkindCart.getItems();
-        
-        // Show default tab (cart)
-        showTab('cart');
+        try {
+          // Ensure cart system is properly initialized
+          if (typeof nightkindCart === 'undefined') {
+            console.error('Cart system not initialized');
+            return;
+          }
+          
+          // Initialize cart and wishlist counts
+          nightkindCart.updateCartCount();
+          nightkindCart.updateWishlistCount();
+          
+          // Initialize filtered cart
+          filteredCart = nightkindCart.getItems();
+          
+          // Show default tab (cart)
+          showTab('cart');
+        } catch (error) {
+          console.error('Error initializing cart page:', error);
+          // Show error message to user
+          const cartContent = document.getElementById('cartContent');
+          if (cartContent) {
+            cartContent.innerHTML = `
+              <div class="empty-cart">
+                <div class="icon">⚠️</div>
+                <h3>Cart System Error</h3>
+                <p>There was an error loading the cart system. Please refresh the page or contact support.</p>
+                <button class="cart-action-btn" onclick="location.reload()">Refresh Page</button>
+              </div>
+            `;
+          }
+        }
       });
     </script>
 
