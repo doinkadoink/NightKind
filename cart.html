@@ -1725,10 +1725,14 @@
       }
     </script>
     <script>
+      console.log('Script starting...');
+      
       // Enhanced cart functionality using cart utilities
       let shippingOption = 'standard';
       let currentTab = 'cart';
       let filteredCart = [];
+      
+      console.log('Variables initialized...');
 
       // Stripe configuration
       let stripe = null;
@@ -1851,6 +1855,7 @@
       }
 
       // Search functionality
+      console.log('About to define searchCart function...');
       function searchCart() {
         const searchTerm = document.getElementById('searchInput').value;
         if (searchTerm.trim() === '') {
@@ -2063,8 +2068,8 @@
               <a href="shop-categories.html" class="continue-shopping">Continue Shopping</a>
             </div>
           `;
-          return;
-        }
+            return;
+          }
         
         // Use filtered cart if available, otherwise use all items
         const itemsToRender = filteredCart.length > 0 ? filteredCart : nightkindCart.getItems();

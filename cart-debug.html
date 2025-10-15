@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Debug - NightKind Collective</title>
+    <style>
+        body {
+            font-family: 'Courier Prime', monospace;
+            background: #1a1a1a;
+            color: #e6e6e6;
+            padding: 2rem;
+            margin: 0;
+        }
+        .debug-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #2a2a2a;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #444;
+        }
+        h1 {
+            color: #ff6b6b;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .debug-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: #333;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b6b;
+        }
+        button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Courier Prime', monospace;
+            font-weight: bold;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+        .success {
+            color: #4caf50;
+        }
+        .error {
+            color: #f44336;
+        }
+        .warning {
+            color: #ff9800;
+        }
+        pre {
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            border: 1px solid #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>🛒 Cart System Debug Tool</h1>
+        
+        <div class="debug-section">
+            <h2>Current Cart Data</h2>
+            <div id="cartData">Loading...</div>
+            <button onclick="showCartData()">Refresh Cart Data</button>
+        </div>
+        
+        <div class="debug-section">
+            <h2>Clear Cart Data</h2>
+            <p>Use these buttons to clear all cart-related data:</p>
+            <button onclick="clearCart()">Clear Cart</button>
+            <button onclick="clearWishlist()">Clear Wishlist</button>
+            <button onclick="clearAll()">Clear Everything</button>
+        </div>
+        
+        <div class="debug-section">
+            <h2>Test Cart System</h2>
+            <p>Test if the cart system is working:</p>
+            <button onclick="testCartSystem()">Test Cart System</button>
+            <div id="testResults"></div>
+        </div>
+        
+        <div class="debug-section">
+            <h2>Navigation</h2>
+            <button onclick="goToCart()">Go to Cart Page</button>
+            <button onclick="goToShop()">Go to Shop</button>
+        </div>
+    </div>
+
+    <script>
+        function showCartData() {
+            const cartData = localStorage.getItem('nightkindCart');
+            const wishlistData = localStorage.getItem('nightkindWishlist');
+            const cartCount = localStorage.getItem('nightkindCartCount');
+            const savedCart = localStorage.getItem('nightkindSavedCart');
+            
+            const display = document.getElementById('cartData');
+            display.innerHTML = `
+                <h3>Cart Items:</h3>
+                <pre>${cartData || 'No cart data'}</pre>
+                
+                <h3>Wishlist Items:</h3>
+                <pre>${wishlistData || 'No wishlist data'}</pre>
+                
+                <h3>Cart Count:</h3>
+                <pre>${cartCount || 'No count data'}</pre>
+                
+                <h3>Saved Cart:</h3>
+                <pre>${savedCart || 'No saved cart data'}</pre>
+            `;
+        }
+        
+        function clearCart() {
+            localStorage.removeItem('nightkindCart');
+            localStorage.removeItem('nightkindCartCount');
+            showCartData();
+            document.getElementById('testResults').innerHTML = '<p class="success">✅ Cart cleared successfully!</p>';
+        }
+        
+        function clearWishlist() {
+            localStorage.removeItem('nightkindWishlist');
+            showCartData();
+            document.getElementById('testResults').innerHTML = '<p class="success">✅ Wishlist cleared successfully!</p>';
+        }
+        
+        function clearAll() {
+            localStorage.removeItem('nightkindCart');
+            localStorage.removeItem('nightkindWishlist');
+            localStorage.removeItem('nightkindCartCount');
+            localStorage.removeItem('nightkindSavedCart');
+            showCartData();
+            document.getElementById('testResults').innerHTML = '<p class="success">✅ All cart data cleared successfully!</p>';
+        }
+        
+        function testCartSystem() {
+            const results = document.getElementById('testResults');
+            results.innerHTML = '<p>Testing cart system...</p>';
+            
+            try {
+                // Test if cart-utils.js loads
+                if (typeof nightkindCart !== 'undefined') {
+                    results.innerHTML += '<p class="success">✅ Cart system loaded</p>';
+                    
+                    // Test basic cart functions
+                    const isEmpty = nightkindCart.isEmpty();
+                    results.innerHTML += `<p class="success">✅ Cart isEmpty() works: ${isEmpty}</p>`;
+                    
+                    const count = nightkindCart.getCartCount();
+                    results.innerHTML += `<p class="success">✅ Cart getCartCount() works: ${count}</p>`;
+                    
+                } else {
+                    results.innerHTML += '<p class="error">❌ Cart system not loaded</p>';
+                }
+            } catch (error) {
+                results.innerHTML += `<p class="error">❌ Error testing cart system: ${error.message}</p>`;
+            }
+        }
+        
+        function goToCart() {
+            window.location.href = 'cart.html';
+        }
+        
+        function goToShop() {
+            window.location.href = 'shop-categories.html';
+        }
+        
+        // Load cart-utils.js for testing
+        const script = document.createElement('script');
+        script.src = 'cart-utils.js';
+        script.onload = function() {
+            showCartData();
+            document.getElementById('testResults').innerHTML = '<p class="success">✅ Cart system loaded successfully!</p>';
+        };
+        script.onerror = function() {
+            document.getElementById('testResults').innerHTML = '<p class="error">❌ Failed to load cart-utils.js</p>';
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
