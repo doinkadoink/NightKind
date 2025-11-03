@@ -1,19 +1,53 @@
-# NightKind Collective - Static Website Copy
+# NightKind Collective - E-commerce Platform
 
-This is a static copy of the NightKind Collective website (https://nightkind-shadow-market.lovable.app/) downloaded for offline use and GitHub Pages hosting.
+E-commerce platform for NightKind Collective featuring secure Stripe payments, POS system, and cart management.
 
 ## 🌐 Live Demo
 
 Once deployed to GitHub Pages, the website will be available at:
 `https://[your-username].github.io/[repository-name]/`
 
+## Key Features
+
+- ✅ **Stripe Payment Integration** - Secure payment processing
+- ✅ **POS System** - Professional point-of-sale terminal
+- ✅ **Cart Management** - Full-featured shopping cart
+- ✅ **Wishlist System** - Save items for later
+- ✅ **Product Catalog** - Complete product management
+- ✅ **Email Notifications** - Order confirmations via EmailJS
+
+## Quick Start
+
+### 🚀 Want to Accept Payments NOW?
+**See `QUICK_START.md`** - Get Stripe payments working in 5 minutes!
+
+### 📋 System Overview
+**See `PAYMENT_SYSTEM_SUMMARY.md`** - Complete implementation summary
+
+### 📚 Other Guides
+- **`DEPLOYMENT_GUIDE.md`** - Deploy to Vercel, Heroku, etc.
+- **`CART_SYSTEM_README.md`** - Complete cart documentation
+- **`CURRENT_INTEGRATION_STATUS.md`** - Implementation status
+
 ## Files Included
 
+### Core Application
 - `index.html` - Main HTML file
-- `index-B11PqZaG.js` - JavaScript bundle
-- `index-CZEDu5tD.css` - CSS styles
-- `fonts.css` - Google Fonts (Creepster and Courier Prime)
-- `preview.png` - Website preview image
+- `cart.html` - Shopping cart with Stripe payments
+- `pos.html` - POS terminal interface
+- `products.js` - Product catalog
+
+### Payment System
+- `server.js` - Stripe payment backend
+- `package.json` - Dependencies and scripts
+- `.env` - Environment variables (create this)
+
+### Documentation
+- `QUICK_START.md` - Get started in 5 minutes
+- `DEPLOYMENT_GUIDE.md` - Production deployment
+- `CART_SYSTEM_README.md` - Cart system docs
+- `CURRENT_INTEGRATION_STATUS.md` - Implementation status
+- `ENV_SETUP.md` - Environment configuration
 
 ## 🚀 How to Deploy to GitHub Pages
 
@@ -50,30 +84,71 @@ Once deployed to GitHub Pages, the website will be available at:
 
 ## 🖥️ Local Development
 
-### Using the Batch File (Windows)
-1. Double-click `start-server.bat`
-2. Open http://localhost:8000
-
-### Using Node.js
+### Payment Server (Required for Stripe)
 ```bash
+# Install dependencies
+npm install
+
+# Create .env file with your Stripe key
+# See QUICK_START.md for details
+
+# Start server
 npm start
-# or
-npx serve . -p 8000
 ```
 
-### Using Python
+Server runs on: http://localhost:3000
+
+### Static Files Server (Optional)
 ```bash
+# Using batch file (Windows)
+start-server.bat
+
+# Or using Node.js
+npm run serve
+
+# Or using Python
 python -m http.server 8000
 ```
 
-## Notes
+Static server runs on: http://localhost:8000
 
-- This is a static copy, so any dynamic features (forms, backend interactions) will not work
-- The website appears to be built with a modern JavaScript framework (likely React/Vue)
-- All external dependencies have been downloaded and made local
-- The Lovable development badge has been removed for a cleaner appearance
-- GitHub Pages will automatically serve the website with proper MIME types
+## Installation
 
-## Original Website
+1. Clone or download this repository
+2. Run `npm install` to install dependencies
+3. Create `.env` file with your Stripe keys (see `QUICK_START.md`)
+4. Run `npm start` to start the payment server
+5. Open http://localhost:3000 to view the site
 
-Original site: https://nightkind-shadow-market.lovable.app/ 
+## Architecture
+
+### Frontend
+- **Static HTML/CSS/JS** - No build process required
+- **Stripe Elements** - Secure payment forms
+- **LocalStorage** - Cart and transaction persistence
+
+### Backend
+- **Express.js** - Web server
+- **Stripe API** - Payment processing
+- **Webhooks** - Async event handling
+
+### Payment Flow
+```
+Customer → Cart → Payment Form → Stripe Elements
+                                    ↓
+                              Server (Create Intent)
+                                    ↓
+                              Stripe API (Process)
+                                    ↓
+                              Webhooks (Confirm)
+                                    ↓
+                              Receipt & Confirmation
+```
+
+## Support
+
+For detailed guides:
+- **Quick Start**: `QUICK_START.md`
+- **Deployment**: `DEPLOYMENT_GUIDE.md`
+- **Cart System**: `CART_SYSTEM_README.md`
+- **Integration Status**: `CURRENT_INTEGRATION_STATUS.md` 

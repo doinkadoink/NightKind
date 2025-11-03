@@ -1747,6 +1747,9 @@
       // Initialize Stripe (replace with your publishable key)
       const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SA2UTQvPhK322os6nwl988dEXrIdSCz0VqNFSI9E1EZ2DcOqx53y9T8HWAyubSVDcQMwEJJ6hZ0nuSLy1nTjRyM00C3sZRq2N'; // Live Stripe key for production
       
+      // Server configuration - Update this with your server URL
+      const SERVER_URL = 'http://localhost:3000'; // Change to your production URL when deploying
+      
       // EmailJS configuration (you'll need to replace these with your actual EmailJS credentials)
       const EMAILJS_SERVICE_ID = 'service_nightkind'; // Replace with your EmailJS service ID
       const EMAILJS_TEMPLATE_ID = 'template_order_confirmation'; // Replace with your EmailJS template ID
@@ -2039,7 +2042,7 @@
       // Render cart
       function renderCart() {
         try {
-          const cartContent = document.getElementById('cartContent');
+        const cartContent = document.getElementById('cartContent');
           
           if (!cartContent) {
             console.error('Cart content element not found');
@@ -2058,9 +2061,9 @@
             `;
             return;
           }
-          
-          if (nightkindCart.isEmpty()) {
-            cartContent.innerHTML = `
+        
+        if (nightkindCart.isEmpty()) {
+          cartContent.innerHTML = `
             <div class="empty-cart">
               <div class="icon">🛒</div>
               <h3>Your cart is empty</h3>
@@ -2068,8 +2071,8 @@
               <a href="shop-categories.html" class="continue-shopping">Continue Shopping</a>
             </div>
           `;
-            return;
-          }
+          return;
+        }
         
         // Use filtered cart if available, otherwise use all items
         const itemsToRender = filteredCart.length > 0 ? filteredCart : nightkindCart.getItems();
@@ -2624,31 +2627,84 @@
           throw new Error('Stripe not initialized');
         }
 
-        const {token, error} = await stripe.createToken(cardElement);
-        
-        if (error) {
-          throw new Error(error.message);
-        }
+        try {
+          // Step 1: Create payment intent on server
+          CartNotification.info('Creating payment intent...');
+          const createResponse = await fetch(`${SERVER_URL}/api/create-payment-intent`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              amount: nightkindPOS.currentTransaction.total,
+              currency: 'usd',
+              customerEmail: document.getElementById('customerEmail').value.trim(),
+              metadata: {
+                transactionId: nightkindPOS.currentTransaction.id,
+                transactionNumber: nightkindPOS.currentTransaction.transactionNumber
+              }
+            })
+          });
 
-        // In a real application, you would send the token to your server
-        // The server would then create the charge using Stripe's API
-        console.log('Stripe token created:', token.id);
-        
-        // Simulate server processing
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            if (Math.random() > 0.1) { // 90% success rate for demo
-              resolve({
-                id: 'pi_' + Math.random().toString(36).substr(2, 9),
-                status: 'succeeded',
-                amount: nightkindPOS.currentTransaction.total * 100, // Stripe uses cents
-                currency: 'usd'
-              });
-            } else {
-              reject(new Error('Payment failed - please try again'));
+          if (!createResponse.ok) {
+            const error = await createResponse.json();
+            throw new Error(error.error || 'Failed to create payment intent');
+          }
+
+          const { clientSecret, paymentIntentId } = await createResponse.json();
+          console.log('Payment Intent created:', paymentIntentId);
+
+          // Step 2: Confirm payment with Stripe
+          CartNotification.info('Confirming payment...');
+          const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+              card: cardElement,
+              billing_details: {
+                name: document.getElementById('customerName').value.trim(),
+                email: document.getElementById('customerEmail').value.trim(),
+                phone: document.getElementById('customerPhone').value.trim() || undefined,
+                address: {
+                  line1: document.getElementById('customerAddress').value.trim() || undefined
+                }
+              }
             }
-          }, 2000); // Simulate network delay
-        });
+          });
+
+          if (error) {
+            throw new Error(error.message);
+          }
+
+          console.log('Payment confirmed:', paymentIntent.id);
+
+          // Step 3: Verify payment with server
+          const confirmResponse = await fetch(`${SERVER_URL}/api/confirm-payment`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              paymentIntentId: paymentIntent.id
+            })
+          });
+
+          if (!confirmResponse.ok) {
+            throw new Error('Payment verification failed');
+          }
+
+          const confirmData = await confirmResponse.json();
+          console.log('Payment verified:', confirmData);
+
+          return {
+            id: paymentIntent.id,
+            status: paymentIntent.status,
+            amount: paymentIntent.amount,
+            currency: paymentIntent.currency
+          };
+
+        } catch (error) {
+          console.error('Payment processing error:', error);
+          throw error;
+        }
       }
 
       // Process payment

@@ -21,6 +21,7 @@ The cart system consists of three main components:
 ### POS System Files
 - `pos.html` - Professional POS terminal interface for staff
 - Enhanced `cart-utils.js` - Now includes NightKindPOS class for transaction management
+- `STRIPE_INTEGRATION_GUIDE.md` - Guide for integrating Stripe payment processing
 
 ### Implementation Files
 - `index.html` - Home page with cart integration
@@ -356,12 +357,20 @@ window.debugCart = true;
 
 ### POS System Enhancements
 - **Hardware Integration**: Receipt printers, barcode scanners, cash drawers
-- **Payment Gateway**: Real credit card processing (Stripe, Square)
+- **Payment Gateway**: Real credit card processing (Stripe, Square) - See `STRIPE_INTEGRATION_GUIDE.md`
 - **Employee Management**: User roles, permissions, and time tracking
 - **Advanced Reporting**: Real-time dashboards and KPI tracking
 - **Inventory Management**: Low stock alerts and automatic reordering
 - **Customer Database**: Customer profiles, purchase history, and loyalty programs
 - **Multi-location Support**: Multiple store locations and centralized management
+
+### Stripe Integration Status
+Currently transactions are stored locally and validated client-side. For production, implement Stripe integration following the guide in `STRIPE_INTEGRATION_GUIDE.md`. The guide covers:
+- Stripe Checkout integration (recommended for POS)
+- Backend server setup
+- Security best practices
+- Testing procedures
+- Production deployment
 
 ## Support
 
