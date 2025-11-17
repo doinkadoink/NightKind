@@ -85,7 +85,7 @@ const EMAILJS_SERVICE_ID = 'service_nightkind';
 const EMAILJS_CUSTOMER_TEMPLATE_ID = 'template_order_confirmation';
 const EMAILJS_OWNER_TEMPLATE_ID = 'template_order_notification';
 const EMAILJS_PUBLIC_KEY = 'your_emailjs_public_key';
-const NIGHTKIND_EMAIL = 'nightkindcollective@gmail.com';
+const NIGHTKIND_EMAIL = 'nightkindcollective.info@gmail.com';
 ```
 
 ### Email Sending Function (cart.html lines 2598-2683)
