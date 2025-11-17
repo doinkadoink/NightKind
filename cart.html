@@ -1176,6 +1176,10 @@
         gap: 1rem;
       }
 
+      .form-row-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
       .form-group label {
         color: hsl(var(--foreground));
         font-weight: bold;
@@ -1752,8 +1756,10 @@
       
       // EmailJS configuration (you'll need to replace these with your actual EmailJS credentials)
       const EMAILJS_SERVICE_ID = 'service_nightkind'; // Replace with your EmailJS service ID
-      const EMAILJS_TEMPLATE_ID = 'template_order_confirmation'; // Replace with your EmailJS template ID
+      const EMAILJS_CUSTOMER_TEMPLATE_ID = 'template_order_confirmation'; // Customer receipt email
+      const EMAILJS_OWNER_TEMPLATE_ID = 'template_order_notification'; // Owner notification email
       const EMAILJS_PUBLIC_KEY = 'your_emailjs_public_key'; // Replace with your EmailJS public key
+      const NIGHTKIND_EMAIL = 'nightkindcollective@gmail.com'; // Owner email for notifications
       
       function initializeStripe() {
         try {
@@ -2401,19 +2407,37 @@
                 <div class="checkout-form">
                   <div class="form-group">
                     <label for="customerName">Name *</label>
-                    <input type="text" id="customerName" required>
+                    <input type="text" id="customerName" required autocomplete="name">
                   </div>
                   <div class="form-group">
                     <label for="customerEmail">Email *</label>
-                    <input type="email" id="customerEmail" required>
+                    <input type="email" id="customerEmail" required autocomplete="email">
                   </div>
                   <div class="form-group">
                     <label for="customerPhone">Phone</label>
-                    <input type="tel" id="customerPhone">
+                    <input type="tel" id="customerPhone" autocomplete="tel">
                   </div>
                   <div class="form-group">
-                    <label for="customerAddress">Address</label>
-                    <textarea id="customerAddress" rows="3"></textarea>
+                    <label for="customerAddressLine1">Street Address</label>
+                    <input type="text" id="customerAddressLine1" autocomplete="street-address" placeholder="123 Main Street">
+                  </div>
+                  <div class="form-row form-row-3">
+                    <div class="form-group">
+                      <label for="customerCity">City</label>
+                      <input type="text" id="customerCity" autocomplete="address-level2" placeholder="City">
+                    </div>
+                    <div class="form-group">
+                      <label for="customerState">State/Province</label>
+                      <input type="text" id="customerState" autocomplete="address-level1" placeholder="State">
+                    </div>
+                    <div class="form-group">
+                      <label for="customerPostcode">Postal Code</label>
+                      <input type="text" id="customerPostcode" autocomplete="postal-code" placeholder="12345">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="customerCountry">Country</label>
+                    <input type="text" id="customerCountry" autocomplete="country" placeholder="United States">
                   </div>
                 </div>
               </div>
@@ -2571,7 +2595,7 @@
         if (toggleBtn) toggleBtn.textContent = 'Stripe Unavailable - Demo Mode Active';
       }
 
-      // Send order confirmation email
+      // Send order confirmation emails (to customer and owner)
       async function sendOrderConfirmationEmail(customerInfo, receipt) {
         if (!isEmailEnabled || !emailService) {
           console.log('Email service not available');
@@ -2589,7 +2613,9 @@
             customer_name: customerInfo.name,
             customer_email: customerInfo.email,
             customer_phone: customerInfo.phone || 'Not provided',
-            customer_address: customerInfo.address || 'Not provided',
+            customer_address: typeof customerInfo.address === 'string' 
+              ? customerInfo.address 
+              : formatAddress(customerInfo.address),
             items_list: receipt.items.map(item => 
               `${item.name} ${item.size ? '(' + item.size + ')' : ''} - Qty: ${item.quantity} - $${item.total.toFixed(2)}`
             ).join('\n'),
@@ -2599,26 +2625,61 @@
             payment_method: receipt.paymentMethod.charAt(0).toUpperCase() + receipt.paymentMethod.slice(1),
             order_notes: receipt.notes || 'No special instructions',
             company_name: 'NightKind Collective',
-            company_email: 'orders@nightkindcollective.com', // Replace with your actual email
+            company_email: NIGHTKIND_EMAIL,
             website_url: window.location.origin,
             conservation_message: 'Thank you for supporting bat conservation efforts in Queensland!'
           };
 
-          // Send email using EmailJS
-          const result = await emailService.send(
+          // Send customer confirmation email
+          console.log('Sending customer confirmation email...');
+          const customerResult = await emailService.send(
             EMAILJS_SERVICE_ID,
-            EMAILJS_TEMPLATE_ID,
+            EMAILJS_CUSTOMER_TEMPLATE_ID,
             templateParams
           );
+          console.log('Customer email sent:', customerResult);
 
-          console.log('Order confirmation email sent successfully:', result);
+          // Send owner notification email (same data, different recipient)
+          const ownerParams = {
+            ...templateParams,
+            to_email: NIGHTKIND_EMAIL,
+            to_name: 'NightKind Collective',
+            email_subject: `New Order Received: #${receipt.transactionNumber}`,
+            order_alert: 'You have received a new order that requires processing.'
+          };
+
+          console.log('Sending owner notification email...');
+          const ownerResult = await emailService.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_OWNER_TEMPLATE_ID,
+            ownerParams
+          );
+          console.log('Owner email sent:', ownerResult);
+
+          console.log('Both confirmation emails sent successfully!');
           return true;
 
         } catch (error) {
-          console.error('Failed to send order confirmation email:', error);
-          CartNotification.warning('Order completed, but confirmation email could not be sent');
+          console.error('Failed to send order confirmation emails:', error);
+          CartNotification.warning('Order completed, but confirmation emails could not be sent');
           return false;
         }
+      }
+
+      // Helper function to format address object to string
+      function formatAddress(address) {
+        if (!address || typeof address !== 'object') {
+          return 'Not provided';
+        }
+        
+        const parts = [];
+        if (address.line1) parts.push(address.line1);
+        if (address.city) parts.push(address.city);
+        if (address.state) parts.push(address.state);
+        if (address.postal_code) parts.push(address.postal_code);
+        if (address.country) parts.push(address.country);
+        
+        return parts.length > 0 ? parts.join(', ') : 'Not provided';
       }
 
       // Secure payment processing with Stripe
@@ -2664,7 +2725,11 @@
                 email: document.getElementById('customerEmail').value.trim(),
                 phone: document.getElementById('customerPhone').value.trim() || undefined,
                 address: {
-                  line1: document.getElementById('customerAddress').value.trim() || undefined
+                  line1: document.getElementById('customerAddressLine1').value.trim() || undefined,
+                  city: document.getElementById('customerCity').value.trim() || undefined,
+                  state: document.getElementById('customerState').value.trim() || undefined,
+                  postal_code: document.getElementById('customerPostcode').value.trim() || undefined,
+                  country: document.getElementById('customerCountry').value.trim() || undefined
                 }
               }
             }
@@ -2774,7 +2839,13 @@
             name: customerName,
             email: customerEmail,
             phone: document.getElementById('customerPhone').value.trim(),
-            address: document.getElementById('customerAddress').value.trim()
+            address: {
+              line1: document.getElementById('customerAddressLine1').value.trim(),
+              city: document.getElementById('customerCity').value.trim(),
+              state: document.getElementById('customerState').value.trim(),
+              postal_code: document.getElementById('customerPostcode').value.trim(),
+              country: document.getElementById('customerCountry').value.trim()
+            }
           });
           
           // Add order notes
@@ -2806,9 +2877,9 @@
           // Complete transaction
           const result = nightkindPOS.completeTransaction();
           
-          // Send order confirmation email
+          // Send order confirmation emails
           const emailSent = await sendOrderConfirmationEmail(
-            nightkindPOS.currentTransaction.customerInfo,
+            result.transaction.customerInfo,
             result.receipt
           );
           

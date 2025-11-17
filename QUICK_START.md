@@ -57,6 +57,21 @@ Should see:
 
 ✅ **Server is working!**
 
+## Optional: Setup Emails (RECOMMENDED)
+
+### Configure EmailJS for Dual Notifications
+
+See `EMAIL_SETUP_GUIDE.md` for complete instructions.
+
+**Quick Setup**:
+1. Create EmailJS account at emailjs.com
+2. Create TWO templates:
+   - Customer confirmation
+   - Owner notification
+3. Update `cart.html` with your credentials
+
+**Without EmailJS**: Payments still work, but no confirmation emails are sent.
+
 ## Test a Real Payment
 
 ### 1. Open Checkout
@@ -71,7 +86,7 @@ http://localhost:3000/cart.html
 
 ### 3. Fill Out Checkout Form
 - Name: Your name
-- Email: Your email
+- Email: Your email (needed for receipt if emails enabled)
 - Choose payment method: Card
 - Enter test card: `4242 4242 4242 4242`
 - Expiry: Any future date (e.g., `12/25`)
@@ -86,6 +101,7 @@ Click "Complete Purchase"
 - ✅ Stripe processes card
 - ✅ Payment confirmed
 - ✅ Receipt generated
+- ✅ TWO emails sent (if EmailJS configured)
 
 **Check your Stripe Dashboard** to see the payment!
 

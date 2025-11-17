@@ -4,6 +4,15 @@
 
 This guide explains how to set up email notifications for order confirmations in your NightKind Collective payment system. The implementation uses EmailJS, a service that allows you to send emails directly from client-side JavaScript without needing a backend server.
 
+## 🚀 Dual Email System
+
+**Two emails are sent after every successful order:**
+
+1. **Customer Confirmation** → Sent to customer with receipt
+2. **Owner Notification** → Sent to NightKind email for processing
+
+This ensures both parties receive order details immediately!
+
 ## 🚀 Quick Setup Steps
 
 ### 1. Create EmailJS Account
@@ -20,33 +29,46 @@ This guide explains how to set up email notifications for order confirmations in
 4. Follow the setup instructions for your provider
 5. Note down your **Service ID** (e.g., `service_nightkind`)
 
-### 3. Create Email Template
+### 3. Create Email Templates (TWO REQUIRED)
 
+#### Template 1: Customer Confirmation
 1. Go to **Email Templates** in your EmailJS dashboard
 2. Click **Create New Template**
-3. Use the template provided in `email-template.html` as a reference
-4. Set up the template with these variables:
-   - `{{to_email}}` - Customer's email address
-   - `{{to_name}}` - Customer's name
-   - `{{transaction_number}}` - Order number
-   - `{{order_date}}` - Order date
-   - `{{order_time}}` - Order time
-   - `{{customer_name}}` - Customer name
-   - `{{customer_email}}` - Customer email
-   - `{{customer_phone}}` - Customer phone
-   - `{{customer_address}}` - Customer address
-   - `{{items_list}}` - List of ordered items
-   - `{{subtotal}}` - Order subtotal
-   - `{{tax}}` - Tax amount
-   - `{{total}}` - Total amount
-   - `{{payment_method}}` - Payment method used
-   - `{{order_notes}}` - Order notes
-   - `{{company_name}}` - Your company name
-   - `{{company_email}}` - Your company email
-   - `{{website_url}}` - Your website URL
-   - `{{conservation_message}}` - Conservation message
+3. Name it: "Order Confirmation - Customer"
+4. Use the template in `email-template.html` as a reference
+5. Set up with all variables (see below)
+6. Note down Template ID: `template_order_confirmation`
 
-5. Note down your **Template ID** (e.g., `template_order_confirmation`)
+#### Template 2: Owner Notification
+1. In **Email Templates**, click **Create New Template** again
+2. Name it: "Order Notification - Owner"
+3. Use the template in `email-template-owner.html` as a reference
+4. Set up with all variables (see below)
+5. Note down Template ID: `template_order_notification`
+
+#### Required Variables for Both Templates:
+- `{{to_email}}` - Recipient email (customer or owner)
+- `{{to_name}}` - Recipient name
+- `{{transaction_number}}` - Order number
+- `{{order_date}}` - Order date
+- `{{order_time}}` - Order time
+- `{{customer_name}}` - Customer name
+- `{{customer_email}}` - Customer email
+- `{{customer_phone}}` - Customer phone
+- `{{customer_address}}` - Customer address
+- `{{items_list}}` - List of ordered items
+- `{{subtotal}}` - Order subtotal
+- `{{tax}}` - Tax amount
+- `{{total}}` - Total amount
+- `{{payment_method}}` - Payment method
+- `{{order_notes}}` - Order notes
+- `{{company_name}}` - Company name
+- `{{company_email}}` - Company email
+- `{{website_url}}` - Website URL
+
+#### Additional Owner Template Variables:
+- `{{email_subject}}` - Custom subject line
+- `{{order_alert}}` - Alert message for owner
 
 ### 4. Get Public Key
 
@@ -61,9 +83,13 @@ In your `cart.html` file, update these constants with your actual EmailJS creden
 ```javascript
 // EmailJS configuration (replace with your actual credentials)
 const EMAILJS_SERVICE_ID = 'service_nightkind'; // Your service ID
-const EMAILJS_TEMPLATE_ID = 'template_order_confirmation'; // Your template ID
+const EMAILJS_CUSTOMER_TEMPLATE_ID = 'template_order_confirmation'; // Customer email template
+const EMAILJS_OWNER_TEMPLATE_ID = 'template_order_notification'; // Owner email template
 const EMAILJS_PUBLIC_KEY = 'your_emailjs_public_key'; // Your public key
+const NIGHTKIND_EMAIL = 'nightkindcollective@gmail.com'; // Your business email
 ```
+
+**Important:** You need both template IDs for the dual email system!
 
 ## 📋 Email Template Variables
 
@@ -159,7 +185,9 @@ The system handles email failures gracefully:
 2. Proceed to checkout
 3. Fill in customer information
 4. Complete payment
-5. Check for email confirmation
+5. Check for TWO email confirmations:
+   - Customer email in their inbox
+   - Owner email in NightKind inbox
 
 ### Debugging
 If emails aren't sending:
@@ -248,7 +276,7 @@ Track email effectiveness:
 - [Template Examples](https://www.emailjs.com/docs/examples/)
 
 ### NightKind Collective
-- **Email**: orders@nightkindcollective.com
+- **Email**: nightkindcollective@gmail.com
 - **Website**: Your website URL
 - **Support**: Contact form or support email
 

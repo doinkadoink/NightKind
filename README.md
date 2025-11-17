@@ -12,9 +12,9 @@ Once deployed to GitHub Pages, the website will be available at:
 - ✅ **Stripe Payment Integration** - Secure payment processing
 - ✅ **POS System** - Professional point-of-sale terminal
 - ✅ **Cart Management** - Full-featured shopping cart
+- ✅ **Dual Email System** - Customer receipts + Owner notifications
 - ✅ **Wishlist System** - Save items for later
 - ✅ **Product Catalog** - Complete product management
-- ✅ **Email Notifications** - Order confirmations via EmailJS
 
 ## Quick Start
 
@@ -44,6 +44,9 @@ Once deployed to GitHub Pages, the website will be available at:
 
 ### Documentation
 - `QUICK_START.md` - Get started in 5 minutes
+- `DUAL_EMAIL_IMPLEMENTATION.md` - Dual email system guide
+- `EMAIL_SETUP_GUIDE.md` - Email configuration
+- `EMAIL_SYSTEM_UPDATE.md` - Email system summary
 - `DEPLOYMENT_GUIDE.md` - Production deployment
 - `CART_SYSTEM_README.md` - Cart system docs
 - `CURRENT_INTEGRATION_STATUS.md` - Implementation status
