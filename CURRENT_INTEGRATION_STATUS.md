@@ -56,10 +56,10 @@ PORT=3000
 - ⚠️ Template ID not configured
 - ⚠️ Public key not configured
 
-### 3. Server URL for Production (REQUIRED ⚠️)
-In `cart.html`, line 1751:
+### 3. Server URL for Production (COMPLETED ✅)
+In `cart.html`, line 1755:
 ```javascript
-const SERVER_URL = 'http://localhost:3000'; // Update to your production URL
+const SERVER_URL = 'https://www.nightkind.org'; // Production server
 ```
 
 ## What This Means
@@ -109,14 +109,14 @@ const SERVER_URL = 'http://localhost:3000'; // Update to your production URL
 
 **Estimated time:** 10 minutes
 
-### Priority 3: Deploy to Production (WHEN READY)
+### Priority 3: Deploy to Production (COMPLETED ✅)
 **Going live:**
 
-1. Choose hosting (Vercel, Heroku, etc.)
+1. ✅ Server deployed to production
 2. Set environment variables in hosting
 3. Deploy server
 4. Configure webhooks
-5. Update frontend `SERVER_URL`
+5. ✅ Frontend `SERVER_URL` configured to `https://www.nightkind.org`
 
 **Instructions:** See `DEPLOYMENT_GUIDE.md`
 
