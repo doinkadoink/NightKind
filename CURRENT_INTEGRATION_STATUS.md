@@ -39,6 +39,16 @@
 
 ## ⚠️ What Needs Configuration
 
+### 0. Backend Deployment (READY TO DEPLOY ✅)
+**Deployment configs created:**
+- ✅ `vercel.json` - Vercel configuration
+- ✅ `render.yaml` - Render configuration  
+- ✅ `railway.json` - Railway configuration
+- ✅ `BACKEND_DEPLOYMENT_GUIDE.md` - Complete deployment guide
+- ✅ `DEPLOY_QUICK_START.md` - Quick 5-minute guide
+
+**Next Step:** Choose a platform and deploy! See `DEPLOY_QUICK_START.md`
+
 ### 1. Environment Variables (REQUIRED ⚠️)
 **You need to create a `.env` file** with your secret key:
 
@@ -56,11 +66,11 @@ PORT=3000
 - ⚠️ Template ID not configured
 - ⚠️ Public key not configured
 
-### 3. Server URL for Production (COMPLETED ✅)
-In `cart.html`, line 1755:
-```javascript
-const SERVER_URL = 'https://www.nightkind.org'; // Production server
-```
+### 3. Server URL for Production (NEEDS UPDATE ⚠️)
+**Current:** `cart.html` line 1755 points to `https://www.nightkind.org`  
+**Action Needed:** After deploying backend, update to your backend URL (e.g., `https://nightkind-api.vercel.app`)
+
+**Note:** Frontend is live on `https://www.nightkind.org`, but backend needs separate deployment.
 
 ## What This Means
 
@@ -109,16 +119,18 @@ const SERVER_URL = 'https://www.nightkind.org'; // Production server
 
 **Estimated time:** 10 minutes
 
-### Priority 3: Deploy to Production (COMPLETED ✅)
+### Priority 3: Deploy Backend to Production (READY ⚠️)
 **Going live:**
 
-1. ✅ Server deployed to production
-2. Set environment variables in hosting
-3. Deploy server
-4. Configure webhooks
-5. ✅ Frontend `SERVER_URL` configured to `https://www.nightkind.org`
+1. ✅ Deployment configs created (vercel.json, render.yaml, railway.json)
+2. ⚠️ **Backend server needs deployment** (choose Vercel/Render/Railway)
+3. ⚠️ Set environment variables in hosting platform
+4. ⚠️ Deploy server and get backend URL
+5. ⚠️ Update `SERVER_URL` in cart.html to backend URL
+6. ⚠️ Configure webhooks (optional)
 
-**Instructions:** See `DEPLOYMENT_GUIDE.md`
+**Quick Start:** See `DEPLOY_QUICK_START.md` (5 minutes)  
+**Full Guide:** See `BACKEND_DEPLOYMENT_GUIDE.md` (detailed steps)
 
 ### Priority 4: EmailJS Setup (OPTIONAL)
 **For order confirmations:**
