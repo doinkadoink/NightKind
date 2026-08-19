@@ -722,21 +722,13 @@
           case 'card':
             inputHTML = `
               <div class="input-group">
-                <label class="input-label">Card Number</label>
-                <input type="text" class="pos-input" id="cardNumber" placeholder="1234 5678 9012 3456">
-              </div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                <div class="input-group">
-                  <label class="input-label">Expiry</label>
-                  <input type="text" class="pos-input" id="cardExpiry" placeholder="MM/YY">
-                </div>
-                <div class="input-group">
-                  <label class="input-label">CVV</label>
-                  <input type="text" class="pos-input" id="cardCvv" placeholder="123">
-                </div>
+                <p style="color: #f5d76e; line-height: 1.5;">Card payments are disabled. NightKind is not collecting card numbers, expiry, or CVV. Use cash for in-person sales, or close this panel.</p>
               </div>
             `;
-            break;
+            paymentInputs.innerHTML = inputHTML;
+            paymentInputs.style.display = 'block';
+            confirmBtn.style.display = 'none';
+            return;
           case 'digital_wallet':
             inputHTML = `
               <div class="input-group">
@@ -798,10 +790,7 @@
             details.amount = parseFloat(document.getElementById('cashAmount').value) || 0;
             break;
           case 'card':
-            details.cardNumber = document.getElementById('cardNumber').value;
-            details.expiry = document.getElementById('cardExpiry').value;
-            details.cvv = document.getElementById('cardCvv').value;
-            break;
+            throw new Error('Card payments are disabled. Card details are not collected.');
           case 'digital_wallet':
             details.walletId = document.getElementById('walletId').value;
             details.confirmation = document.getElementById('walletConfirmation').value;

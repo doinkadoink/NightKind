@@ -494,6 +494,48 @@
         left: 100%;
       }
 
+      .checkout-btn.checkout-disabled,
+      .checkout-btn:disabled {
+        background: hsl(0, 0%, 22%);
+        color: hsl(60, 20%, 80%);
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .checkout-btn.checkout-disabled:hover,
+      .checkout-btn:disabled:hover {
+        background: hsl(0, 0%, 22%);
+        transform: none;
+      }
+
+      .checkout-btn.checkout-disabled::before {
+        display: none;
+      }
+
+      .payments-disabled-banner {
+        background: hsl(0, 40%, 16%);
+        border: 1px solid hsl(0, 70%, 45%);
+        color: hsl(60, 100%, 90%);
+        padding: 1rem 1.25rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+
+      .payments-disabled-banner strong {
+        display: block;
+        margin-bottom: 0.4rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .payments-disabled-body p {
+        color: hsl(var(--muted-foreground));
+        line-height: 1.6;
+        margin: 0 0 1rem;
+      }
+
       .checkout-btn:hover {
         background: hsl(var(--secondary) / 0.9);
         transform: translateY(-3px);
@@ -1742,7 +1784,8 @@
       let stripe = null;
       let elements = null;
       let cardElement = null;
-      let isStripeMode = true;
+      let isStripeMode = false;
+      const ONLINE_PAYMENTS_ENABLED = false;
 
       // EmailJS configuration
       let emailService = null;
@@ -1762,6 +1805,10 @@
       const NIGHTKIND_EMAIL = 'nightkindcollective@gmail.com'; // Owner email for notifications
       
       function initializeStripe() {
+        if (!ONLINE_PAYMENTS_ENABLED) {
+          console.log('Stripe initialization skipped — online payments are disabled');
+          return;
+        }
         try {
           // Initialize Stripe with your actual key
           stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
@@ -1790,8 +1837,7 @@
 
       function setupStripeElements() {
         if (!stripe) {
-          console.log('Stripe not available - falling back to demo mode');
-          switchToManualMode();
+          console.log('Stripe not available — card entry is disabled');
           return;
         }
 
@@ -2189,8 +2235,12 @@
             </div>
           </div>
           
-          <button class="checkout-btn" onclick="proceedToCheckout()">
-            PROCEED TO CHECKOUT - $${totals.total.toFixed(2)}
+          <div class="payments-disabled-banner" role="status">
+            <strong>Checkout is paused</strong>
+            Online payments are temporarily disabled so card details cannot be entered or stored. Your cart is saved — no payment will be taken.
+          </div>
+          <button class="checkout-btn checkout-disabled" type="button" onclick="proceedToCheckout()">
+            CHECKOUT UNAVAILABLE
           </button>
           
           <a href="shop-categories.html" class="continue-shopping">
@@ -2348,6 +2398,11 @@
 
       // Proceed to checkout
       function proceedToCheckout() {
+        if (!ONLINE_PAYMENTS_ENABLED) {
+          showPaymentsDisabledModal();
+          return;
+        }
+
         if (nightkindCart.isEmpty()) {
           CartNotification.error('Your cart is empty');
           return;
@@ -2361,6 +2416,35 @@
           console.error('Error starting checkout:', error);
           CartNotification.error('Failed to start checkout process');
         }
+      }
+
+      function showPaymentsDisabledModal() {
+        closeCheckoutModal();
+        const modal = document.createElement('div');
+        modal.className = 'checkout-modal';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-labelledby', 'paymentsDisabledTitle');
+        modal.innerHTML = `
+          <div class="checkout-modal-content">
+            <div class="checkout-header">
+              <h2 id="paymentsDisabledTitle">Payments paused</h2>
+              <button class="checkout-close" onclick="closeCheckoutModal()" aria-label="Close">&times;</button>
+            </div>
+            <div class="checkout-body payments-disabled-body">
+              <div class="payments-disabled-banner">
+                <strong>No card details will be collected</strong>
+                Checkout is turned off while we finish a secure payment setup. Please do not enter credit card information anywhere on this site.
+              </div>
+              <p>Your cart stays saved in this browser. Nothing will be charged, and NightKind is not processing orders online right now.</p>
+              <p>If you still want to support bat conservation, email us and we will follow up when checkout is ready:</p>
+              <p><a href="mailto:nightkindcollective@gmail.com">nightkindcollective@gmail.com</a> · <a href="contact.html">Contact page</a></p>
+            </div>
+            <div class="checkout-footer">
+              <button class="checkout-btn secondary" onclick="closeCheckoutModal()">Close</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
       }
 
       // Show checkout modal
@@ -2444,68 +2528,9 @@
               
               <div class="checkout-section">
                 <h3>Payment Method</h3>
-                <div class="payment-methods">
-                  <label class="payment-option">
-                    <input type="radio" name="paymentMethod" value="card" checked>
-                    <span class="payment-label">
-                      <span class="payment-icon">💳</span>
-                      <span class="payment-text">Credit/Debit Card</span>
-                    </span>
-                  </label>
-                  <label class="payment-option">
-                    <input type="radio" name="paymentMethod" value="digital_wallet">
-                    <span class="payment-label">
-                      <span class="payment-icon">📱</span>
-                      <span class="payment-text">Digital Wallet</span>
-                    </span>
-                  </label>
-                  <label class="payment-option">
-                    <input type="radio" name="paymentMethod" value="paypal">
-                    <span class="payment-label">
-                      <span class="payment-icon">🅿️</span>
-                      <span class="payment-text">PayPal</span>
-                    </span>
-                  </label>
-                </div>
-                
-                <div id="paymentDetails" class="payment-details" style="display: block;">
-                  <!-- Stripe Elements will be mounted here -->
-                  <div class="form-group">
-                    <label for="card-element">Credit or Debit Card</label>
-                    <div class="secure-payment-badge">Secured by Stripe - Your card details are encrypted and never stored</div>
-                    <div id="card-element" class="stripe-element">
-                      <!-- Stripe Elements will create form elements here -->
-                    </div>
-                    <div id="card-errors" class="payment-error" role="alert"></div>
-                  </div>
-                  
-                  <!-- Alternative: Manual card input (less secure, for demo purposes) -->
-                  <div id="manualCardInput" style="display: none;">
-                    <div class="security-warning">
-                      <span class="warning-icon">⚠️</span>
-                      <strong>Demo Mode:</strong> This is for demonstration only. In production, use Stripe Elements above for secure payment processing.
-                    </div>
-                    <div class="form-group">
-                      <label for="cardNumber">Card Number</label>
-                      <input type="text" id="cardNumber" placeholder="4242 4242 4242 4242 (Test Card)">
-                    </div>
-                    <div class="form-row">
-                      <div class="form-group">
-                        <label for="cardExpiry">Expiry</label>
-                        <input type="text" id="cardExpiry" placeholder="12/25">
-                      </div>
-                      <div class="form-group">
-                        <label for="cardCVV">CVV</label>
-                        <input type="text" id="cardCVV" placeholder="123">
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="payment-toggle">
-                    <button type="button" id="togglePaymentMode" class="toggle-btn">
-                      Switch to Demo Mode
-                    </button>
-                  </div>
+                <div class="payments-disabled-banner">
+                  <strong>Payments paused</strong>
+                  Online checkout cannot collect card details right now. Please close this form — nothing will be charged.
                 </div>
               </div>
               
@@ -2519,7 +2544,7 @@
             
             <div class="checkout-footer">
               <button class="checkout-btn secondary" onclick="closeCheckoutModal()">Cancel</button>
-              <button class="checkout-btn primary" onclick="processPayment()">Complete Order</button>
+              <button class="checkout-btn primary checkout-disabled" type="button" disabled>Complete Order Unavailable</button>
             </div>
           </div>
         `;
@@ -2530,13 +2555,17 @@
         setupPaymentMethodHandlers();
         
         // Initialize Stripe
-        initializeStripe();
+        if (ONLINE_PAYMENTS_ENABLED) {
+          initializeStripe();
+        }
         
         // Initialize EmailJS
         initializeEmailService();
         
         // Setup payment mode toggle
-        setupPaymentModeToggle();
+        if (ONLINE_PAYMENTS_ENABLED) {
+          setupPaymentModeToggle();
+        }
         
         
         // Focus on first input
@@ -2549,6 +2578,7 @@
       function setupPaymentMethodHandlers() {
         const paymentMethods = document.querySelectorAll('input[name="paymentMethod"]');
         const paymentDetails = document.getElementById('paymentDetails');
+        if (!paymentDetails || paymentMethods.length === 0) return;
         
         paymentMethods.forEach(method => {
           method.addEventListener('change', (e) => {
@@ -2564,7 +2594,9 @@
       // Setup payment mode toggle
       function setupPaymentModeToggle() {
         const toggleBtn = document.getElementById('togglePaymentMode');
-        const stripeSection = document.getElementById('card-element').parentElement;
+        const cardElementHost = document.getElementById('card-element');
+        if (!toggleBtn || !cardElementHost) return;
+        const stripeSection = cardElementHost.parentElement;
         const manualSection = document.getElementById('manualCardInput');
         
         if (toggleBtn) {
@@ -2774,6 +2806,12 @@
 
       // Process payment
       async function processPayment() {
+        if (!ONLINE_PAYMENTS_ENABLED) {
+          showPaymentsDisabledModal();
+          CartNotification.error('Online payments are temporarily disabled. Card details are not collected.');
+          return;
+        }
+
         // Validate customer information
         const customerName = document.getElementById('customerName').value.trim();
         const customerEmail = document.getElementById('customerEmail').value.trim();
@@ -2798,27 +2836,7 @@
         let isValid = true;
         
         if (paymentMethod === 'card') {
-          if (isStripeMode) {
-            // Stripe mode - no need to validate here, Stripe handles it
-            paymentDetails = { useStripe: true };
-          } else {
-            // Demo mode - validate manual inputs
-            const cardNumber = document.getElementById('cardNumber').value.trim();
-            const cardExpiry = document.getElementById('cardExpiry').value.trim();
-            const cardCVV = document.getElementById('cardCVV').value.trim();
-            
-            if (!cardNumber || !cardExpiry || !cardCVV) {
-              CartNotification.error('Please fill in all card details');
-              isValid = false;
-            } else {
-              paymentDetails = {
-                cardNumber: cardNumber,
-                expiry: cardExpiry,
-                cvv: cardCVV,
-                useStripe: false
-              };
-            }
-          }
+          paymentDetails = { useStripe: true };
         } else if (paymentMethod === 'digital_wallet') {
           paymentDetails = {
             walletId: 'demo_wallet_' + Date.now(),

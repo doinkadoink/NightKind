@@ -714,6 +714,33 @@ class NightKindPOS {
   init() {
     this.setupTransactionListeners();
     this.updateTransactionCounter();
+    this.scrubStoredCardDetails();
+  }
+
+  // Never persist PAN/CVV/expiry — demo checkout used to save these in localStorage
+  stripPaymentSecrets(details) {
+    if (!details || typeof details !== 'object') return details;
+    const cleaned = { ...details };
+    ['cardNumber', 'card', 'pan', 'cvv', 'cvc', 'expiry', 'cardExpiry', 'cardCvv', 'cardCVV'].forEach((key) => {
+      delete cleaned[key];
+    });
+    return cleaned;
+  }
+
+  scrubStoredCardDetails() {
+    let changed = false;
+    this.transactions = this.transactions.map((tx) => {
+      if (!tx || !tx.paymentDetails) return tx;
+      const cleaned = this.stripPaymentSecrets(tx.paymentDetails);
+      if (JSON.stringify(cleaned) !== JSON.stringify(tx.paymentDetails)) {
+        changed = true;
+        return { ...tx, paymentDetails: cleaned };
+      }
+      return tx;
+    });
+    if (changed) {
+      this.saveTransactions();
+    }
   }
 
   // Load transactions from localStorage
@@ -829,13 +856,19 @@ class NightKindPOS {
       throw new Error('Invalid payment method');
     }
 
+    if (paymentMethod === 'card' && (paymentDetails.cardNumber || paymentDetails.cvv || paymentDetails.cvc)) {
+      throw new Error('Card details cannot be collected. Online payments are disabled.');
+    }
+
+    const safeDetails = this.stripPaymentSecrets(paymentDetails);
+
     // Validate payment details based on method
-    if (!this.validatePaymentDetails(paymentMethod, paymentDetails)) {
+    if (!this.validatePaymentDetails(paymentMethod, safeDetails)) {
       throw new Error('Invalid payment details');
     }
 
     this.currentTransaction.paymentMethod = paymentMethod;
-    this.currentTransaction.paymentDetails = paymentDetails;
+    this.currentTransaction.paymentDetails = safeDetails;
     this.currentTransaction.status = 'paid';
     this.currentTransaction.paidAt = new Date().toISOString();
 
@@ -848,7 +881,11 @@ class NightKindPOS {
       case 'cash':
         return details.amount >= this.currentTransaction.total;
       case 'card':
-        return details.cardNumber && details.expiry && details.cvv;
+        // Never accept raw card data. Stripe confirmations use a payment intent id only.
+        if (details.cardNumber || details.cvv || details.cvc || details.expiry) {
+          return false;
+        }
+        return Boolean(details.paymentIntentId || details.useStripe);
       case 'digital_wallet':
         return details.walletId && details.confirmation;
       case 'paypal':

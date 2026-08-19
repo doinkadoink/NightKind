@@ -11,6 +11,12 @@ const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const PAYMENTS_ENABLED = false;
+
+const paymentsDisabledResponse = () => ({
+  error: 'Online payments are temporarily disabled. NightKind is not collecting card details.',
+  paymentsEnabled: false
+});
 
 // Middleware
 app.use(cors()); // Allow cross-origin requests
@@ -27,13 +33,18 @@ app.get('/health', (req, res) => {
   res.json({ 
     status: 'ok', 
     service: 'NightKind Payment Server',
-    stripe: 'connected',
+    stripe: PAYMENTS_ENABLED ? 'connected' : 'disabled',
+    paymentsEnabled: PAYMENTS_ENABLED,
     timestamp: new Date().toISOString()
   });
 });
 
 // Create Payment Intent - for cart.html checkout
 app.post('/api/create-payment-intent', async (req, res) => {
+  if (!PAYMENTS_ENABLED) {
+    return res.status(503).json(paymentsDisabledResponse());
+  }
+
   try {
     const { amount, currency = 'usd', customerEmail, metadata = {} } = req.body;
     
@@ -72,6 +83,10 @@ app.post('/api/create-payment-intent', async (req, res) => {
 
 // Confirm Payment - verify payment completion
 app.post('/api/confirm-payment', async (req, res) => {
+  if (!PAYMENTS_ENABLED) {
+    return res.status(503).json(paymentsDisabledResponse());
+  }
+
   try {
     const { paymentIntentId } = req.body;
     
@@ -105,6 +120,10 @@ app.post('/api/confirm-payment', async (req, res) => {
 
 // Stripe Webhook - handle asynchronous events
 app.post('/webhook', async (req, res) => {
+  if (!PAYMENTS_ENABLED) {
+    return res.status(503).json(paymentsDisabledResponse());
+  }
+
   const sig = req.headers['stripe-signature'];
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   
@@ -193,9 +212,9 @@ async function handleFailedPayment(paymentIntent) {
 app.listen(PORT, () => {
   console.log('\n🦇 NightKind Collective Payment Server 🦇');
   console.log(`Server running on port ${PORT}`);
-  console.log(`Stripe Mode: ${process.env.STRIPE_SECRET_KEY ? 'LIVE' : 'TEST'}`);
+  console.log('Online payments: DISABLED');
   console.log(`Health Check: http://localhost:${PORT}/health`);
-  console.log('\nReady to process payments!\n');
+  console.log('\nPayment endpoints are blocked until PAYMENTS_ENABLED is set to true.\n');
 });
 
 // Handle server errors
