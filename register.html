@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - NightKind Collective</title>
+    <meta name="description" content="Create your NightKind Collective account to track orders and manage your profile">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="bat vector tracing1.svg">
+    <link rel="icon" type="image/png" href="bat vector tracing1.svg">
+    
+    <!-- Fonts -->
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="index-CZEDu5tD.css">
+    
+    <style>
+      :root {
+        --background: 0 0% 3.9%;
+        --foreground: 0 0% 98%;
+        --card: 0 0% 3.9%;
+        --card-foreground: 0 0% 98%;
+        --popover: 0 0% 3.9%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 0 0% 98%;
+        --primary-foreground: 0 0% 9%;
+        --secondary: 60 100% 65%;
+        --secondary-foreground: 0 0% 9%;
+        --muted: 0 0% 14.9%;
+        --muted-foreground: 0 0% 63.9%;
+        --accent: 0 0% 14.9%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 0 0% 14.9%;
+        --input: 0 0% 14.9%;
+        --ring: 0 0% 83.1%;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .register-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 2rem;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      /* Bat Logo Header */
+      .logo-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .logo-container {
+        display: inline-block;
+        position: relative;
+        z-index: 10;
+      }
+
+      .site-logo {
+        width: 150px;
+        height: auto;
+        filter: drop-shadow(0 0 20px hsla(270, 100%, 70%, 0.8));
+        transition: all 0.4s ease;
+        animation: logoFloat 4s ease-in-out infinite;
+      }
+
+      .site-logo:hover {
+        filter: drop-shadow(0 0 30px hsla(270, 100%, 70%, 1));
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      @keyframes logoFloat {
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(2deg);
+        }
+      }
+
+      .logo-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, hsla(270, 100%, 70%, 0.3) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: glowPulse 3s ease-in-out infinite;
+        z-index: 1;
+      }
+
+      @keyframes glowPulse {
+        0%, 100% {
+          opacity: 0.3;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          opacity: 0.6;
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+      }
+
+      .register-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .register-title {
+        color: hsl(var(--secondary));
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        text-shadow: 0 0 15px hsla(60, 100%, 65%, 0.5);
+        animation: titleGlow 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes titleGlow {
+        0% {
+          text-shadow: 0 0 15px hsla(60, 100%, 65%, 0.5);
+        }
+        100% {
+          text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.7);
+        }
+      }
+
+      .register-subtitle {
+        color: hsl(var(--muted-foreground));
+        font-size: 1.1rem;
+      }
+
+      .register-form {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 0 20px hsla(60, 100%, 65%, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-label {
+        display: block;
+        color: hsl(var(--secondary));
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: hsl(var(--input));
+        border: 1px solid hsl(var(--border));
+        border-radius: 6px;
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: hsl(var(--secondary));
+        box-shadow: 0 0 0 2px hsla(60, 100%, 65%, 0.2);
+      }
+
+      .register-btn {
+        width: 100%;
+        background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+        color: hsl(var(--primary-foreground));
+        border: 1px solid hsl(var(--secondary));
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-family: 'Courier Prime', monospace;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 1rem;
+      }
+
+      .register-btn:hover {
+        background: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--primary)));
+        color: hsl(var(--secondary-foreground));
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px hsla(60, 100%, 65%, 0.3);
+      }
+
+      .login-link {
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+
+      .login-link a {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+
+      .login-link a:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
+      }
+
+      .back-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        margin-bottom: 2rem;
+        display: inline-block;
+        font-size: 1.1rem;
+        transition: color 0.3s;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border: 1px solid transparent;
+        border-radius: 4px;
+      }
+
+      .back-link:hover {
+        color: hsl(var(--foreground));
+        text-decoration: underline;
+        border-color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.1);
+      }
+
+      .error-message {
+        background: hsl(var(--destructive));
+        color: hsl(var(--destructive-foreground));
+        padding: 1rem;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        text-align: center;
+        display: none;
+      }
+
+      .success-message {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        padding: 1rem;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        text-align: center;
+        display: none;
+      }
+
+      .password-requirements {
+        background: hsl(var(--muted));
+        border: 1px solid hsl(var(--border));
+        border-radius: 6px;
+        padding: 1rem;
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: hsl(var(--muted-foreground));
+      }
+
+      .password-requirements ul {
+        margin-left: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      .password-requirements li {
+        margin-bottom: 0.25rem;
+      }
+
+      @media (max-width: 768px) {
+        .register-container {
+          padding: 1rem;
+        }
+        
+        .register-title {
+          font-size: 2rem;
+          letter-spacing: 0.1em;
+        }
+        
+        .register-form {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <!-- Bat Logo Header -->
+        <div class="logo-header">
+            <div class="logo-container">
+                <img src="bat vector tracing1.svg" alt="NightKind Collective Logo" class="site-logo">
+            </div>
+            <div class="logo-glow"></div>
+        </div>
+
+        <div class="register-header">
+            <a href="/" class="back-link">← Back to NightKind Collective</a>
+            <h1 class="register-title">REGISTER</h1>
+            <p class="register-subtitle">Create your account to track orders</p>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+
+        <form class="register-form" id="registerForm">
+            <div class="form-group">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" id="name" name="name" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" id="email" name="email" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-input" required>
+                <div class="password-requirements">
+                    <strong>Password must contain:</strong>
+                    <ul>
+                        <li>At least 8 characters</li>
+                        <li>At least one uppercase letter</li>
+                        <li>At least one number</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" required>
+            </div>
+
+            <button type="submit" class="register-btn">CREATE ACCOUNT</button>
+        </form>
+
+        <div class="login-link">
+            <p>Already have an account? <a href="login.html">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+        // User registration system
+        const registerForm = document.getElementById('registerForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+
+        // Check if user is already logged in
+        function checkAuthStatus() {
+            const user = localStorage.getItem('nightkindUser');
+            if (user) {
+                // Redirect to account page if already logged in
+                window.location.href = 'account.html';
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        // Validate password strength
+        function validatePassword(password) {
+            const minLength = 8;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasNumber = /\d/.test(password);
+            
+            return password.length >= minLength && hasUpperCase && hasNumber;
+        }
+
+        // Handle registration form submission
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validation
+            if (!name) {
+                showError('Please enter your full name.');
+                return;
+            }
+
+            if (!email) {
+                showError('Please enter a valid email address.');
+                return;
+            }
+
+            if (!validatePassword(password)) {
+                showError('Password must be at least 8 characters with one uppercase letter and one number.');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showError('Passwords do not match.');
+                return;
+            }
+
+            // Get existing users
+            const users = JSON.parse(localStorage.getItem('nightkindUsers') || '[]');
+            
+            // Check if email already exists
+            if (users.find(u => u.email === email)) {
+                showError('An account with this email already exists.');
+                return;
+            }
+
+            // Create new user
+            const newUser = {
+                id: Date.now().toString(),
+                name: name,
+                email: email,
+                password: password,
+                createdAt: new Date().toISOString(),
+                orders: []
+            };
+
+            // Add user to storage
+            users.push(newUser);
+            localStorage.setItem('nightkindUsers', JSON.stringify(users));
+
+            // Auto-login the new user
+            localStorage.setItem('nightkindUser', JSON.stringify(newUser));
+            
+            showSuccess('Account created successfully! Redirecting to your account...');
+            
+            // Redirect to account page
+            setTimeout(() => {
+                window.location.href = 'account.html';
+            }, 2000);
+        });
+
+        // Check auth status on page load
+        checkAuthStatus();
+    </script>
+</body>
+</html> 

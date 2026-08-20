@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stickers - NightKind Collective</title>
+    <meta name="description" content="Alternative bat-themed stickers supporting wildlife conservation" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="bat vector tracing1.svg">
+    <link rel="icon" type="image/png" href="bat vector tracing1.svg">
+    
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="index-CZEDu5tD.css">
+    <link rel="stylesheet" href="cart-mini-panel.css">
+    <style>
+      .shop-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      
+      .shop-header {
+        text-align: center;
+        padding: 2rem;
+        background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+        margin-bottom: 3rem;
+        border-radius: 12px;
+      }
+      
+      .shop-title {
+        color: #ffd700;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6), 0 0 40px hsla(60, 100%, 65%, 0.3);
+        animation: titleGlow 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes titleGlow {
+        0% {
+          text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6), 0 0 40px hsla(60, 100%, 65%, 0.3);
+        }
+        100% {
+          text-shadow: 0 0 25px hsla(60, 100%, 65%, 0.8), 0 0 50px hsla(60, 100%, 65%, 0.4);
+        }
+      }
+      
+      .shop-description {
+        color: #ccc;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+        font-size: 1.1rem;
+      }
+
+      .logo-container {
+        margin: 2rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .site-logo {
+        width: 150px;
+        height: auto;
+        filter: drop-shadow(0 0 20px hsla(270, 100%, 70%, 0.8));
+        transition: all 0.4s ease;
+        animation: logoFloat 4s ease-in-out infinite;
+      }
+
+      .site-logo:hover {
+        filter: drop-shadow(0 0 30px hsla(270, 100%, 70%, 1));
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      @keyframes logoFloat {
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(2deg);
+        }
+      }
+
+      /* Bat Logo Header */
+      .logo-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .logo-container {
+        display: inline-block;
+        position: relative;
+        z-index: 10;
+      }
+
+      .logo-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, hsla(270, 100%, 70%, 0.3) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: glowPulse 3s ease-in-out infinite;
+        z-index: 1;
+      }
+
+      @keyframes glowPulse {
+        0%, 100% {
+          opacity: 0.3;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          opacity: 0.6;
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+      }
+      
+      .back-link {
+        color: #ffd700;
+        text-decoration: none;
+        margin-bottom: 1rem;
+        display: inline-block;
+      }
+      
+      .back-link:hover {
+        text-decoration: underline;
+      }
+      
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+      
+      .product-card {
+        background: #2a2a2a;
+        border: 1px solid #444;
+        border-radius: 12px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        box-shadow: 0 0 15px hsla(60, 100%, 65%, 0.1);
+        animation: cardFloat 6s ease-in-out infinite;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .product-card:nth-child(3n+1) {
+        animation-delay: 0s;
+      }
+
+      .product-card:nth-child(3n+2) {
+        animation-delay: 2s;
+      }
+
+      .product-card:nth-child(3n+3) {
+        animation-delay: 4s;
+      }
+
+      @keyframes cardFloat {
+        0%, 100% {
+          transform: translateY(0px);
+          box-shadow: 0 0 15px hsla(60, 100%, 65%, 0.1);
+        }
+        50% {
+          transform: translateY(-5px);
+          box-shadow: 0 0 25px hsla(60, 100%, 65%, 0.2);
+        }
+      }
+      
+      .product-card:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 0 30px hsla(60, 100%, 65%, 0.3), 0 10px 40px hsla(270, 45%, 15%, 0.8);
+        border-color: #ffd700;
+      }
+      
+      .product-image {
+        width: 200px;
+        height: 200px;
+        background: #333;
+        border-radius: 12px;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        transition: transform 0.2s;
+      }
+      
+      .product-card:hover .product-image {
+        transform: scale(1.05);
+      }
+      
+      .product-title {
+        color: #ffd700;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+      }
+      
+      .product-description {
+        color: #ccc;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+      
+      .product-price {
+        color: #ffd700;
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+      }
+      
+      .conservation-impact {
+        color: #4CAF50;
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        background: rgba(76, 175, 80, 0.1);
+        border: 1px solid rgba(76, 175, 80, 0.3);
+        border-radius: 6px;
+        text-align: center;
+      }
+      
+      .add-to-cart-btn {
+        background: #ffd700;
+        color: #000;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: all 0.2s;
+        width: 100%;
+      }
+      
+      .add-to-cart-btn:hover {
+        background: #ffed4e;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+      }
+      
+      /* Cart icon styles are now handled by cart-mini-panel.css */
+
+      .wishlist-icon {
+        position: fixed;
+        top: 20px;
+        right: 80px;
+        background: #ff6b6b;
+        color: white;
+        padding: 0.5rem;
+        border-radius: 50%;
+        cursor: pointer;
+        font-weight: bold;
+        z-index: 1000;
+        font-size: 1.2rem;
+        transition: transform 0.2s;
+      }
+      
+      .wishlist-icon:hover {
+        transform: scale(1.1);
+      }
+      
+      .wishlist-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ff4444;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+      }
+
+      /* Cart functionality is now handled by cart-mini-panel.css */
+
+      /* New styles for size selection */
+      .size-selection {
+        margin-bottom: 1.5rem;
+        text-align: left;
+        padding-left: 10px; /* Align with price */
+      }
+
+      .size-selection label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #ffd700;
+        font-size: 0.9rem;
+        font-weight: bold;
+      }
+
+      .size-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+
+      .size-btn {
+        background: #444;
+        color: #ccc;
+        border: 1px solid #666;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        min-width: 60px;
+        text-align: center;
+      }
+
+      .size-btn:hover {
+        background: #666;
+        border-color: #ffd700;
+        color: #ffd700;
+      }
+
+      .size-btn.selected {
+        background: #ffd700;
+        color: #000;
+        border-color: #ffd700;
+      }
+
+      /* Notification styles */
+      .cart-notification {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: #4CAF50;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        z-index: 10000;
+        font-family: 'Courier Prime', monospace;
+        font-weight: bold;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+      }
+
+      .cart-notification.error {
+        background: #f44336;
+      }
+
+      .cart-notification.success {
+        background: #4CAF50;
+      }
+
+      .cart-notification.warning {
+        background: #ff9800;
+      }
+
+      /* Wishlist button styles */
+      .wishlist-btn {
+        background: transparent;
+        color: #ff6b6b;
+        border: 2px solid #ff6b6b;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        margin-bottom: 1rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .wishlist-btn:hover {
+        background: #ff6b6b;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+      }
+
+      .wishlist-btn.in-wishlist {
+        background: #ff6b6b;
+        color: white;
+      }
+
+      /* Pride product styling */
+      .product-card[data-product*="pride"] {
+        border: 2px solid transparent;
+        background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .product-card[data-product*="pride"]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, 
+          #ff0000, #ff8000, #ffff00, #00ff00, #0080ff, #8000ff, #ff0080);
+        animation: prideRainbow 3s linear infinite;
+      }
+
+      @keyframes prideRainbow {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+
+      .product-card[data-product*="pride"] .product-title {
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: prideTitleGlow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes prideTitleGlow {
+        0% { filter: brightness(1) saturate(1); }
+        100% { filter: brightness(1.2) saturate(1.3); }
+      }
+
+      .product-card[data-product*="pride"] .add-to-cart-btn {
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+        background-size: 300% 300%;
+        animation: prideButtonGlow 3s ease-in-out infinite;
+        color: white;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      }
+
+      @keyframes prideButtonGlow {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      .product-card[data-product*="pride"] .add-to-cart-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+      }
+
+      /* Pride badge */
+      .pride-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+        color: white;
+        padding: 0.3rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        animation: prideBadgeGlow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes prideBadgeGlow {
+        0% { box-shadow: 0 0 10px rgba(255, 107, 107, 0.5); }
+        100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+      }
+
+      /* Fullscreen modal styles */
+      .fullscreen-modal {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(10px);
+        animation: modalFadeIn 0.3s ease-out;
+      }
+
+      @keyframes modalFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      .fullscreen-modal.show {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        position: relative;
+        max-width: 90vw;
+        max-height: 90vh;
+        text-align: center;
+        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+        border: 2px solid #ffd700;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+        animation: modalSlideIn 0.3s ease-out;
+      }
+
+      @keyframes modalSlideIn {
+        from { transform: scale(0.8) translateY(-50px); opacity: 0; }
+        to { transform: scale(1) translateY(0); opacity: 1; }
+      }
+
+      .modal-image {
+        width: 100%;
+        height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        margin-bottom: 1.5rem;
+        border: 2px solid #ffd700;
+        overflow: hidden;
+      }
+
+      .modal-image img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+        cursor: zoom-in;
+      }
+
+      .modal-image img:hover {
+        transform: scale(1.05);
+        cursor: zoom-out;
+      }
+
+      .modal-image.zoomed img {
+        transform: scale(1.5);
+        cursor: zoom-out;
+      }
+
+      .modal-image:hover .zoom-indicator {
+        opacity: 1 !important;
+      }
+
+      .modal-image.zoomed .zoom-indicator {
+        opacity: 1 !important;
+        content: '🔍 Click to zoom out';
+      }
+
+      .modal-title {
+        color: #ffd700;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .modal-description {
+        color: #ccc;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .modal-price {
+        color: #ffd700;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      .modal-conservation {
+        color: #4CAF50;
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        padding: 0.8rem;
+        background: rgba(76, 175, 80, 0.1);
+        border: 1px solid rgba(76, 175, 80, 0.3);
+        border-radius: 8px;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        color: #aaa;
+        font-size: 2rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        background: none;
+        border: none;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+
+      .modal-close:hover {
+        color: #ffd700;
+        background: rgba(255, 215, 0, 0.1);
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+
+      .modal-btn {
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        min-width: 150px;
+      }
+
+      .modal-btn.primary {
+        background: linear-gradient(45deg, #ffd700, #ffed4e);
+        color: #000;
+      }
+
+      .modal-btn.primary:hover {
+        background: linear-gradient(45deg, #ffed4e, #ffd700);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+      }
+
+      .modal-btn.secondary {
+        background: transparent;
+        color: #ffd700;
+        border: 2px solid #ffd700;
+      }
+
+      .modal-btn.secondary:hover {
+        background: #ffd700;
+        color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+      }
+
+      .modal-btn.wishlist {
+        background: transparent;
+        color: #ff6b6b;
+        border: 2px solid #ff6b6b;
+      }
+
+      .modal-btn.wishlist:hover {
+        background: #ff6b6b;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+      }
+
+      .modal-btn.wishlist.in-wishlist {
+        background: #ff6b6b;
+        color: white;
+      }
+
+      /* Modal size selection styling */
+      .modal-size-selection {
+        margin: 1.5rem 0;
+        text-align: center;
+      }
+
+      .modal-size-selection .size-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .modal-size-selection .size-btn {
+        background: #444;
+        color: #ccc;
+        border: 1px solid #666;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        min-width: 60px;
+        text-align: center;
+      }
+
+      .modal-size-selection .size-btn:hover {
+        background: #666;
+        border-color: #ffd700;
+        color: #ffd700;
+      }
+
+      .modal-size-selection .size-btn.selected {
+        background: #ffd700;
+        color: #000;
+        border-color: #ffd700;
+      }
+
+      /* Product image clickable */
+      .product-image {
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        width: 100%;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid #444;
+      }
+
+      .product-image img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+      }
+
+      .product-image:hover {
+        transform: scale(1.02);
+        border-color: #ffd700;
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+      }
+
+      .product-image:hover img {
+        transform: scale(1.05);
+      }
+
+      .product-image.clickable {
+        position: relative;
+      }
+
+      .product-image.clickable::after {
+        content: '🔍 Click to view full size';
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        font-weight: bold;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        backdrop-filter: blur(5px);
+      }
+
+      .product-image.clickable:hover::after {
+        opacity: 1;
+      }
+
+      /* Filter section styling */
+      .filter-section {
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .filter-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        background: #333;
+        color: #ccc;
+        border: 2px solid #555;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .filter-btn:hover {
+        background: #555;
+        border-color: #ffd700;
+        color: #ffd700;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+      }
+
+      .filter-btn.active {
+        background: linear-gradient(45deg, #ffd700, #ffed4e);
+        color: #000;
+        border-color: #ffd700;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      }
+
+      .filter-btn.active:hover {
+        background: linear-gradient(45deg, #ffed4e, #ffd700);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+      }
+
+      .wishlist-btn.in-wishlist:hover {
+        background: #ff4444;
+        border-color: #ff4444;
+      }
+
+      /* Product card enhancements */
+      .product-card {
+        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+        border: 1px solid #444;
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .product-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+          transparent 0%, 
+          hsla(270, 100%, 70%, 0.1) 50%, 
+          transparent 100%);
+        transition: left 0.6s ease;
+        z-index: 1;
+      }
+
+      .product-card:hover::before {
+        left: 100%;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px hsla(270, 100%, 70%, 0.2);
+        border-color: hsla(270, 100%, 70%, 0.5);
+      }
+
+      .product-image {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        filter: drop-shadow(0 0 10px hsla(270, 100%, 70%, 0.5));
+        transition: all 0.3s ease;
+      }
+
+      .product-card:hover .product-image {
+        filter: drop-shadow(0 0 20px hsla(270, 100%, 70%, 0.8));
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+         <!-- Cart Icon -->
+     <div class="cart-icon" onclick="window.location.href='cart.html'">
+       <div class="cart-count" id="cartCount">0</div>
+     </div>
+     
+     <!-- Cart Mini Panel -->
+     <div class="cart-mini-panel" id="cartMiniPanel">
+       <div class="cart-mini-header">
+         <h3 class="cart-mini-title">Shopping Cart</h3>
+       </div>
+       <div class="cart-mini-content" id="cartMiniContent">
+         <!-- Cart items will be loaded here -->
+       </div>
+       <div class="cart-mini-footer" id="cartMiniFooter">
+         <!-- Cart footer will be loaded here -->
+       </div>
+     </div>
+    
+    <div class="wishlist-icon" onclick="window.location.href='cart.html#wishlist'">
+      ❤️
+      <div class="wishlist-count" id="wishlistCount">0</div>
+    </div>
+    
+    <div class="shop-container">
+      <!-- Bat Logo Header -->
+      <div class="logo-header">
+        <div class="logo-container">
+          <img src="bat vector tracing1.svg" alt="NightKind Collective Logo" class="site-logo">
+        </div>
+        <div class="logo-glow"></div>
+      </div>
+
+      <div class="shop-header">
+        <a href="shop-categories.html" class="back-link">← Back to Shop</a>
+        <h1 class="shop-title">STICKERS</h1>
+        <p class="shop-description">
+          Illustrative bat designs with alt/gothic motifs. High-quality vinyl stickers perfect for laptops, water bottles, and anywhere you want to show your support for bat conservation.
+        </p>
+      </div>
+      
+      <!-- Filter Section -->
+      <div class="filter-section">
+        <div class="filter-buttons">
+          <button class="filter-btn active" onclick="filterProducts('all')">All Stickers</button>
+          <button class="filter-btn" onclick="filterProducts('pride')">Pride Collection</button>
+          <button class="filter-btn" onclick="filterProducts('gothic')">Gothic</button>
+          <button class="filter-btn" onclick="filterProducts('conservation')">Conservation</button>
+        </div>
+      </div>
+      
+      <div class="product-grid" id="productGrid">
+        <!-- Products will be loaded here -->
+      </div>
+
+      <!-- Fullscreen Modal -->
+      <div id="fullscreenModal" class="fullscreen-modal">
+        <div class="modal-content">
+          <button class="modal-close" onclick="closeFullscreenModal()">&times;</button>
+          <div id="modalImage" class="modal-image">
+            <div class="zoom-indicator" style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.8rem; opacity: 0; transition: opacity 0.3s ease;">
+              🔍 Click to zoom
+            </div>
+          </div>
+          <h2 id="modalTitle" class="modal-title"></h2>
+          <p id="modalDescription" class="modal-description"></p>
+          <div id="modalPrice" class="modal-price"></div>
+          <div id="modalConservation" class="modal-conservation"></div>
+          
+          <!-- Size selection for modal -->
+          <div id="modalSizeSelection" class="modal-size-selection" style="display: none;">
+            <label style="color: #ffd700; font-weight: bold; margin-bottom: 0.5rem; display: block;">Select Size:</label>
+            <div id="modalSizeButtons" class="size-buttons" style="justify-content: center; margin-bottom: 1rem;"></div>
+          </div>
+          
+          <div class="modal-actions">
+            <button id="modalWishlistBtn" class="modal-btn wishlist" onclick="toggleModalWishlist()">
+              🤍 Add to Wishlist
+            </button>
+            <button id="modalAddToCartBtn" class="modal-btn primary" onclick="addToCartFromModal()">
+              Add to Cart
+            </button>
+            <button class="modal-btn secondary" onclick="closeFullscreenModal()">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="cart-utils.js"></script>
+    <script src="products.js"></script>
+    <script src="cart-mini-panel.js"></script>
+    <script>
+      // Enhanced cart functionality using cart utilities and product catalog
+      let selectedSizes = {};
+      
+      function updateCartCount() {
+        // This is now handled by the cart utility
+        nightkindCart.updateCartCount();
+        nightkindCart.updateWishlistCount();
+      }
+
+      // Cart functionality is now handled by the standardized CartMiniPanel class
+
+      function showCartMiniPanel() {
+        clearTimeout(cartMiniPanelTimeout);
+        const panel = document.getElementById('cartMiniPanel');
+        panel.classList.add('show');
+        renderCartMiniPanel();
+      }
+
+      function hideCartMiniPanel() {
+        const panel = document.getElementById('cartMiniPanel');
+        panel.classList.remove('show');
+      }
+
+      function hideCartMiniPanelDelayed() {
+        cartMiniPanelTimeout = setTimeout(hideCartMiniPanel, 1500); // Increased delay to 1.5 seconds
+      }
+
+      // Cart mini panel event listeners
+      document.addEventListener('DOMContentLoaded', function() {
+        const cartIcon = document.querySelector('.cart-icon');
+        const cartMiniPanel = document.getElementById('cartMiniPanel');
+
+        // Show panel on hover
+        cartIcon.addEventListener('mouseenter', showCartMiniPanel);
+        cartIcon.addEventListener('mouseleave', hideCartMiniPanelDelayed);
+
+        // Keep panel open when hovering over it
+        cartMiniPanel.addEventListener('mouseenter', () => {
+          clearTimeout(cartMiniPanelTimeout);
+        });
+
+        cartMiniPanel.addEventListener('mouseleave', hideCartMiniPanelDelayed);
+      });
+
+      // Render cart mini panel
+      function renderCartMiniPanel() {
+        const content = document.getElementById('cartMiniContent');
+        const footer = document.getElementById('cartMiniFooter');
+
+        if (nightkindCart.isEmpty()) {
+          content.innerHTML = `
+            <div class="cart-mini-empty">
+              <div class="cart-mini-empty-icon">🛒</div>
+              <h3 class="cart-mini-empty-text">Your cart is empty</h3>
+              <p class="cart-mini-empty-text">Add some NightKind products to get started!</p>
+            </div>
+          `;
+          footer.innerHTML = `
+            <div class="cart-mini-actions">
+              <button class="cart-mini-btn secondary" onclick="window.location.href='shop-categories.html'">
+                Browse Products
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        // Render cart items (show first 3)
+        let cartItems = nightkindCart.getItems().slice(0, 3).map(item => `
+          <div class="cart-mini-item">
+            <div class="cart-mini-item-image">${item.image}</div>
+            <div class="cart-mini-item-details">
+              <div class="cart-mini-item-name">${item.name}</div>
+              ${item.size ? `<div class="cart-mini-item-size">Size: ${item.size}</div>` : ''}
+              <div class="cart-mini-item-price">$${item.price.toFixed(2)}</div>
+            </div>
+            <div class="cart-mini-item-quantity">
+              <button class="cart-mini-quantity-btn" onclick="updateCartItemQuantity('${item.id}', '${item.size || ''}', -1)">-</button>
+              <div class="cart-mini-quantity-display">${item.quantity}</div>
+              <button class="cart-mini-quantity-btn" onclick="updateCartItemQuantity('${item.id}', '${item.size || ''}', 1)">+</button>
+            </div>
+          </div>
+        `).join('');
+
+        // Add "more items" indicator if there are more than 3 items
+        if (nightkindCart.getItems().length > 3) {
+          cartItems += `
+            <div class="cart-mini-item" style="justify-content: center; color: #888; font-style: italic;">
+              +${nightkindCart.getItems().length - 3} more items
+            </div>
+          `;
+        }
+
+        content.innerHTML = cartItems;
+
+        // Calculate totals
+        const totals = nightkindCart.getCartTotal();
+
+        // Render footer
+        footer.innerHTML = `
+          <div class="cart-mini-total">
+            <span>Total:</span>
+            <span>$${totals.total.toFixed(2)}</span>
+          </div>
+          <div class="cart-mini-actions">
+            <button class="cart-mini-btn secondary" onclick="window.location.href='cart.html'">
+              View Cart
+            </button>
+            <button class="cart-mini-btn primary" onclick="window.location.href='cart.html'">
+              Checkout
+            </button>
+          </div>
+        `;
+      }
+
+      // Update cart item quantity from mini panel
+      function updateCartItemQuantity(itemId, size, change) {
+        const result = nightkindCart.updateQuantity(itemId, size, change);
+        
+        switch (result) {
+          case 'updated':
+            renderCartMiniPanel();
+            break;
+          case 'removed':
+            renderCartMiniPanel();
+            break;
+          case 'max_exceeded':
+            CartNotification.error('Maximum quantity is 99');
+            return;
+          case 'not_found':
+            CartNotification.error('Item not found in cart');
+            return;
+        }
+      }
+
+      function addToCartById(productId, size = null) {
+        try {
+          const product = ProductUtils.getProductById(productId);
+          if (!product) {
+            CartNotification.error('Product not found');
+            return;
+          }
+
+          // Clean up size parameter - handle undefined/null strings
+          let cleanSize = size;
+          if (size === 'undefined' || size === 'null' || size === '') {
+            cleanSize = null;
+          }
+
+          // Validate size selection
+          if (product.sizes && product.sizes.length > 1 && !cleanSize) {
+            CartNotification.error('Please select a size');
+            return;
+          }
+          
+          // Add to cart using utility
+          const finalSize = cleanSize || (product.sizes ? product.sizes[0] : null);
+          nightkindCart.addToCart(product, finalSize, 1);
+          
+          // Show success notification
+          CartNotification.success('Added to cart!');
+          
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          CartNotification.error('Failed to add item to cart');
+        }
+      }
+
+      function addToWishlistById(productId, size = null) {
+        try {
+          const product = ProductUtils.getProductById(productId);
+          if (!product) {
+            CartNotification.error('Product not found');
+            return;
+          }
+          
+          // Use provided size or get selected size from UI
+          const selectedSize = size || selectedSizes[productId] || (product.sizes ? product.sizes[0] : null);
+          
+          nightkindCart.addToWishlist(product, selectedSize);
+          CartNotification.success(`Added to wishlist! (Size: ${selectedSize || 'N/A'})`);
+          renderProducts(); // Re-render to update wishlist button state
+        } catch (error) {
+          console.error('Error adding to wishlist:', error);
+          CartNotification.error('Failed to add to wishlist');
+        }
+      }
+
+      function removeFromWishlist(productId) {
+        try {
+          if (nightkindCart.removeFromWishlist(productId)) {
+            CartNotification.warning('Removed from wishlist');
+            renderProducts(); // Re-render to update wishlist button state
+          }
+        } catch (error) {
+          console.error('Error removing from wishlist:', error);
+          CartNotification.error('Failed to remove from wishlist');
+        }
+      }
+
+      function isInWishlist(productId) {
+        return nightkindCart.getWishlistItems().some(item => item.id === productId);
+      }
+
+      function selectSize(productId, size) {
+        selectedSizes[productId] = size;
+        
+        // Update UI to show selected size
+        const sizeButtons = document.querySelectorAll(`[data-product="${productId}"] .size-btn`);
+        sizeButtons.forEach(btn => {
+          btn.classList.remove('selected');
+          if (btn.textContent.trim() === size) {
+            btn.classList.add('selected');
+          }
+        });
+      }
+
+      let currentFilter = 'all';
+      let currentModalProduct = null;
+      
+      // Fullscreen modal functions
+      function openFullscreenModal(productId) {
+        const product = ProductUtils.getProductById(productId);
+        if (!product) return;
+        
+        currentModalProduct = product;
+        
+        // Extract image source from the product image HTML
+        let imageSrc = '';
+        if (product.image.includes('<img')) {
+          const imgMatch = product.image.match(/src="([^"]+)"/);
+          if (imgMatch) {
+            imageSrc = imgMatch[1];
+          }
+        }
+        
+        // Update modal content with full-sized image
+        if (imageSrc) {
+          document.getElementById('modalImage').innerHTML = `<img src="${imageSrc}" alt="${product.name}" onclick="toggleModalZoom()" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
+        } else {
+          document.getElementById('modalImage').innerHTML = product.image;
+        }
+        
+        document.getElementById('modalTitle').textContent = product.name;
+        document.getElementById('modalDescription').textContent = product.description;
+        document.getElementById('modalPrice').textContent = `$${product.price.toFixed(2)}`;
+        document.getElementById('modalConservation').textContent = product.conservationImpact;
+        
+        // Handle size selection
+        const sizeSelection = document.getElementById('modalSizeSelection');
+        const sizeButtons = document.getElementById('modalSizeButtons');
+        
+        if (product.sizes && product.sizes.length > 1) {
+          sizeSelection.style.display = 'block';
+          sizeButtons.innerHTML = product.sizes.map(size => `
+            <button class="size-btn modal-size-btn ${size === (selectedSizes[product.id] || product.sizes[0]) ? 'selected' : ''}" 
+                    data-size="${size}">
+              ${size}
+            </button>
+          `).join('');
+        } else {
+          sizeSelection.style.display = 'none';
+        }
+        
+        // Update wishlist button state
+        updateModalWishlistButton(product.id);
+        
+        // Show modal
+        document.getElementById('fullscreenModal').classList.add('show');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      }
+      
+      function closeFullscreenModal() {
+        document.getElementById('fullscreenModal').classList.remove('show');
+        document.body.style.overflow = ''; // Restore scrolling
+        currentModalProduct = null;
+        // Reset zoom state
+        document.getElementById('modalImage').classList.remove('zoomed');
+      }
+      
+      function toggleModalZoom() {
+        const modalImage = document.getElementById('modalImage');
+        const zoomIndicator = modalImage.querySelector('.zoom-indicator');
+        modalImage.classList.toggle('zoomed');
+        
+        if (modalImage.classList.contains('zoomed')) {
+          zoomIndicator.textContent = '🔍 Click to zoom out';
+        } else {
+          zoomIndicator.textContent = '🔍 Click to zoom';
+        }
+      }
+      
+      function updateModalWishlistButton(productId) {
+        const wishlistBtn = document.getElementById('modalWishlistBtn');
+        const inWishlist = isInWishlist(productId);
+        
+        if (inWishlist) {
+          wishlistBtn.textContent = '❤️ Remove from Wishlist';
+          wishlistBtn.classList.add('in-wishlist');
+        } else {
+          wishlistBtn.textContent = '🤍 Add to Wishlist';
+          wishlistBtn.classList.remove('in-wishlist');
+        }
+      }
+      
+      function toggleModalWishlist() {
+        if (!currentModalProduct) return;
+        
+        if (isInWishlist(currentModalProduct.id)) {
+          removeFromWishlist(currentModalProduct.id);
+        } else {
+          // Get the selected size from modal or use default
+          const selectedSize = selectedSizes[currentModalProduct.id] || 
+                             (currentModalProduct.sizes ? currentModalProduct.sizes[0] : null);
+          addToWishlistById(currentModalProduct.id, selectedSize);
+        }
+        
+        updateModalWishlistButton(currentModalProduct.id);
+        renderProducts(); // Update main page wishlist buttons
+      }
+      
+      function selectModalSize(size) {
+        if (!currentModalProduct) return;
+        
+        // Update selected size
+        selectedSizes[currentModalProduct.id] = size;
+        
+        // Update modal size button states
+        const modalSizeButtons = document.querySelectorAll('#modalSizeButtons .size-btn');
+        modalSizeButtons.forEach(btn => {
+          btn.classList.remove('selected');
+          if (btn.getAttribute('data-size') === size) {
+            btn.classList.add('selected');
+          }
+        });
+        
+        // Update main page size selection
+        const mainSizeButtons = document.querySelectorAll(`[data-product="${currentModalProduct.id}"] .size-btn`);
+        mainSizeButtons.forEach(btn => {
+          btn.classList.remove('selected');
+          if (btn.textContent.trim() === size) {
+            btn.classList.add('selected');
+          }
+        });
+      }
+      
+      function addToCartFromModal() {
+        if (!currentModalProduct) return;
+        
+        // Get selected size from main page
+        const selectedSize = selectedSizes[currentModalProduct.id] || 
+                           (currentModalProduct.sizes ? currentModalProduct.sizes[0] : null);
+        
+        addToCartById(currentModalProduct.id, selectedSize);
+        closeFullscreenModal();
+      }
+      
+      // Close modal when clicking outside
+      document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('fullscreenModal');
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            closeFullscreenModal();
+          }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && modal.classList.contains('show')) {
+            closeFullscreenModal();
+          }
+        });
+        
+        // Event delegation for size buttons
+        document.addEventListener('click', function(e) {
+          if (e.target.classList.contains('size-btn')) {
+            if (e.target.classList.contains('modal-size-btn')) {
+              // Modal size button
+              const size = e.target.getAttribute('data-size');
+              selectModalSize(size);
+            } else {
+              // Main page size button
+              const productCard = e.target.closest('[data-product]');
+              if (productCard) {
+                const productId = productCard.getAttribute('data-product');
+                const size = e.target.textContent.trim();
+                selectSize(productId, size);
+              }
+            }
+          }
+        });
+      });
+      
+      function filterProducts(filter) {
+        currentFilter = filter;
+        
+        // Update active button
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        
+        renderProducts();
+      }
+      
+      function renderProducts() {
+        const grid = document.getElementById('productGrid');
+        let products = ProductUtils.getProductsByCategory('stickers');
+        
+        // Apply filter
+        if (currentFilter !== 'all') {
+          products = products.filter(product => {
+            if (currentFilter === 'pride') {
+              return product.tags.includes('pride') || product.tags.includes('lgbtq+');
+            } else {
+              return product.tags.includes(currentFilter);
+            }
+          });
+        }
+        
+        grid.innerHTML = products.map(product => {
+          const inWishlist = isInWishlist(product.id);
+          const wishlistBtnText = inWishlist ? '❤️ Remove from Wishlist' : '🤍 Add to Wishlist';
+          const wishlistBtnClass = inWishlist ? 'wishlist-btn in-wishlist' : 'wishlist-btn';
+          const wishlistBtnOnclick = inWishlist ? 
+            `removeFromWishlist('${product.id}')` : 
+            `addToWishlistById('${product.id}')`;
+          
+          return `
+            <div class="product-card" data-product="${product.id}">
+              ${product.tags.includes('pride') ? '<div class="pride-badge">Pride</div>' : ''}
+              <div class="product-image clickable" onclick="openFullscreenModal('${product.id}')">${product.image}</div>
+              <h3 class="product-title">${product.name}</h3>
+              <p class="product-description">${product.description}</p>
+              <div class="product-price">$${product.price.toFixed(2)}</div>
+              <div class="conservation-impact">${product.conservationImpact}</div>
+              
+              ${product.sizes && product.sizes.length > 1 ? `
+                <div class="size-selection">
+                  <label>Size:</label>
+                  <div class="size-buttons">
+                    ${product.sizes.map(size => `
+                      <button class="size-btn ${size === (selectedSizes[product.id] || product.sizes[0]) ? 'selected' : ''}">
+                        ${size}
+                      </button>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+              
+              <button class="${wishlistBtnClass}" onclick="${wishlistBtnOnclick}">
+                ${wishlistBtnText}
+              </button>
+              
+              <button class="add-to-cart-btn" onclick="addToCartById('${product.id}', selectedSizes['${product.id}'] || '${product.sizes ? product.sizes[0] : ''}')">
+                Add to Cart
+              </button>
+            </div>
+          `;
+        }).join('');
+      }
+      
+      // Initialize page
+      updateCartCount();
+      renderProducts();
+      
+      // Listen for cart updates from other pages
+      nightkindCart.addListener(() => {
+        updateCartCount();
+        renderCartMiniPanel();
+      });
+      
+      // Initialize cart mini panel
+      renderCartMiniPanel();
+    </script>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">NightKind Collective</h3>
+          <p class="footer-description">
+            Alternative fashion with purpose. Supporting Queensland bat rescue through authentic subcultural style.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Conservation</h4>
+          <p class="footer-text">
+            Every purchase directly funds wildlife rescue operations and bat conservation efforts.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Community</h4>
+          <p class="footer-text">
+            Join the NightKind community and make a difference through style.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2026 NightKind Collective. All rights reserved. | <a href="privacy.html" class="footer-link">Privacy Policy</a> | <a href="login.html" class="footer-link">Login</a></p>
+      </div>
+    </footer>
+
+    <style>
+      .footer {
+        background: linear-gradient(180deg, #1a1a1a, #2a2a2a);
+        border-top: 1px solid #444;
+        margin-top: 6rem;
+        padding: 3rem 0 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #ffd700, transparent);
+        box-shadow: 0 0 10px #ffd700;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section {
+        text-align: center;
+      }
+
+      .footer-title {
+        color: #ffd700;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-shadow: 0 0 10px hsla(60, 100%, 65%, 0.5);
+      }
+
+      .footer-subtitle {
+        color: #ffd700;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .footer-description,
+      .footer-text {
+        color: #ccc;
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid #444;
+        margin: 0 2rem;
+      }
+
+      .footer-copyright {
+        color: #ccc;
+        font-size: 0.9rem;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      @media (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        
+        .footer {
+          padding: 2rem 0 1rem;
+        }
+      }
+    </style>
+  </body>
+</html> 

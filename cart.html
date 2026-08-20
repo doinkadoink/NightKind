@@ -1,0 +1,3219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart - NightKind Collective</title>
+    <meta name="description" content="Your NightKind Collective shopping cart" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="bat vector tracing1.svg">
+    <link rel="icon" type="image/png" href="bat vector tracing1.svg">
+    
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="index-CZEDu5tD.css">
+    <style>
+      :root {
+        --background: 0 0% 8%;
+        --foreground: 60 100% 85%;
+        --card: 0 0% 12%;
+        --card-foreground: 60 100% 85%;
+        --primary: 270 45% 25%;
+        --secondary: 270 60% 70%;
+        --muted: 0 0% 18%;
+        --muted-foreground: 0 0% 65%;
+        --accent: 270 35% 35%;
+        --border: 0 0% 25%;
+        --destructive: 0 84% 60%;
+        --success: 142 76% 36%;
+        --warning: 38 92% 50%;
+        --shadow-gothic: 0 10px 40px -15px hsla(270, 45%, 15%, .8);
+        --shadow-glow: 0 0 30px hsla(60, 100%, 65%, .3);
+        --gradient-primary: linear-gradient(135deg, hsl(270, 45%, 25%), hsl(270, 35%, 35%));
+        --gradient-accent: linear-gradient(90deg, hsl(60, 100%, 65%), hsl(50, 100%, 70%));
+        --gradient-dark: linear-gradient(180deg, hsl(0, 0%, 8%), hsl(0, 0%, 12%));
+      }
+
+      body {
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+
+      .cart-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+        position: relative;
+      }
+      
+      .cart-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .back-link {
+        color: hsl(var(--secondary));
+        text-decoration: none;
+        margin-bottom: 2rem;
+        display: inline-block;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        padding: 0.75rem 1.5rem;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        position: relative;
+        z-index: 10;
+        background: hsla(60, 100%, 65%, 0.1);
+      }
+
+      .back-link:hover {
+        color: hsl(var(--foreground));
+        border-color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px hsla(60, 100%, 65%, 0.3);
+      }
+
+      .pos-link {
+        color: hsl(var(--foreground));
+        text-decoration: none;
+        margin-left: 2rem;
+        display: inline-block;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        padding: 0.75rem 1.5rem;
+        border: 1px solid hsl(var(--secondary));
+        border-radius: 8px;
+        position: relative;
+        z-index: 10;
+        background: hsla(60, 100%, 65%, 0.2);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: bold;
+      }
+
+      .pos-link:hover {
+        color: hsl(var(--background));
+        background: hsl(var(--secondary));
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px hsla(60, 100%, 65%, 0.4);
+      }
+      
+      .cart-title {
+        color: hsl(var(--secondary));
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6), 0 0 40px hsla(60, 100%, 65%, 0.3);
+        animation: titleGlow 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes titleGlow {
+        0% {
+          text-shadow: 0 0 20px hsla(60, 100%, 65%, 0.6), 0 0 40px hsla(60, 100%, 65%, 0.3);
+        }
+        100% {
+          text-shadow: 0 0 25px hsla(60, 100%, 65%, 0.8), 0 0 50px hsla(60, 100%, 65%, 0.4);
+        }
+      }
+
+      .logo-container {
+        margin: 2rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .site-logo {
+        width: 150px;
+        height: auto;
+        filter: drop-shadow(0 0 20px hsla(270, 100%, 70%, 0.8));
+        transition: all 0.4s ease;
+        animation: logoFloat 4s ease-in-out infinite;
+        cursor: pointer;
+      }
+
+      .site-logo:hover {
+        filter: drop-shadow(0 0 30px hsla(270, 100%, 70%, 1));
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      @keyframes logoFloat {
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(2deg);
+        }
+      }
+
+      /* Bat Logo Header */
+      .logo-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .logo-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, hsla(270, 100%, 70%, 0.3) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: glowPulse 3s ease-in-out infinite;
+        z-index: 1;
+      }
+
+      @keyframes glowPulse {
+        0%, 100% {
+          opacity: 0.3;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          opacity: 0.6;
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+      }
+
+      .cart-items {
+        margin-bottom: 2rem;
+      }
+
+      .cart-item {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        display: grid;
+        grid-template-columns: auto 1fr auto auto;
+        gap: 1.5rem;
+        align-items: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cart-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+          transparent 0%, 
+          hsla(270, 100%, 70%, 0.1) 50%, 
+          transparent 100%);
+        transition: left 0.6s ease;
+        z-index: 1;
+      }
+
+      .cart-item:hover::before {
+        left: 100%;
+      }
+
+      .cart-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px hsla(270, 100%, 70%, 0.2);
+        border-color: hsla(270, 100%, 70%, 0.5);
+      }
+
+      .item-image {
+        font-size: 3rem;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: hsla(270, 100%, 70%, 0.1);
+        border-radius: 8px;
+        border: 1px solid hsla(270, 100%, 70%, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .cart-item:hover .item-image {
+        transform: scale(1.1);
+        background: hsla(270, 100%, 70%, 0.2);
+        border-color: hsla(270, 100%, 70%, 0.6);
+      }
+
+      .item-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .item-name {
+        color: hsl(var(--secondary));
+        font-size: 1.3rem;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .item-description {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.95rem;
+        line-height: 1.4;
+      }
+
+      .item-size {
+        color: hsl(var(--secondary));
+        font-size: 0.9rem;
+        font-weight: bold;
+        background: hsla(60, 100%, 65%, 0.1);
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        display: inline-block;
+        border: 1px solid hsla(60, 100%, 65%, 0.3);
+      }
+
+      .item-price {
+        color: hsl(var(--secondary));
+        font-size: 1.2rem;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .item-quantity {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: hsla(270, 100%, 70%, 0.1);
+        padding: 0.5rem;
+        border-radius: 8px;
+        border: 1px solid hsla(270, 100%, 70%, 0.3);
+      }
+
+      .quantity-btn {
+        background: hsl(var(--secondary));
+        color: hsl(0, 0%, 9%);
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.2rem;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .quantity-btn:hover {
+        background: hsl(var(--secondary) / 0.8);
+        transform: scale(1.1);
+        box-shadow: 0 2px 8px hsla(60, 100%, 65%, 0.4);
+      }
+
+      .quantity-btn:disabled {
+        background: hsl(var(--muted));
+        color: hsl(var(--muted-foreground));
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .quantity-display {
+        color: hsl(var(--foreground));
+        font-weight: bold;
+        min-width: 40px;
+        text-align: center;
+        font-size: 1.1rem;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .remove-btn {
+        background: hsl(var(--destructive));
+        color: white;
+        border: none;
+        padding: 0.75rem 1.25rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .remove-btn:hover {
+        background: hsl(var(--destructive) / 0.8);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px hsla(0, 84%, 60%, 0.4);
+      }
+
+      .cart-summary {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cart-summary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, 
+          transparent, 
+          hsl(var(--secondary)), 
+          transparent);
+        box-shadow: 0 0 10px hsl(var(--secondary));
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        color: hsl(var(--muted-foreground));
+        font-size: 1.1rem;
+        padding: 0.5rem 0;
+      }
+
+      .summary-row.shipping-options {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .shipping-option {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        border: 1px solid hsl(var(--border));
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: transparent;
+      }
+
+      .shipping-option:hover {
+        border-color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.05);
+      }
+
+      .shipping-option.selected {
+        border-color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.1);
+        box-shadow: 0 0 0 1px hsl(var(--secondary));
+      }
+
+      .shipping-option input[type="radio"] {
+        accent-color: hsl(var(--secondary));
+        transform: scale(1.2);
+      }
+
+      .shipping-option-label {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .shipping-name {
+        color: hsl(var(--foreground));
+        font-weight: bold;
+      }
+
+      .shipping-price {
+        color: hsl(var(--secondary));
+        font-weight: bold;
+      }
+
+      .summary-total {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 2px solid hsl(var(--border));
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .checkout-btn {
+        background: hsl(var(--secondary));
+        color: hsl(0, 0%, 9%);
+        border: none;
+        padding: 1.25rem 2rem;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.2rem;
+        width: 100%;
+        margin-bottom: 1.5rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .checkout-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+          transparent 0%, 
+          hsla(0, 0%, 100%, 0.2) 50%, 
+          transparent 100%);
+        transition: left 0.6s ease;
+      }
+
+      .checkout-btn:hover::before {
+        left: 100%;
+      }
+
+      .checkout-btn.checkout-disabled,
+      .checkout-btn:disabled {
+        background: hsl(0, 0%, 22%);
+        color: hsl(60, 20%, 80%);
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .checkout-btn.checkout-disabled:hover,
+      .checkout-btn:disabled:hover {
+        background: hsl(0, 0%, 22%);
+        transform: none;
+      }
+
+      .checkout-btn.checkout-disabled::before {
+        display: none;
+      }
+
+      .payments-disabled-banner {
+        background: hsl(0, 40%, 16%);
+        border: 1px solid hsl(0, 70%, 45%);
+        color: hsl(60, 100%, 90%);
+        padding: 1rem 1.25rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+
+      .payments-disabled-banner strong {
+        display: block;
+        margin-bottom: 0.4rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .payments-disabled-body p {
+        color: hsl(var(--muted-foreground));
+        line-height: 1.6;
+        margin: 0 0 1rem;
+      }
+
+      .checkout-btn:hover {
+        background: hsl(var(--secondary) / 0.9);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px hsla(60, 100%, 65%, 0.4);
+      }
+
+      .continue-shopping {
+        background: transparent;
+        color: hsl(var(--secondary));
+        border: 2px solid hsl(var(--secondary));
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s ease;
+        text-align: center;
+        width: 100%;
+      }
+
+      .continue-shopping:hover {
+        background: hsl(var(--secondary));
+        color: hsl(0, 0%, 9%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px hsla(60, 100%, 65%, 0.3);
+      }
+
+      .empty-cart {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: hsl(var(--muted-foreground));
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        margin-bottom: 2rem;
+      }
+
+      .empty-cart .icon {
+        font-size: 5rem;
+        margin-bottom: 1.5rem;
+        filter: drop-shadow(0 0 20px hsla(270, 100%, 70%, 0.5));
+        animation: emptyCartFloat 3s ease-in-out infinite;
+      }
+
+      @keyframes emptyCartFloat {
+        0%, 100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .empty-cart h3 {
+        color: hsl(var(--secondary));
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .empty-cart p {
+        color: hsl(var(--muted-foreground));
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cart-notification {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: hsl(var(--success));
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px hsla(142, 76%, 36%, 0.4);
+        z-index: 10000;
+        font-family: 'Courier Prime', monospace;
+        font-weight: bold;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+      }
+
+      .cart-notification.show {
+        transform: translateX(0);
+      }
+
+      .cart-notification.error {
+        background: hsl(var(--destructive));
+        box-shadow: 0 4px 15px hsla(0, 84%, 60%, 0.4);
+      }
+
+      .cart-notification.warning {
+        background: hsl(var(--warning));
+        box-shadow: 0 4px 15px hsla(38, 92%, 50%, 0.4);
+      }
+
+      .cart-actions {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .cart-action-btn {
+        background: transparent;
+        color: hsl(var(--muted-foreground));
+        border: 1px solid hsl(var(--border));
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .cart-action-btn:hover {
+        color: hsl(var(--foreground));
+        border-color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .cart-action-btn.danger {
+        color: hsl(var(--destructive));
+        border-color: hsl(var(--destructive));
+      }
+
+      .cart-action-btn.danger:hover {
+        background: hsl(var(--destructive));
+        color: white;
+      }
+
+      /* Cart Tabs */
+      .cart-tabs {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid hsl(var(--border));
+        padding-bottom: 1rem;
+      }
+
+      .tab-btn {
+        background: transparent;
+        color: hsl(var(--muted-foreground));
+        border: none;
+        padding: 1rem 1.5rem;
+        border-radius: 8px 8px 0 0;
+        cursor: pointer;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        border-bottom: 3px solid transparent;
+        position: relative;
+      }
+
+      .tab-btn:hover {
+        color: hsl(var(--foreground));
+        background: hsla(60, 100%, 65%, 0.1);
+      }
+
+      .tab-btn.active {
+        color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.1);
+        border-bottom-color: hsl(var(--secondary));
+      }
+
+      /* Cart Controls */
+      .cart-controls {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 1.5rem;
+      }
+
+      .search-bar {
+        display: flex;
+        gap: 0.5rem;
+        flex: 1;
+        max-width: 400px;
+      }
+
+      .search-bar input {
+        flex: 1;
+        background: hsl(var(--background));
+        border: 1px solid hsl(var(--border));
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        font-size: 0.9rem;
+      }
+
+      .search-bar input:focus {
+        outline: none;
+        border-color: hsl(var(--secondary));
+        box-shadow: 0 0 0 2px hsla(60, 100%, 65%, 0.2);
+      }
+
+      .search-bar button {
+        background: hsl(var(--secondary));
+        color: hsl(0, 0%, 9%);
+        border: none;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+
+      .search-bar button:hover {
+        background: hsl(var(--secondary) / 0.8);
+        transform: scale(1.05);
+      }
+
+      .filter-controls {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .filter-controls select {
+        background: hsl(var(--background));
+        border: 1px solid hsl(var(--border));
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .filter-controls select:focus {
+        outline: none;
+        border-color: hsl(var(--secondary));
+        box-shadow: 0 0 0 2px hsla(60, 100%, 65%, 0.2);
+      }
+
+      .filter-controls select:hover {
+        border-color: hsl(var(--secondary));
+      }
+
+      /* Wishlist Items */
+      .wishlist-item {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 1.5rem;
+        align-items: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .wishlist-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+          transparent 0%, 
+          hsla(270, 100%, 70%, 0.1) 50%, 
+          transparent 100%);
+        transition: left 0.6s ease;
+        z-index: 1;
+      }
+
+      .wishlist-item:hover::before {
+        left: 100%;
+      }
+
+      .wishlist-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px hsla(270, 100%, 70%, 0.2);
+        border-color: hsla(270, 100%, 70%, 0.5);
+      }
+
+      .wishlist-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-direction: column;
+      }
+
+      .wishlist-btn {
+        background: hsl(var(--accent));
+        color: hsl(var(--foreground));
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+        font-size: 0.8rem;
+        white-space: nowrap;
+      }
+
+      .wishlist-btn:hover {
+        background: hsl(var(--secondary));
+        color: hsl(0, 0%, 9%);
+        transform: translateY(-1px);
+      }
+
+      .wishlist-btn.remove {
+        background: hsl(var(--destructive));
+        color: white;
+      }
+
+      .wishlist-btn.remove:hover {
+        background: hsl(var(--destructive) / 0.8);
+      }
+
+      /* Saved Items */
+      .saved-items {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .saved-items h3 {
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .saved-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border: 1px solid hsl(var(--border));
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        background: hsl(var(--background));
+      }
+
+      .saved-item-info {
+        flex: 1;
+      }
+
+      .saved-item-name {
+        color: hsl(var(--foreground));
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .saved-item-details {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.9rem;
+      }
+
+      .saved-item-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      /* Cart Statistics */
+      .cart-stats {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: 1rem;
+        background: hsla(60, 100%, 65%, 0.05);
+        border-radius: 8px;
+        border: 1px solid hsla(60, 100%, 65%, 0.2);
+      }
+
+      .stat-value {
+        color: hsl(var(--secondary));
+        font-size: 1.5rem;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Export/Import Buttons */
+      .data-actions {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .data-btn {
+        background: transparent;
+        color: hsl(var(--muted-foreground));
+        border: 1px solid hsl(var(--border));
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .data-btn:hover {
+        color: hsl(var(--foreground));
+        border-color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .data-btn.export {
+        color: hsl(var(--success));
+        border-color: hsl(var(--success));
+      }
+
+      .data-btn.export:hover {
+        background: hsl(var(--success));
+        color: white;
+      }
+
+      .data-btn.import {
+        color: hsl(var(--info));
+        border-color: hsl(var(--info));
+      }
+
+      .data-btn.import:hover {
+        background: hsl(var(--info));
+        color: white;
+      }
+
+      /* Hidden file input for import */
+      .hidden-file-input {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .cart-container {
+          padding: 1rem;
+        }
+        
+        .cart-title {
+          font-size: 2.5rem;
+        }
+        
+        .cart-item {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+          text-align: center;
+        }
+        
+        .item-quantity {
+          justify-content: center;
+        }
+        
+        .cart-actions {
+          flex-direction: column;
+        }
+        
+        .cart-action-btn {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .cart-summary {
+          padding: 1.5rem;
+        }
+        
+        .summary-total {
+          font-size: 1.3rem;
+        }
+      }
+
+      /* Checkout Modal Styles */
+      .checkout-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        padding: 2rem;
+        box-sizing: border-box;
+      }
+
+      .checkout-modal-content {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: 12px;
+        max-width: 800px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      }
+
+      .checkout-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 2rem 1rem;
+        border-bottom: 1px solid hsl(var(--border));
+      }
+
+      .checkout-header h2 {
+        color: hsl(var(--secondary));
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin: 0;
+      }
+
+      .checkout-close {
+        background: none;
+        border: none;
+        color: hsl(var(--muted-foreground));
+        font-size: 2rem;
+        cursor: pointer;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .checkout-close:hover {
+        background: hsl(var(--destructive));
+        color: white;
+      }
+
+      .checkout-body {
+        padding: 2rem;
+      }
+
+      .checkout-section {
+        margin-bottom: 2rem;
+      }
+
+      .checkout-section h3 {
+        color: hsl(var(--secondary));
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid hsl(var(--border));
+        padding-bottom: 0.5rem;
+      }
+
+      .checkout-items {
+        margin-bottom: 1rem;
+      }
+
+      .checkout-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid hsl(var(--border));
+      }
+
+      .checkout-item:last-child {
+        border-bottom: none;
+      }
+
+      .item-name {
+        flex: 1;
+        color: hsl(var(--secondary));
+        font-weight: bold;
+      }
+
+      .item-quantity {
+        color: hsl(var(--muted-foreground));
+        margin: 0 1rem;
+      }
+
+      .item-price {
+        color: hsl(var(--secondary));
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .checkout-totals {
+        background: hsla(60, 100%, 65%, 0.05);
+        border: 1px solid hsla(60, 100%, 65%, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+      }
+
+      .total-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        color: hsl(var(--muted-foreground));
+      }
+
+      .total-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .total-final {
+        color: hsl(var(--secondary));
+        font-weight: bold;
+        font-size: 1.2rem;
+        font-family: 'Courier Prime', monospace;
+        border-top: 1px solid hsl(var(--border));
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .checkout-form {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .form-row-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .form-group label {
+        color: hsl(var(--foreground));
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.9rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        background: hsl(var(--background));
+        border: 1px solid hsl(var(--border));
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: hsl(var(--foreground));
+        font-family: 'Courier Prime', monospace;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: hsl(var(--secondary));
+        box-shadow: 0 0 0 2px hsla(60, 100%, 65%, 0.2);
+      }
+
+      .payment-methods {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .payment-option {
+        cursor: pointer;
+      }
+
+      .payment-option input[type="radio"] {
+        display: none;
+      }
+
+      .payment-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem;
+        border: 2px solid hsl(var(--border));
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        background: hsl(var(--card));
+      }
+
+      .payment-option input[type="radio"]:checked + .payment-label {
+        border-color: hsl(var(--secondary));
+        background: hsla(60, 100%, 65%, 0.1);
+        box-shadow: 0 0 0 1px hsl(var(--secondary));
+      }
+
+      .payment-icon {
+        font-size: 1.5rem;
+      }
+
+      .payment-text {
+        color: hsl(var(--foreground));
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.8rem;
+      }
+
+      .payment-details {
+        background: hsla(60, 100%, 65%, 0.05);
+        border: 1px solid hsla(60, 100%, 65%, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1rem;
+      }
+
+      /* Stripe Elements Styling */
+      .stripe-element {
+        background: hsl(var(--background));
+        border: 1px solid hsla(60, 100%, 65%, 0.3);
+        border-radius: 4px;
+        padding: 12px;
+        margin-top: 0.5rem;
+        transition: border-color 0.3s ease;
+      }
+
+      .stripe-element:focus-within {
+        border-color: hsl(var(--secondary));
+        box-shadow: 0 0 0 2px hsla(60, 100%, 65%, 0.2);
+      }
+
+      .payment-error {
+        color: hsl(var(--destructive));
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        display: none;
+      }
+
+      .payment-error.show {
+        display: block;
+      }
+
+      /* Security Warning Styling */
+      .security-warning {
+        background: hsla(38, 92%, 50%, 0.1);
+        border: 1px solid hsla(38, 92%, 50%, 0.3);
+        border-radius: 6px;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .warning-icon {
+        font-size: 1.2rem;
+      }
+
+      .security-warning strong {
+        color: hsl(var(--warning));
+      }
+
+      /* Payment Toggle Button */
+      .payment-toggle {
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      .toggle-btn {
+        background: hsla(60, 100%, 65%, 0.1);
+        border: 1px solid hsla(60, 100%, 65%, 0.3);
+        border-radius: 4px;
+        padding: 0.5rem 1rem;
+        color: hsl(var(--foreground));
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+      }
+
+      .toggle-btn:hover {
+        background: hsla(60, 100%, 65%, 0.2);
+        border-color: hsl(var(--secondary));
+      }
+
+      /* Secure Payment Badge */
+      .secure-payment-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: hsl(var(--success));
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+      }
+
+      .secure-payment-badge::before {
+        content: "🔒";
+      }
+
+      .change-display {
+        background: hsl(var(--success));
+        color: white;
+        padding: 0.75rem;
+        border-radius: 6px;
+        text-align: center;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        margin-top: 1rem;
+      }
+
+      .checkout-footer {
+        display: flex;
+        gap: 1rem;
+        padding: 2rem;
+        border-top: 1px solid hsl(var(--border));
+        background: hsl(var(--muted));
+      }
+
+      .checkout-btn {
+        flex: 1;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+      }
+
+      .checkout-btn.secondary {
+        background: transparent;
+        color: hsl(var(--muted-foreground));
+        border: 2px solid hsl(var(--border));
+      }
+
+      .checkout-btn.secondary:hover {
+        background: hsl(var(--border));
+        color: hsl(var(--foreground));
+      }
+
+      .checkout-btn.primary {
+        background: hsl(var(--secondary));
+        color: hsl(0, 0%, 9%);
+      }
+
+      .checkout-btn.primary:hover {
+        background: hsl(var(--secondary) / 0.8);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px hsla(60, 100%, 65%, 0.4);
+      }
+
+      /* Receipt Modal Styles */
+      .receipt-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10001;
+        padding: 2rem;
+        box-sizing: border-box;
+      }
+
+      .receipt-modal-content {
+        background: white;
+        border-radius: 12px;
+        max-width: 600px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        color: #333;
+      }
+
+      .receipt-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 2rem 1rem;
+        border-bottom: 2px solid #333;
+        background: #f8f8f8;
+      }
+
+      .receipt-header h2 {
+        color: #333;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin: 0;
+      }
+
+      .receipt-close {
+        background: none;
+        border: none;
+        color: #666;
+        font-size: 2rem;
+        cursor: pointer;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .receipt-close:hover {
+        background: #ff4444;
+        color: white;
+      }
+
+      .receipt-body {
+        padding: 2rem;
+      }
+
+      .receipt-info {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .receipt-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .receipt-items {
+        margin-bottom: 2rem;
+      }
+
+      .receipt-items h3 {
+        color: #333;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 0.5rem;
+      }
+
+      .receipt-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #eee;
+        font-family: 'Courier Prime', monospace;
+      }
+
+      .receipt-modal .receipt-item .item-name {
+        color: #333 !important;
+        font-weight: bold;
+        font-size: 1rem !important;
+      }
+
+      .receipt-modal .receipt-item .item-price {
+        color: #333 !important;
+        font-weight: bold;
+        font-size: 1rem !important;
+      }
+
+      .receipt-item:last-child {
+        border-bottom: none;
+      }
+
+      .receipt-totals {
+        background: #f8f8f8;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .receipt-total {
+        font-weight: bold;
+        border-top: 2px solid #333;
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+        font-size: 1.1rem;
+      }
+
+      .receipt-notes {
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: #f8f8f8;
+        border-radius: 8px;
+        border-left: 4px solid #333;
+      }
+
+      .receipt-notes h3 {
+        color: #333;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+      }
+
+      .receipt-footer {
+        text-align: center;
+        padding: 1rem;
+        background: #f8f8f8;
+        border-radius: 8px;
+        font-family: 'Courier Prime', monospace;
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      .receipt-actions {
+        display: flex;
+        gap: 1rem;
+        padding: 2rem;
+        border-top: 1px solid #ddd;
+        background: #f8f8f8;
+      }
+
+      .receipt-btn {
+        flex: 1;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+      }
+
+      .receipt-btn.secondary {
+        background: transparent;
+        color: #666;
+        border: 2px solid #ddd;
+      }
+
+      .receipt-btn.secondary:hover {
+        background: #ddd;
+        color: #333;
+      }
+
+      .receipt-btn.primary {
+        background: #333;
+        color: white;
+      }
+
+      .receipt-btn.primary:hover {
+        background: #555;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        .checkout-modal,
+        .receipt-modal {
+          padding: 1rem;
+        }
+        
+        .checkout-modal-content,
+        .receipt-modal-content {
+          max-height: 95vh;
+        }
+        
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        
+        .payment-methods {
+          grid-template-columns: 1fr 1fr;
+        }
+        
+        .checkout-footer,
+        .receipt-actions {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cart-container">
+      <!-- Bat Logo Header -->
+      <div class="logo-header">
+        <div class="logo-container">
+          <img src="bat vector tracing1.svg" alt="NightKind Collective Logo" class="site-logo" onclick="window.location.href='index.html'">
+        </div>
+        <div class="logo-glow"></div>
+      </div>
+
+      <div class="cart-header">
+        <a href="shop-categories.html" class="back-link">← Back to Shop</a>
+        <h1 class="cart-title">SHOPPING CART</h1>
+        <a href="pos.html" class="pos-link">💳 POS Terminal</a>
+      </div>
+      
+      <!-- Cart Navigation Tabs -->
+      <div class="cart-tabs">
+        <button class="tab-btn active" onclick="showTab('cart')" data-tab="cart">
+          🛒 Cart (<span id="cartCount">0</span>)
+        </button>
+        <button class="tab-btn" onclick="showTab('wishlist')" data-tab="wishlist">
+          ❤️ Wishlist (<span id="wishlistCount">0</span>)
+        </button>
+        <button class="tab-btn" onclick="showTab('saved')" data-tab="saved">
+          💾 Saved Items
+        </button>
+      </div>
+      
+      <!-- Search and Filter Bar -->
+      <div class="cart-controls">
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Search your cart..." onkeyup="searchCart()">
+          <button onclick="searchCart()">🔍</button>
+        </div>
+        
+        <div class="filter-controls">
+          <select id="sortSelect" onchange="sortCart()">
+            <option value="date-desc">Newest First</option>
+            <option value="date-asc">Oldest First</option>
+            <option value="name-asc">Name A-Z</option>
+            <option value="name-desc">Name Z-A</option>
+            <option value="price-asc">Price Low-High</option>
+            <option value="price-desc">Price High-Low</option>
+          </select>
+          
+          <select id="categoryFilter" onchange="filterCart()">
+            <option value="">All Categories</option>
+            <option value="stickers">Stickers</option>
+            <option value="keychains">Keychains</option>
+            <option value="pins">Pins</option>
+            <option value="tshirts">T-Shirts</option>
+          </select>
+        </div>
+      </div>
+      
+      <div id="cartContent">
+        <!-- Cart content will be loaded here -->
+      </div>
+      
+      <!-- Wishlist Content -->
+      <div id="wishlistContent" style="display: none;">
+        <!-- Wishlist content will be loaded here -->
+      </div>
+      
+      <!-- Saved Items Content -->
+      <div id="savedContent" style="display: none;">
+        <!-- Saved items content will be loaded here -->
+      </div>
+    </div>
+
+    <!-- Cart Notification -->
+    <div id="cartNotification" class="cart-notification"></div>
+    
+    <script src="cart-utils.js"></script>
+    <script src="products.js"></script>
+    <!-- Stripe.js for secure payment processing -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- EmailJS for sending order confirmation emails -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    <!-- Script loading verification -->
+    <script>
+      // Check if required scripts are loaded
+      if (typeof nightkindCart === 'undefined') {
+        console.error('cart-utils.js failed to load');
+        document.body.innerHTML = `
+          <div style="padding: 2rem; text-align: center; color: #ff4444;">
+            <h1>Script Loading Error</h1>
+            <p>The cart system failed to load. Please check that cart-utils.js is accessible.</p>
+            <button onclick="location.reload()">Refresh Page</button>
+          </div>
+        `;
+      }
+    </script>
+    <script>
+      console.log('Script starting...');
+      
+      // Enhanced cart functionality using cart utilities
+      let shippingOption = 'standard';
+      let currentTab = 'cart';
+      let filteredCart = [];
+      
+      console.log('Variables initialized...');
+
+      // Stripe configuration
+      let stripe = null;
+      let elements = null;
+      let cardElement = null;
+      let isStripeMode = false;
+      const ONLINE_PAYMENTS_ENABLED = false;
+
+      // EmailJS configuration
+      let emailService = null;
+      let isEmailEnabled = true;
+
+      // Initialize Stripe (replace with your publishable key)
+      const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SA2UTQvPhK322os6nwl988dEXrIdSCz0VqNFSI9E1EZ2DcOqx53y9T8HWAyubSVDcQMwEJJ6hZ0nuSLy1nTjRyM00C3sZRq2N'; // Live Stripe key for production
+      
+      // Server configuration - Production server URL
+      const SERVER_URL = 'https://www.nightkind.org'; // Production server
+      
+      // EmailJS configuration (you'll need to replace these with your actual EmailJS credentials)
+      const EMAILJS_SERVICE_ID = 'service_nightkind'; // Replace with your EmailJS service ID
+      const EMAILJS_CUSTOMER_TEMPLATE_ID = 'template_order_confirmation'; // Customer receipt email
+      const EMAILJS_OWNER_TEMPLATE_ID = 'template_order_notification'; // Owner notification email
+      const EMAILJS_PUBLIC_KEY = 'your_emailjs_public_key'; // Replace with your EmailJS public key
+      const NIGHTKIND_EMAIL = 'nightkindcollective@gmail.com'; // Owner email for notifications
+      
+      function initializeStripe() {
+        if (!ONLINE_PAYMENTS_ENABLED) {
+          console.log('Stripe initialization skipped — online payments are disabled');
+          return;
+        }
+        try {
+          // Initialize Stripe with your actual key
+          stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+          
+          console.log('Stripe initialized successfully');
+          setupStripeElements();
+        } catch (error) {
+          console.error('Failed to initialize Stripe:', error);
+          // Fall back to manual input mode
+          switchToManualMode();
+        }
+      }
+
+      function initializeEmailService() {
+        try {
+          // Initialize EmailJS
+          emailjs.init(EMAILJS_PUBLIC_KEY);
+          emailService = emailjs;
+          console.log('EmailJS initialized successfully');
+        } catch (error) {
+          console.error('Failed to initialize EmailJS:', error);
+          isEmailEnabled = false;
+          CartNotification.warning('Email notifications are currently unavailable');
+        }
+      }
+
+      function setupStripeElements() {
+        if (!stripe) {
+          console.log('Stripe not available — card entry is disabled');
+          return;
+        }
+
+        elements = stripe.elements({
+          appearance: {
+            theme: 'night',
+            variables: {
+              colorPrimary: 'hsl(270, 60%, 70%)',
+              colorBackground: 'hsl(0, 0%, 8%)',
+              colorText: 'hsl(60, 100%, 85%)',
+              colorDanger: 'hsl(0, 84%, 60%)',
+              fontFamily: 'Courier Prime, monospace',
+              borderRadius: '4px'
+            }
+          }
+        });
+
+        cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        cardElement.on('change', ({error}) => {
+          const displayError = document.getElementById('card-errors');
+          if (error) {
+            displayError.textContent = error.message;
+            displayError.classList.add('show');
+          } else {
+            displayError.textContent = '';
+            displayError.classList.remove('show');
+          }
+        });
+      }
+      
+      // Shipping options
+      const shippingOptions = [
+        { id: 'standard', name: 'Standard Shipping', price: 5.99, days: '5-7 business days' },
+        { id: 'express', name: 'Express Shipping', price: 12.99, days: '2-3 business days' },
+        { id: 'overnight', name: 'Overnight Shipping', price: 24.99, days: 'Next business day' }
+      ];
+
+      // Tab management
+      function showTab(tabName) {
+        currentTab = tabName;
+        
+        // Hide all content
+        document.getElementById('cartContent').style.display = 'none';
+        document.getElementById('wishlistContent').style.display = 'none';
+        document.getElementById('savedContent').style.display = 'none';
+        
+        // Remove active class from all tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // Show selected content and activate tab
+        document.getElementById(tabName + 'Content').style.display = 'block';
+        document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        
+        // Render appropriate content
+        switch(tabName) {
+          case 'cart':
+            renderCart();
+            break;
+          case 'wishlist':
+            renderWishlist();
+            break;
+          case 'saved':
+            renderSavedItems();
+            break;
+        }
+      }
+
+      // Search functionality
+      console.log('About to define searchCart function...');
+      function searchCart() {
+        const searchTerm = document.getElementById('searchInput').value;
+        if (searchTerm.trim() === '') {
+          filteredCart = nightkindCart.getItems();
+        } else {
+          filteredCart = nightkindCart.searchCart(searchTerm);
+        }
+        renderCart();
+      }
+
+      // Filter functionality
+      function filterCart() {
+        const category = document.getElementById('categoryFilter').value;
+        if (category === '') {
+          filteredCart = nightkindCart.getItems();
+        } else {
+          filteredCart = nightkindCart.filterCartByCategory(category);
+        }
+        renderCart();
+      }
+
+      // Sort functionality
+      function sortCart() {
+        const sortValue = document.getElementById('sortSelect').value;
+        const [criteria, direction] = sortValue.split('-');
+        
+        if (filteredCart.length > 0) {
+          filteredCart = nightkindCart.sortCart(criteria, direction);
+        } else {
+          filteredCart = nightkindCart.sortCart(criteria, direction);
+        }
+        renderCart();
+      }
+
+      // Update quantity with validation
+      function updateQuantity(itemId, size, change) {
+        const result = nightkindCart.updateQuantity(itemId, size, change);
+        
+        switch (result) {
+          case 'updated':
+            CartNotification.success('Quantity updated');
+            break;
+          case 'removed':
+            CartNotification.warning('Item removed from cart');
+            break;
+          case 'max_exceeded':
+            CartNotification.error('Maximum quantity is 99');
+            return;
+          case 'not_found':
+            CartNotification.error('Item not found in cart');
+            return;
+        }
+        
+        renderCart();
+      }
+
+      // Remove item from cart
+      function removeItem(itemId, size) {
+        if (nightkindCart.removeFromCart(itemId, size)) {
+          CartNotification.warning('Item removed from cart');
+          renderCart();
+        }
+      }
+
+      // Clear entire cart
+      function clearCart() {
+        if (!nightkindCart.isEmpty()) {
+          if (confirm('Are you sure you want to clear your entire cart?')) {
+            nightkindCart.clearCart();
+            CartNotification.warning('Cart cleared');
+            renderCart();
+          }
+        }
+      }
+
+      // Save cart for later
+      function saveForLater() {
+        if (nightkindCart.saveForLater()) {
+          CartNotification.success('Cart saved for later');
+          renderCart();
+        } else {
+          CartNotification.error('Failed to save cart');
+        }
+      }
+
+      // Add to wishlist
+      function addToWishlist(product) {
+        try {
+          nightkindCart.addToWishlist(product);
+          CartNotification.success('Added to wishlist!');
+          // Always update wishlist count
+          nightkindCart.updateWishlistCount();
+          if (currentTab === 'wishlist') {
+            renderWishlist();
+          }
+        } catch (error) {
+          console.error('Error adding to wishlist:', error);
+          CartNotification.error('Failed to add to wishlist');
+        }
+      }
+
+      // Remove from wishlist
+      function removeFromWishlist(productId, size = null) {
+        if (nightkindCart.removeFromWishlist(productId, size)) {
+          const sizeText = size ? ` (Size: ${size})` : '';
+          CartNotification.warning(`Removed from wishlist${sizeText}`);
+          renderWishlist();
+        }
+      }
+
+      // Move from wishlist to cart
+      function moveToCart(productId, size = null, quantity = 1) {
+        if (nightkindCart.moveToCart(productId, size, quantity)) {
+          const sizeText = size ? ` (Size: ${size})` : '';
+          CartNotification.success(`Moved to cart!${sizeText}`);
+          renderWishlist();
+          renderCart();
+        }
+      }
+
+      // Load saved cart
+      function loadSavedCart() {
+        if (nightkindCart.loadSavedCart()) {
+          CartNotification.success('Saved cart loaded!');
+          renderCart();
+        } else {
+          CartNotification.warning('No saved cart found');
+        }
+      }
+
+      // Export cart data
+      function exportCart() {
+        try {
+          nightkindCart.exportCart();
+          CartNotification.success('Cart exported successfully!');
+        } catch (error) {
+          CartNotification.error('Failed to export cart');
+        }
+      }
+
+      // Import cart data
+      function importCart() {
+        const fileInput = document.getElementById('importFile');
+        fileInput.click();
+      }
+
+      // Handle file import
+      function handleFileImport(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            try {
+              if (nightkindCart.importCart(e.target.result)) {
+                CartNotification.success('Cart imported successfully!');
+                renderCart();
+              } else {
+                CartNotification.error('Invalid cart file format');
+              }
+            } catch (error) {
+              CartNotification.error('Failed to import cart');
+            }
+          };
+          reader.readAsText(file);
+        }
+        // Reset file input
+        event.target.value = '';
+      }
+
+      // Calculate totals
+      function calculateTotal() {
+        return nightkindCart.getCartTotal();
+      }
+
+      // Update shipping option
+      function updateShipping(optionId) {
+        shippingOption = optionId;
+        renderCart();
+      }
+
+      // Render cart
+      function renderCart() {
+        try {
+        const cartContent = document.getElementById('cartContent');
+          
+          if (!cartContent) {
+            console.error('Cart content element not found');
+            return;
+          }
+          
+          if (!nightkindCart || typeof nightkindCart.isEmpty !== 'function') {
+            console.error('Cart system not properly initialized');
+            cartContent.innerHTML = `
+              <div class="empty-cart">
+                <div class="icon">⚠️</div>
+                <h3>Cart System Error</h3>
+                <p>Cart system is not properly initialized. Please refresh the page.</p>
+                <button class="cart-action-btn" onclick="location.reload()">Refresh Page</button>
+              </div>
+            `;
+            return;
+          }
+        
+        if (nightkindCart.isEmpty()) {
+          cartContent.innerHTML = `
+            <div class="empty-cart">
+              <div class="icon">🛒</div>
+              <h3>Your cart is empty</h3>
+              <p>Add some NightKind products to get started! Every purchase directly supports bat conservation efforts in Queensland.</p>
+              <a href="shop-categories.html" class="continue-shopping">Continue Shopping</a>
+            </div>
+          `;
+          return;
+        }
+        
+        // Use filtered cart if available, otherwise use all items
+        const itemsToRender = filteredCart.length > 0 ? filteredCart : nightkindCart.getItems();
+        
+        if (itemsToRender.length === 0) {
+          cartContent.innerHTML = `
+            <div class="empty-cart">
+              <div class="icon">🔍</div>
+              <h3>No items found</h3>
+              <p>Try adjusting your search or filter criteria.</p>
+              <button class="cart-action-btn" onclick="clearFilters()">Clear Filters</button>
+            </div>
+          `;
+          return;
+        }
+        
+        const cartItems = itemsToRender.map(item => `
+          <div class="cart-item" data-item-id="${item.id}" data-size="${item.size || ''}">
+            <div class="item-image">${item.image}</div>
+            <div class="item-details">
+              <div class="item-name">${item.name}</div>
+              <div class="item-description">${item.description}</div>
+              ${item.size ? '<div class="item-size">Size: ' + item.size + '</div>' : ''}
+              <div class="item-price">$${item.price.toFixed(2)}</div>
+            </div>
+            <div class="item-quantity">
+              <button class="quantity-btn" onclick="updateQuantity('${item.id}', '${item.size || ''}', -1)" ${item.quantity <= 1 ? 'disabled' : ''}>-</button>
+              <div class="quantity-display">${item.quantity}</div>
+              <button class="quantity-btn" onclick="updateQuantity('${item.id}', '${item.size || ''}', 1)" ${item.quantity >= 99 ? 'disabled' : ''}>+</button>
+            </div>
+            <button class="remove-btn" onclick="removeItem('${item.id}', '${item.size || ''}')">Remove</button>
+          </div>
+        `).join('');
+        
+        const totals = calculateTotal();
+        
+        const shippingOptionsHtml = shippingOptions.map(option => `
+          <div class="shipping-option ${option.id === shippingOption ? 'selected' : ''}" onclick="updateShipping('${option.id}')">
+            <input type="radio" name="shipping" value="${option.id}" ${option.id === shippingOption ? 'checked' : ''}>
+            <div class="shipping-option-label">
+              <span class="shipping-name">${option.name} (${option.days})</span>
+              <span class="shipping-price">$${option.price.toFixed(2)}</span>
+            </div>
+          </div>
+        `).join('');
+        
+        // Get cart statistics
+        const stats = nightkindCart.getCartStats();
+        
+        cartContent.innerHTML = `
+          <div class="cart-stats">
+            <div class="stat-item">
+              <div class="stat-value">${stats.totalItems}</div>
+              <div class="stat-label">Total Items</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">${stats.uniqueItems}</div>
+              <div class="stat-label">Unique Items</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">$${stats.totalValue.toFixed(2)}</div>
+              <div class="stat-label">Total Value</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">$${stats.averageItemPrice.toFixed(2)}</div>
+              <div class="stat-label">Avg. Price</div>
+            </div>
+          </div>
+          
+          <div class="data-actions">
+            <button class="data-btn export" onclick="exportCart()">
+              📤 Export Cart
+            </button>
+            <button class="data-btn import" onclick="importCart()">
+              📥 Import Cart
+            </button>
+            <input type="file" id="importFile" class="hidden-file-input" accept=".json" onchange="handleFileImport(event)">
+          </div>
+          
+          <div class="cart-actions">
+            <button class="cart-action-btn" onclick="clearCart()">Clear Cart</button>
+            <button class="cart-action-btn" onclick="saveForLater()">Save for Later</button>
+          </div>
+          
+          <div class="cart-items">
+            ${cartItems}
+          </div>
+          
+          <div class="cart-summary">
+            <div class="summary-row">
+              <span>Subtotal (${nightkindCart.getCartCount()} items):</span>
+              <span>$${totals.subtotal.toFixed(2)}</span>
+            </div>
+            
+            <div class="summary-row shipping-options">
+              <span>Shipping:</span>
+              ${shippingOptionsHtml}
+            </div>
+            
+            <div class="summary-row">
+              <span>Tax (10%):</span>
+              <span>$${totals.tax.toFixed(2)}</span>
+            </div>
+            
+            <div class="summary-total">
+              <span>Total:</span>
+              <span>$${totals.total.toFixed(2)}</span>
+            </div>
+          </div>
+          
+          <div class="payments-disabled-banner" role="status">
+            <strong>Checkout is paused</strong>
+            Online payments are temporarily disabled so card details cannot be entered or stored. Your cart is saved — no payment will be taken.
+          </div>
+          <button class="checkout-btn checkout-disabled" type="button" onclick="proceedToCheckout()">
+            CHECKOUT UNAVAILABLE
+          </button>
+          
+          <a href="shop-categories.html" class="continue-shopping">
+            Continue Shopping
+          </a>
+        `;
+        } catch (error) {
+          console.error('Error rendering cart:', error);
+          const cartContent = document.getElementById('cartContent');
+          if (cartContent) {
+            cartContent.innerHTML = `
+              <div class="empty-cart">
+                <div class="icon">⚠️</div>
+                <h3>Cart Rendering Error</h3>
+                <p>There was an error rendering the cart. Please refresh the page.</p>
+                <button class="cart-action-btn" onclick="location.reload()">Refresh Page</button>
+              </div>
+            `;
+          }
+        }
+      }
+
+      // Render wishlist
+      function renderWishlist() {
+        const wishlistContent = document.getElementById('wishlistContent');
+        
+        // Update wishlist count
+        nightkindCart.updateWishlistCount();
+        
+        if (nightkindCart.isWishlistEmpty()) {
+          wishlistContent.innerHTML = `
+            <div class="empty-cart">
+              <div class="icon">❤️</div>
+              <h3>Your wishlist is empty</h3>
+              <p>Start building your wishlist by browsing our products and adding items you love!</p>
+              <a href="shop-categories.html" class="continue-shopping">Browse Products</a>
+            </div>
+          `;
+          return;
+        }
+        
+        const wishlistItems = nightkindCart.getWishlistItems().map(item => `
+          <div class="wishlist-item" data-item-id="${item.id}">
+            <div class="item-image">${item.image}</div>
+            <div class="item-details">
+              <div class="item-name">${item.name}</div>
+              <div class="item-description">${item.description}</div>
+              <div class="item-price">$${item.price.toFixed(2)}</div>
+              ${item.size ? '<div class="item-size">Size: ' + item.size + '</div>' : ''}
+            </div>
+            <div class="wishlist-actions">
+              <button class="wishlist-btn" onclick="moveToCart('${item.id}', '${item.size || ''}')">
+                Add to Cart
+              </button>
+              <button class="wishlist-btn remove" onclick="removeFromWishlist('${item.id}', '${item.size || ''}')">
+                Remove
+              </button>
+            </div>
+          </div>
+        `).join('');
+        
+        wishlistContent.innerHTML = `
+          <div class="cart-actions">
+            <button class="cart-action-btn danger" onclick="clearWishlist()">Clear Wishlist</button>
+          </div>
+          
+          <div class="cart-items">
+            ${wishlistItems}
+          </div>
+        `;
+      }
+
+      // Render saved items
+      function renderSavedItems() {
+        const savedContent = document.getElementById('savedContent');
+        const savedItems = nightkindCart.getSavedCart();
+        
+        if (savedItems.length === 0) {
+          savedContent.innerHTML = `
+            <div class="empty-cart">
+              <div class="icon">💾</div>
+              <h3>No saved items</h3>
+              <p>Items you save for later will appear here.</p>
+            </div>
+          `;
+          return;
+        }
+        
+        const savedItemsHtml = savedItems.map(item => `
+          <div class="saved-item">
+            <div class="saved-item-info">
+              <div class="saved-item-name">${item.name}</div>
+              <div class="saved-item-details">
+                ${item.size ? 'Size: ' + item.size + ' • ' : ''}Qty: ${item.quantity} • $${item.price.toFixed(2)}
+              </div>
+            </div>
+            <div class="saved-item-actions">
+              <button class="wishlist-btn" onclick="moveSavedToCart('${item.id}', '${item.size || ''}', ${item.quantity})">
+                Move to Cart
+              </button>
+            </div>
+          </div>
+        `).join('');
+        
+        savedContent.innerHTML = `
+          <div class="saved-items">
+            <h3>Saved Items (${savedItems.length})</h3>
+            ${savedItemsHtml}
+            <button class="cart-action-btn" onclick="loadSavedCart()">Load All to Cart</button>
+          </div>
+        `;
+      }
+
+      // Move saved item to cart
+      function moveSavedToCart(itemId, size, quantity) {
+        // Find the item in saved cart
+        const savedItems = nightkindCart.getSavedCart();
+        const item = savedItems.find(savedItem => 
+          savedItem.id === itemId && savedItem.size === size
+        );
+        
+        if (item) {
+          nightkindCart.addToCart(item, size, quantity);
+          // Remove from saved cart
+          const updatedSavedItems = savedItems.filter(savedItem => 
+            !(savedItem.id === itemId && savedItem.size === size)
+          );
+          localStorage.setItem('nightkindSavedCart', JSON.stringify(updatedSavedItems));
+          
+          CartNotification.success('Moved to cart!');
+          renderSavedItems();
+          renderCart();
+        }
+      }
+
+      // Clear wishlist
+      function clearWishlist() {
+        if (!nightkindCart.isWishlistEmpty()) {
+          if (confirm('Are you sure you want to clear your entire wishlist?')) {
+            nightkindCart.clearWishlist();
+            CartNotification.warning('Wishlist cleared');
+            renderWishlist();
+          }
+        }
+      }
+
+      // Clear filters
+      function clearFilters() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('categoryFilter').value = '';
+        document.getElementById('sortSelect').value = 'date-desc';
+        filteredCart = [];
+        renderCart();
+      }
+
+      // Proceed to checkout
+      function proceedToCheckout() {
+        if (!ONLINE_PAYMENTS_ENABLED) {
+          showPaymentsDisabledModal();
+          return;
+        }
+
+        if (nightkindCart.isEmpty()) {
+          CartNotification.error('Your cart is empty');
+          return;
+        }
+        
+        // Start POS transaction
+        try {
+          const transaction = nightkindPOS.startTransaction();
+          showCheckoutModal(transaction);
+        } catch (error) {
+          console.error('Error starting checkout:', error);
+          CartNotification.error('Failed to start checkout process');
+        }
+      }
+
+      function showPaymentsDisabledModal() {
+        closeCheckoutModal();
+        const modal = document.createElement('div');
+        modal.className = 'checkout-modal';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-labelledby', 'paymentsDisabledTitle');
+        modal.innerHTML = `
+          <div class="checkout-modal-content">
+            <div class="checkout-header">
+              <h2 id="paymentsDisabledTitle">Payments paused</h2>
+              <button class="checkout-close" onclick="closeCheckoutModal()" aria-label="Close">&times;</button>
+            </div>
+            <div class="checkout-body payments-disabled-body">
+              <div class="payments-disabled-banner">
+                <strong>No card details will be collected</strong>
+                Checkout is turned off while we finish a secure payment setup. Please do not enter credit card information anywhere on this site.
+              </div>
+              <p>Your cart stays saved in this browser. Nothing will be charged, and NightKind is not processing orders online right now.</p>
+              <p>If you still want to support bat conservation, email us and we will follow up when checkout is ready:</p>
+              <p><a href="mailto:nightkindcollective@gmail.com">nightkindcollective@gmail.com</a> · <a href="contact.html">Contact page</a></p>
+            </div>
+            <div class="checkout-footer">
+              <button class="checkout-btn secondary" onclick="closeCheckoutModal()">Close</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+      }
+
+      // Show checkout modal
+      function showCheckoutModal(transaction) {
+        const modal = document.createElement('div');
+        modal.className = 'checkout-modal';
+        modal.innerHTML = `
+          <div class="checkout-modal-content">
+            <div class="checkout-header">
+              <h2>Complete Your Order</h2>
+              <button class="checkout-close" onclick="closeCheckoutModal()">&times;</button>
+            </div>
+            
+            <div class="checkout-body">
+              <div class="checkout-section">
+                <h3>Order Summary</h3>
+                <div class="checkout-items">
+                  ${transaction.items.map(item => `
+                    <div class="checkout-item">
+                      <span class="item-name">${item.name} ${item.size ? '(' + item.size + ')' : ''}</span>
+                      <span class="item-quantity">×${item.quantity}</span>
+                      <span class="item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="checkout-totals">
+                  <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span>$${transaction.subtotal.toFixed(2)}</span>
+                  </div>
+                  <div class="total-row">
+                    <span>Tax (8%):</span>
+                    <span>$${transaction.tax.toFixed(2)}</span>
+                  </div>
+                  <div class="total-row total-final">
+                    <span>Total:</span>
+                    <span>$${transaction.total.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="checkout-section">
+                <h3>Customer Information</h3>
+                <div class="checkout-form">
+                  <div class="form-group">
+                    <label for="customerName">Name *</label>
+                    <input type="text" id="customerName" required autocomplete="name">
+                  </div>
+                  <div class="form-group">
+                    <label for="customerEmail">Email *</label>
+                    <input type="email" id="customerEmail" required autocomplete="email">
+                  </div>
+                  <div class="form-group">
+                    <label for="customerPhone">Phone</label>
+                    <input type="tel" id="customerPhone" autocomplete="tel">
+                  </div>
+                  <div class="form-group">
+                    <label for="customerAddressLine1">Street Address</label>
+                    <input type="text" id="customerAddressLine1" autocomplete="street-address" placeholder="123 Main Street">
+                  </div>
+                  <div class="form-row form-row-3">
+                    <div class="form-group">
+                      <label for="customerCity">City</label>
+                      <input type="text" id="customerCity" autocomplete="address-level2" placeholder="City">
+                    </div>
+                    <div class="form-group">
+                      <label for="customerState">State/Province</label>
+                      <input type="text" id="customerState" autocomplete="address-level1" placeholder="State">
+                    </div>
+                    <div class="form-group">
+                      <label for="customerPostcode">Postal Code</label>
+                      <input type="text" id="customerPostcode" autocomplete="postal-code" placeholder="12345">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="customerCountry">Country</label>
+                    <input type="text" id="customerCountry" autocomplete="country" placeholder="United States">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="checkout-section">
+                <h3>Payment Method</h3>
+                <div class="payments-disabled-banner">
+                  <strong>Payments paused</strong>
+                  Online checkout cannot collect card details right now. Please close this form — nothing will be charged.
+                </div>
+              </div>
+              
+              <div class="checkout-section">
+                <h3>Order Notes</h3>
+                <div class="form-group">
+                  <textarea id="orderNotes" rows="3" placeholder="Any special instructions or notes for your order..."></textarea>
+                </div>
+              </div>
+            </div>
+            
+            <div class="checkout-footer">
+              <button class="checkout-btn secondary" onclick="closeCheckoutModal()">Cancel</button>
+              <button class="checkout-btn primary checkout-disabled" type="button" disabled>Complete Order Unavailable</button>
+            </div>
+          </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Setup payment method change handler
+        setupPaymentMethodHandlers();
+        
+        // Initialize Stripe
+        if (ONLINE_PAYMENTS_ENABLED) {
+          initializeStripe();
+        }
+        
+        // Initialize EmailJS
+        initializeEmailService();
+        
+        // Setup payment mode toggle
+        if (ONLINE_PAYMENTS_ENABLED) {
+          setupPaymentModeToggle();
+        }
+        
+        
+        // Focus on first input
+        setTimeout(() => {
+          document.getElementById('customerName').focus();
+        }, 100);
+      }
+
+      // Setup payment method handlers
+      function setupPaymentMethodHandlers() {
+        const paymentMethods = document.querySelectorAll('input[name="paymentMethod"]');
+        const paymentDetails = document.getElementById('paymentDetails');
+        if (!paymentDetails || paymentMethods.length === 0) return;
+        
+        paymentMethods.forEach(method => {
+          method.addEventListener('change', (e) => {
+            if (e.target.value === 'card') {
+              paymentDetails.style.display = 'block';
+            } else {
+              paymentDetails.style.display = 'none';
+            }
+          });
+        });
+      }
+
+      // Setup payment mode toggle
+      function setupPaymentModeToggle() {
+        const toggleBtn = document.getElementById('togglePaymentMode');
+        const cardElementHost = document.getElementById('card-element');
+        if (!toggleBtn || !cardElementHost) return;
+        const stripeSection = cardElementHost.parentElement;
+        const manualSection = document.getElementById('manualCardInput');
+        
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', () => {
+            isStripeMode = !isStripeMode;
+            
+            if (isStripeMode) {
+              stripeSection.style.display = 'block';
+              manualSection.style.display = 'none';
+              toggleBtn.textContent = 'Switch to Demo Mode';
+            } else {
+              stripeSection.style.display = 'none';
+              manualSection.style.display = 'block';
+              toggleBtn.textContent = 'Switch to Secure Mode';
+            }
+          });
+        }
+      }
+
+      function switchToManualMode() {
+        isStripeMode = false;
+        const stripeSection = document.getElementById('card-element').parentElement;
+        const manualSection = document.getElementById('manualCardInput');
+        const toggleBtn = document.getElementById('togglePaymentMode');
+        
+        if (stripeSection) stripeSection.style.display = 'none';
+        if (manualSection) manualSection.style.display = 'block';
+        if (toggleBtn) toggleBtn.textContent = 'Stripe Unavailable - Demo Mode Active';
+      }
+
+      // Send order confirmation emails (to customer and owner)
+      async function sendOrderConfirmationEmail(customerInfo, receipt) {
+        if (!isEmailEnabled || !emailService) {
+          console.log('Email service not available');
+          return false;
+        }
+
+        try {
+          // Prepare email template data
+          const templateParams = {
+            to_email: customerInfo.email,
+            to_name: customerInfo.name,
+            transaction_number: receipt.transactionNumber,
+            order_date: new Date(receipt.timestamp).toLocaleDateString(),
+            order_time: new Date(receipt.timestamp).toLocaleTimeString(),
+            customer_name: customerInfo.name,
+            customer_email: customerInfo.email,
+            customer_phone: customerInfo.phone || 'Not provided',
+            customer_address: typeof customerInfo.address === 'string' 
+              ? customerInfo.address 
+              : formatAddress(customerInfo.address),
+            items_list: receipt.items.map(item => 
+              `${item.name} ${item.size ? '(' + item.size + ')' : ''} - Qty: ${item.quantity} - $${item.total.toFixed(2)}`
+            ).join('\n'),
+            subtotal: receipt.subtotal.toFixed(2),
+            tax: receipt.tax.toFixed(2),
+            total: receipt.total.toFixed(2),
+            payment_method: receipt.paymentMethod.charAt(0).toUpperCase() + receipt.paymentMethod.slice(1),
+            order_notes: receipt.notes || 'No special instructions',
+            company_name: 'NightKind Collective',
+            company_email: NIGHTKIND_EMAIL,
+            website_url: window.location.origin,
+            conservation_message: 'Thank you for supporting bat conservation efforts in Queensland!'
+          };
+
+          // Send customer confirmation email
+          console.log('Sending customer confirmation email...');
+          const customerResult = await emailService.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_CUSTOMER_TEMPLATE_ID,
+            templateParams
+          );
+          console.log('Customer email sent:', customerResult);
+
+          // Send owner notification email (same data, different recipient)
+          const ownerParams = {
+            ...templateParams,
+            to_email: NIGHTKIND_EMAIL,
+            to_name: 'NightKind Collective',
+            email_subject: `New Order Received: #${receipt.transactionNumber}`,
+            order_alert: 'You have received a new order that requires processing.'
+          };
+
+          console.log('Sending owner notification email...');
+          const ownerResult = await emailService.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_OWNER_TEMPLATE_ID,
+            ownerParams
+          );
+          console.log('Owner email sent:', ownerResult);
+
+          console.log('Both confirmation emails sent successfully!');
+          return true;
+
+        } catch (error) {
+          console.error('Failed to send order confirmation emails:', error);
+          CartNotification.warning('Order completed, but confirmation emails could not be sent');
+          return false;
+        }
+      }
+
+      // Helper function to format address object to string
+      function formatAddress(address) {
+        if (!address || typeof address !== 'object') {
+          return 'Not provided';
+        }
+        
+        const parts = [];
+        if (address.line1) parts.push(address.line1);
+        if (address.city) parts.push(address.city);
+        if (address.state) parts.push(address.state);
+        if (address.postal_code) parts.push(address.postal_code);
+        if (address.country) parts.push(address.country);
+        
+        return parts.length > 0 ? parts.join(', ') : 'Not provided';
+      }
+
+      // Secure payment processing with Stripe
+      async function processStripePayment() {
+        if (!stripe || !cardElement) {
+          throw new Error('Stripe not initialized');
+        }
+
+        try {
+          // Step 1: Create payment intent on server
+          CartNotification.info('Creating payment intent...');
+          const createResponse = await fetch(`${SERVER_URL}/api/create-payment-intent`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              amount: nightkindPOS.currentTransaction.total,
+              currency: 'usd',
+              customerEmail: document.getElementById('customerEmail').value.trim(),
+              metadata: {
+                transactionId: nightkindPOS.currentTransaction.id,
+                transactionNumber: nightkindPOS.currentTransaction.transactionNumber
+              }
+            })
+          });
+
+          if (!createResponse.ok) {
+            const error = await createResponse.json();
+            throw new Error(error.error || 'Failed to create payment intent');
+          }
+
+          const { clientSecret, paymentIntentId } = await createResponse.json();
+          console.log('Payment Intent created:', paymentIntentId);
+
+          // Step 2: Confirm payment with Stripe
+          CartNotification.info('Confirming payment...');
+          const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+              card: cardElement,
+              billing_details: {
+                name: document.getElementById('customerName').value.trim(),
+                email: document.getElementById('customerEmail').value.trim(),
+                phone: document.getElementById('customerPhone').value.trim() || undefined,
+                address: {
+                  line1: document.getElementById('customerAddressLine1').value.trim() || undefined,
+                  city: document.getElementById('customerCity').value.trim() || undefined,
+                  state: document.getElementById('customerState').value.trim() || undefined,
+                  postal_code: document.getElementById('customerPostcode').value.trim() || undefined,
+                  country: document.getElementById('customerCountry').value.trim() || undefined
+                }
+              }
+            }
+          });
+
+          if (error) {
+            throw new Error(error.message);
+          }
+
+          console.log('Payment confirmed:', paymentIntent.id);
+
+          // Step 3: Verify payment with server
+          const confirmResponse = await fetch(`${SERVER_URL}/api/confirm-payment`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              paymentIntentId: paymentIntent.id
+            })
+          });
+
+          if (!confirmResponse.ok) {
+            throw new Error('Payment verification failed');
+          }
+
+          const confirmData = await confirmResponse.json();
+          console.log('Payment verified:', confirmData);
+
+          return {
+            id: paymentIntent.id,
+            status: paymentIntent.status,
+            amount: paymentIntent.amount,
+            currency: paymentIntent.currency
+          };
+
+        } catch (error) {
+          console.error('Payment processing error:', error);
+          throw error;
+        }
+      }
+
+      // Process payment
+      async function processPayment() {
+        if (!ONLINE_PAYMENTS_ENABLED) {
+          showPaymentsDisabledModal();
+          CartNotification.error('Online payments are temporarily disabled. Card details are not collected.');
+          return;
+        }
+
+        // Validate customer information
+        const customerName = document.getElementById('customerName').value.trim();
+        const customerEmail = document.getElementById('customerEmail').value.trim();
+        
+        if (!customerName || !customerEmail) {
+          CartNotification.error('Please fill in required customer information');
+          return;
+        }
+        
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(customerEmail)) {
+          CartNotification.error('Please enter a valid email address');
+          return;
+        }
+        
+        // Get payment method
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+        
+        // Validate payment details
+        let paymentDetails = {};
+        let isValid = true;
+        
+        if (paymentMethod === 'card') {
+          paymentDetails = { useStripe: true };
+        } else if (paymentMethod === 'digital_wallet') {
+          paymentDetails = {
+            walletId: 'demo_wallet_' + Date.now(),
+            confirmation: 'confirmed_' + Math.random().toString(36).substr(2, 9)
+          };
+        } else if (paymentMethod === 'paypal') {
+          paymentDetails = {
+            paypalId: 'demo_paypal_' + Date.now(),
+            confirmation: 'confirmed_' + Math.random().toString(36).substr(2, 9)
+          };
+        }
+        
+        if (!isValid) return;
+        
+        try {
+          // Add customer information
+          nightkindPOS.addCustomerInfo({
+            name: customerName,
+            email: customerEmail,
+            phone: document.getElementById('customerPhone').value.trim(),
+            address: {
+              line1: document.getElementById('customerAddressLine1').value.trim(),
+              city: document.getElementById('customerCity').value.trim(),
+              state: document.getElementById('customerState').value.trim(),
+              postal_code: document.getElementById('customerPostcode').value.trim(),
+              country: document.getElementById('customerCountry').value.trim()
+            }
+          });
+          
+          // Add order notes
+          const notes = document.getElementById('orderNotes').value.trim();
+          if (notes) {
+            nightkindPOS.addNotes(notes);
+          }
+          
+          // Process payment
+          let paymentResult;
+          
+          if (paymentMethod === 'card' && paymentDetails.useStripe) {
+            // Process with Stripe
+            CartNotification.info('Processing secure payment...');
+            paymentResult = await processStripePayment();
+            
+            // Update payment details with Stripe result
+            paymentDetails = {
+              paymentIntentId: paymentResult.id,
+              status: paymentResult.status,
+              amount: paymentResult.amount,
+              currency: paymentResult.currency,
+              useStripe: true
+            };
+          }
+          
+          nightkindPOS.processPayment(paymentMethod, paymentDetails);
+          
+          // Complete transaction
+          const result = nightkindPOS.completeTransaction();
+          
+          // Send order confirmation emails
+          const emailSent = await sendOrderConfirmationEmail(
+            result.transaction.customerInfo,
+            result.receipt
+          );
+          
+          // Show success message
+          const secureText = paymentDetails.useStripe ? ' (Secured by Stripe)' : '';
+          const emailText = emailSent ? ' Confirmation email sent!' : '';
+          CartNotification.success(`Order completed! Transaction #${result.transaction.transactionNumber}${secureText}${emailText}`);
+          
+          // Close modal
+          closeCheckoutModal();
+          
+          // Show receipt
+          showReceipt(result.receipt);
+          
+          // Refresh cart
+          renderCart();
+          
+        } catch (error) {
+          console.error('Payment processing error:', error);
+          CartNotification.error('Payment processing failed: ' + error.message);
+        }
+      }
+
+      // Close checkout modal
+      function closeCheckoutModal() {
+        const modal = document.querySelector('.checkout-modal');
+        if (modal) {
+          modal.remove();
+        }
+        
+        // Cancel current transaction if it exists
+        if (nightkindPOS.currentTransaction) {
+          nightkindPOS.cancelTransaction();
+        }
+      }
+
+      // Show receipt
+      function showReceipt(receipt) {
+        const modal = document.createElement('div');
+        modal.className = 'receipt-modal';
+        modal.innerHTML = `
+          <div class="receipt-modal-content">
+            <div class="receipt-header">
+              <h2>Order Confirmation</h2>
+              <button class="receipt-close" onclick="closeReceiptModal()">&times;</button>
+            </div>
+            
+            <div class="receipt-body">
+              <div class="receipt-info">
+                <div class="receipt-row">
+                  <span>Transaction #:</span>
+                  <span>${receipt.transactionNumber}</span>
+                </div>
+                <div class="receipt-row">
+                  <span>Date:</span>
+                  <span>${new Date(receipt.timestamp).toLocaleString()}</span>
+                </div>
+                ${receipt.customerInfo ? `
+                  <div class="receipt-row">
+                    <span>Customer:</span>
+                    <span>${receipt.customerInfo.name}</span>
+                  </div>
+                  <div class="receipt-row">
+                    <span>Email:</span>
+                    <span>${receipt.customerInfo.email}</span>
+                  </div>
+                ` : ''}
+              </div>
+              
+              <div class="receipt-items">
+                <h3>Items Ordered</h3>
+                ${receipt.items.map(item => `
+                  <div class="receipt-item">
+                    <span class="item-name">${item.name} ${item.size ? `(${item.size})` : ''}</span>
+                    <span class="item-quantity">×${item.quantity}</span>
+                    <span class="item-price">$${item.total.toFixed(2)}</span>
+                  </div>
+                `).join('')}
+              </div>
+              
+              <div class="receipt-totals">
+                <div class="receipt-row">
+                  <span>Subtotal:</span>
+                  <span>$${receipt.subtotal.toFixed(2)}</span>
+                </div>
+                <div class="receipt-row">
+                  <span>Tax:</span>
+                  <span>$${receipt.tax.toFixed(2)}</span>
+                </div>
+                <div class="receipt-row receipt-total">
+                  <span>Total:</span>
+                  <span>$${receipt.total.toFixed(2)}</span>
+                </div>
+                <div class="receipt-row">
+                  <span>Payment Method:</span>
+                  <span>${receipt.paymentMethod.charAt(0).toUpperCase() + receipt.paymentMethod.slice(1)}</span>
+                </div>
+              </div>
+              
+              ${receipt.notes ? `
+                <div class="receipt-notes">
+                  <h3>Order Notes</h3>
+                  <p>${receipt.notes}</p>
+                </div>
+              ` : ''}
+              
+              <div class="receipt-footer">
+                <p>Thank you for supporting NightKind Collective!</p>
+                <p>Your purchase helps fund bat conservation efforts in Queensland.</p>
+              </div>
+            </div>
+            
+            <div class="receipt-actions">
+              <button class="receipt-btn secondary" onclick="closeReceiptModal()">Close</button>
+              <button class="receipt-btn primary" onclick="printReceipt()">Print Receipt</button>
+            </div>
+          </div>
+        `;
+        
+        document.body.appendChild(modal);
+      }
+
+      // Close receipt modal
+      function closeReceiptModal() {
+        const modal = document.querySelector('.receipt-modal');
+        if (modal) {
+          modal.remove();
+        }
+      }
+
+      // Print receipt
+      function printReceipt() {
+        const receiptContent = document.querySelector('.receipt-modal-content');
+        if (receiptContent) {
+          const printWindow = window.open('', '_blank');
+          printWindow.document.write(`
+            <html>
+              <head>
+                <title>NightKind Collective - Receipt</title>
+                <style>
+                  body { font-family: 'Courier Prime', monospace; margin: 20px; }
+                  .receipt-header { text-align: center; margin-bottom: 20px; }
+                  .receipt-row { display: flex; justify-content: space-between; margin: 5px 0; }
+                  .receipt-total { font-weight: bold; border-top: 1px solid #000; padding-top: 5px; }
+                  .receipt-footer { text-align: center; margin-top: 20px; font-size: 0.9em; }
+                </style>
+              </head>
+              <body>
+                ${receiptContent.innerHTML}
+              </body>
+            </html>
+          `);
+          printWindow.document.close();
+          printWindow.print();
+        }
+      }
+
+      // Listen for cart updates from other pages
+      nightkindCart.addListener(() => {
+        if (currentTab === 'cart') {
+          renderCart();
+        }
+        filteredCart = nightkindCart.getItems();
+      });
+
+      // Initialize page
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+          // Ensure cart system is properly initialized
+          if (typeof nightkindCart === 'undefined') {
+            console.error('Cart system not initialized');
+            return;
+          }
+          
+          // Initialize cart and wishlist counts
+          nightkindCart.updateCartCount();
+          nightkindCart.updateWishlistCount();
+          
+          // Initialize filtered cart
+          filteredCart = nightkindCart.getItems();
+          
+          // Show default tab (cart)
+          showTab('cart');
+        } catch (error) {
+          console.error('Error initializing cart page:', error);
+          // Show error message to user
+          const cartContent = document.getElementById('cartContent');
+          if (cartContent) {
+            cartContent.innerHTML = `
+              <div class="empty-cart">
+                <div class="icon">⚠️</div>
+                <h3>Cart System Error</h3>
+                <p>There was an error loading the cart system. Please refresh the page or contact support.</p>
+                <button class="cart-action-btn" onclick="location.reload()">Refresh Page</button>
+              </div>
+            `;
+          }
+        }
+      });
+    </script>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">NightKind Collective</h3>
+          <p class="footer-description">
+            Alternative fashion with purpose. Supporting Queensland bat rescue through authentic subcultural style.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Conservation</h4>
+          <p class="footer-text">
+            Every purchase directly funds wildlife rescue operations and bat conservation efforts.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Community</h4>
+          <p class="footer-text">
+            Join the NightKind community and help protect Queensland's bat populations.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 NightKind Collective. All rights reserved. | <a href="privacy.html" class="footer-link">Privacy Policy</a> | <a href="login.html" class="footer-link">Login</a></p>
+      </div>
+    </footer>
+
+    <style>
+      .footer {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        border-top: 1px solid #444;
+        margin-top: 4rem;
+        padding: 3rem 0 1rem;
+        position: relative;
+      }
+
+      .footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, hsl(270, 60%, 70%), transparent);
+        box-shadow: 0 0 10px hsl(270, 60%, 70%);
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .footer-section {
+        text-align: center;
+      }
+
+      .footer-title {
+        color: hsl(270, 60%, 70%);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-shadow: 0 0 10px hsla(270, 60%, 70%, 0.5);
+      }
+
+      .footer-subtitle {
+        color: hsl(270, 60%, 70%);
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Courier Prime', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .footer-description,
+      .footer-text {
+        color: #ccc;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid #444;
+      }
+
+      .footer-bottom p {
+        color: #888;
+        font-size: 0.9rem;
+      }
+
+      .footer-link {
+        color: hsl(270, 60%, 70%);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-link:hover {
+        color: #fff;
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+      }
+    </style>
+  </body>
+</html> 

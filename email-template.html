@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NightKind Collective - Order Confirmation Email Template</title>
+    <style>
+        body {
+            font-family: 'Courier Prime', monospace;
+            background-color: #0a0a0a;
+            color: #d4af37;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #2a1a4a, #4a2a6a);
+            padding: 30px;
+            text-align: center;
+            border-bottom: 2px solid #d4af37;
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+        .tagline {
+            font-size: 1rem;
+            color: #b8a070;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .content {
+            padding: 30px;
+        }
+        .greeting {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #d4af37;
+        }
+        .order-info {
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 5px 0;
+            border-bottom: 1px solid #333;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #b8a070;
+        }
+        .info-value {
+            color: #d4af37;
+        }
+        .items-section {
+            margin: 20px 0;
+        }
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 15px;
+            color: #d4af37;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 5px;
+        }
+        .item {
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .item-name {
+            font-weight: bold;
+            color: #d4af37;
+            margin-bottom: 5px;
+        }
+        .item-details {
+            color: #b8a070;
+            font-size: 0.9rem;
+        }
+        .totals {
+            background-color: #1a1a1a;
+            border: 2px solid #d4af37;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        .total-final {
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-top: 2px solid #d4af37;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        .conservation-message {
+            background: linear-gradient(135deg, #1a4a2a, #2a6a4a);
+            border: 1px solid #4a8a6a;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .conservation-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #6ab84a;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .conservation-text {
+            color: #8ac86a;
+            font-size: 0.95rem;
+        }
+        .footer {
+            background-color: #0a0a0a;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        .footer-text {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        .contact-info {
+            color: #d4af37;
+            font-size: 0.9rem;
+        }
+        .contact-info a {
+            color: #d4af37;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            .email-container {
+                margin: 0;
+                border-radius: 0;
+            }
+            .content {
+                padding: 20px;
+            }
+            .info-row {
+                flex-direction: column;
+            }
+            .info-label {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🦇 NightKind Collective</div>
+            <div class="tagline">Alternative Fashion with Purpose</div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Greeting -->
+            <div class="greeting">
+                Hello {{to_name}},
+            </div>
+
+            <p>Thank you for your order! Your purchase is confirmed and we're excited to prepare your NightKind items for shipping.</p>
+
+            <!-- Order Information -->
+            <div class="order-info">
+                <div class="info-row">
+                    <span class="info-label">Order Number:</span>
+                    <span class="info-value">#{{transaction_number}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Order Date:</span>
+                    <span class="info-value">{{order_date}} at {{order_time}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Customer:</span>
+                    <span class="info-value">{{customer_name}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">{{customer_email}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Phone:</span>
+                    <span class="info-value">{{customer_phone}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Address:</span>
+                    <span class="info-value">{{customer_address}}</span>
+                </div>
+            </div>
+
+            <!-- Items Ordered -->
+            <div class="items-section">
+                <div class="section-title">Items Ordered</div>
+                <div class="item">
+                    <div class="item-name">Order Items:</div>
+                    <div class="item-details">
+                        {{items_list}}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Totals -->
+            <div class="totals">
+                <div class="section-title">Order Summary</div>
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span>${{subtotal}}</span>
+                </div>
+                <div class="total-row">
+                    <span>Tax:</span>
+                    <span>${{tax}}</span>
+                </div>
+                <div class="total-row total-final">
+                    <span>Total:</span>
+                    <span>${{total}}</span>
+                </div>
+                <div class="total-row">
+                    <span>Payment Method:</span>
+                    <span>{{payment_method}}</span>
+                </div>
+            </div>
+
+            <!-- Order Notes -->
+            {{#if order_notes}}
+            <div class="items-section">
+                <div class="section-title">Order Notes</div>
+                <div class="item">
+                    <div class="item-details">{{order_notes}}</div>
+                </div>
+            </div>
+            {{/if}}
+
+            <!-- Conservation Message -->
+            <div class="conservation-message">
+                <div class="conservation-title">🦇 Conservation Impact</div>
+                <div class="conservation-text">
+                    {{conservation_message}}<br>
+                    Your purchase directly supports bat rescue operations and wildlife conservation efforts in Queensland.
+                </div>
+            </div>
+
+            <!-- Shipping Information -->
+            <div class="items-section">
+                <div class="section-title">What's Next?</div>
+                <div class="item">
+                    <div class="item-details">
+                        <strong>Processing:</strong> We'll process your order within 1-2 business days.<br>
+                        <strong>Shipping:</strong> You'll receive a shipping confirmation with tracking details.<br>
+                        <strong>Delivery:</strong> Standard shipping takes 5-7 business days.<br>
+                        <strong>Support:</strong> Contact us at {{company_email}} with any questions.
+                    </div>
+                </div>
+            </div>
+
+            <p>Thank you for choosing NightKind Collective and supporting our conservation mission!</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-text">
+                <strong>{{company_name}}</strong><br>
+                Alternative Fashion with Purpose
+            </div>
+            <div class="contact-info">
+                <a href="{{website_url}}">Visit Our Website</a> | 
+                <a href="mailto:{{company_email}}">Contact Us</a>
+            </div>
+            <div class="footer-text">
+                This email was sent to {{customer_email}} because you placed an order with NightKind Collective.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
