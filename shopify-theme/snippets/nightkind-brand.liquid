@@ -1,0 +1,19 @@
+{%- doc -%}
+  Loads NightKind Collective brand fonts and stylesheet so the Shopify store matches nightkind.org.
+{%- enddoc -%}
+<link rel="icon" type="image/svg+xml" href="{{ 'nightkind-bat.svg' | asset_url }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Creepster&display=swap"
+  rel="stylesheet"
+>
+{{ 'nightkind-brand.css' | asset_url | stylesheet_tag }}
+<style>
+  .header-logo::before,
+  .password-main-content .header-logo::before,
+  a.header-logo::before,
+  .password-main-content h1::before {
+    background-image: url({{ 'nightkind-bat.svg' | asset_url }});
+  }
+</style>
