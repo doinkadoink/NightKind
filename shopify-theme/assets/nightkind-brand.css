@@ -1,0 +1,136 @@
+/* NightKind Collective brand — match nightkind.org */
+:root {
+  --nk-bg: #141414;
+  --nk-bg-deep: #0a0a0a;
+  --nk-border: #262626;
+  --nk-gold: #ffff4d;
+  --nk-gold-bright: #ffff80;
+  --nk-gold-pale: #ffffb3;
+  --nk-purple: #593a78;
+  --nk-text: #fafafa;
+  --nk-heading: Creepster, cursive;
+  --nk-body: 'Courier Prime', ui-monospace, monospace;
+}
+
+html,
+body {
+  background: var(--nk-bg) !important;
+  color: var(--nk-text);
+}
+
+body,
+input,
+textarea,
+select,
+button,
+.button,
+.paragraph,
+p,
+a {
+  font-family: var(--nk-body) !important;
+}
+
+h1,
+h2,
+h3,
+.h1,
+.h2,
+.h3,
+.hero :is(h1, h2, h3, p:has(+ .button), .text-block h1, .text-block h2) {
+  font-family: var(--nk-heading) !important;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 18px rgba(255, 255, 77, 0.35);
+}
+
+.header-section,
+.header,
+header-component,
+#header-group {
+  background: rgba(20, 20, 20, 0.95) !important;
+  border-bottom: 1px solid var(--nk-border) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.header-logo {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--nk-body) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nk-gold) !important;
+  text-decoration: none;
+}
+
+.header-logo::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 28px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  flex-shrink: 0;
+}
+
+.header-menu a,
+nav a {
+  font-family: var(--nk-body) !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.78rem !important;
+}
+
+.header-menu a:hover,
+nav a:hover {
+  color: var(--nk-gold) !important;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+.button,
+button.shopify-payment-button__button,
+.shopify-challenge__button {
+  border-radius: 4px !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.password-main-content,
+.password-dialog,
+.section-password {
+  background: var(--nk-bg-deep) !important;
+  min-height: 100vh;
+}
+
+.password-main-content h1::before {
+  content: '';
+  display: block;
+  width: 72px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+  font-family: var(--nk-heading) !important;
+  color: var(--nk-gold) !important;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.password-main-content p {
+  color: #cfcfcf;
+  text-align: center;
+}
+
+footer {
+  background: linear-gradient(180deg, #0a0a0a, #262626) !important;
+  border-top: 1px solid var(--nk-border);
+}
+
+::selection {
+  background: var(--nk-gold);
+  color: var(--nk-bg);
+}
