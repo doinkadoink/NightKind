@@ -1579,9 +1579,9 @@
             logo.style.transform = 'scale(1) rotate(0deg)';
           });
           
-          // Add click to go to shop
+          // Send the NightKind bat logo to the canonical Shopify storefront.
           logo.addEventListener('click', () => {
-            window.location.href = 'shop-categories.html';
+            window.location.href = 'https://nightkind-collective.myshopify.com';
           });
           
           logoContainer.appendChild(logo);
@@ -1846,7 +1846,7 @@
           const href = link.getAttribute('href');
           
           if (href === '/shop') {
-            link.href = 'shop-categories.html';
+            link.href = 'https://nightkind-collective.myshopify.com';
           } else if (href === '/about') {
             link.href = 'about.html';
           } else if (href === '/contact') {
@@ -1870,9 +1870,9 @@
           const text = (element.textContent || element.innerText || '').toLowerCase();
           const href = element.getAttribute('href') || '';
           
-          // If it looks like a shop link but doesn't already point to our shop page
-          if ((text.includes('shop') || text.includes('store') || text.includes('buy') || text.includes('merch')) && 
-              !href.includes('shop-categories.html') && 
+          // If it looks like a shop link but does not already point to Shopify.
+          if ((text.includes('shop') || text.includes('store') || text.includes('buy') || text.includes('merch')) &&
+              !href.includes('nightkind-collective.myshopify.com') &&
               !element.hasAttribute('data-shop-redirected')) {
             
             console.log('Redirecting shop element:', text);
@@ -1884,7 +1884,7 @@
             element.addEventListener('click', (e) => {
               e.preventDefault();
               e.stopPropagation();
-              window.location.href = 'shop-categories.html';
+              window.location.href = 'https://nightkind-collective.myshopify.com';
             });
             
             // Make it look clickable
@@ -2446,4 +2446,3 @@
     </script>
   </body>
 </html>
-
