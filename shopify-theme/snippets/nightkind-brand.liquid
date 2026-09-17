@@ -16,4 +16,11 @@
   .password-main-content h1::before {
     background-image: url({{ 'nightkind-bat.svg' | asset_url }});
   }
+  .shopify-section:has(.hero),
+  .hero {
+    background-image: linear-gradient(rgba(10, 10, 10, 0.72), rgba(10, 10, 10, 0.88)),
+      url({{ 'nightkind-preview.png' | asset_url }});
+    background-size: cover;
+    background-position: center;
+  }
 </style>
